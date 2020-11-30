@@ -8,6 +8,7 @@ target 'rnappnamorofront' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+
   target 'rnappnamorofrontTests' do
     inherit! :complete
     # Pods for testing

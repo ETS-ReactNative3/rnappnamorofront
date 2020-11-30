@@ -1,0 +1,33 @@
+.modal {
+    min-width: var(--defaultMinModalWidth);
+    max-width: 600px;
+    width: 80%;
+    min-height: 300px;
+    max-height: 485px;
+    height: 350px;
+}
+
+.form {
+    min-height: 90%;
+    min-width: 100%;
+    text-align: center;
+}
+
+.titleSubtitleDiv {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 20px 0;
+}
+
+.titleSubtitleDiv h2 {
+    align-self: center !important;
+    font-size: 23px !important;
+    font-weight: 600;
+    color: var(--primaryColor) !important;
+}
+
+.titleSubtitleDiv p {
+    font-size: 17px !important;
+    color: var(--lightTextColor);
+    cursor: default;
+}

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">rnappnamorofront</string>
+    <string name="facebook_app_id">537720903824774</string>
+    <string name="server_client_id">1047242635525-fkelb7038u3c4n7q19iuvi88r856lqgm.apps.googleusercontent.com</string>
 </resources>

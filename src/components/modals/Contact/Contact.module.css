@@ -1,0 +1,14 @@
+.modal {
+    min-width: var(--defaultMinModalWidth);
+    max-width: 800px;
+    width: 80%;
+    min-height: 450px;
+    max-height: 500px;
+    height: 400px;
+}
+
+.form {
+    min-height: 90%;
+    min-width: 100%;
+    text-align: center;
+}

@@ -1,0 +1,32 @@
+*******************************
+To Do
+*******************************
+on notification.js I reaplaced dangerNotification and successNotification by Alerts
+
+see if detect-browser works
+
+create log out to facebook and google oauth
+
+*******************************
+Importants
+*******************************
+strings.xml contains the facebook app id, so it won't will be uploaded to git's repository. File address: 'android/app/src/main/res/values/strings.xml'
+
+*******************************
+Troubleshooting
+*******************************
+ERROR: ".dex file cannot exceed 64K."
+SOLUTION: Set 'multiDexEnabled true' into 'module/build.gradle'
+EX: 'android {
+
+    defaultConfig {
+        ...
+
+        // Enabling multidex support.
+        multiDexEnabled true
+    }
+    ...
+}'
+-------------------------------
+ERROR: "path not found on node_modules"
+SOLUTION: "react-native start --reset-cache"
