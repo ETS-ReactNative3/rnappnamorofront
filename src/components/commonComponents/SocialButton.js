@@ -1,7 +1,12 @@
 import React from 'react';
 import { Text } from 'react-native';
 import styled from 'styled-components';
-import { GenericRowView, AwesomeIcon } from '../../GlobalStyle';
+import { GenericRowView } from '../../GlobalStyle';
+import { AwesomeIcon } from '../commonComponents';
+
+const ButtonContainer = styled(GenericRowView)`
+    align-items: center;
+`;
 
 const Button = styled.TouchableHighlight`
     height: ${props => props.theme.$heightOfGenericComponents}px;
@@ -9,6 +14,11 @@ const Button = styled.TouchableHighlight`
     justify-content: center;
     border-radius: ${props => props.theme.$smallBorderRadius};
     margin-top: 10px;
+`;
+
+const ButtonText = styled.Text`
+    color: white;
+    font-size: 17px;
 `;
 
 const IconView = styled.View`
@@ -19,21 +29,19 @@ const IconView = styled.View`
     height: ${props => props.theme.$heightOfGenericComponents}px;
 `;
 
-const ButtonText = styled.Text`
-    color: white;
-    font-size: 17px;
-`;
-
 export default SocialButton = (props) => {
     return <Button style={props.customButtonStyle} underlayColor={props.underlayColor} onPress={() => props.onPress()}>
-        <GenericRowView>
+        <ButtonContainer>
 
             <IconView>
-                <AwesomeIcon name={props.iconName} style={{ color: 'white' }} />
+                <AwesomeIcon {...props} customIconStyle={{ color: 'white' }} />
             </IconView>
 
-            <ButtonText style={{ color: 'white' }}>Entrar com <Text style={{ fontWeight: 'bold' }}>{props.text}</Text></ButtonText>
+            <ButtonText>
+                {'Entrar com '}
+                <Text style={{ fontWeight: 'bold' }}>{props.text}</Text>
+            </ButtonText>
 
-        </GenericRowView>
+        </ButtonContainer>
     </Button>
 }

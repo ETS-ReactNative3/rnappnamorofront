@@ -3,6 +3,11 @@ import { Text } from 'react-native';
 import styled from 'styled-components';
 import { GenericRowView } from '../../GlobalStyle';
 
+const LineTextLineContainer = styled(GenericRowView)`
+    width: auto;
+    align-items: center;
+`;
+
 const Line = styled.View`
     display: flex;
     width: 40%;
@@ -12,9 +17,9 @@ const Line = styled.View`
 `;
 
 export default LineTextLine = (props) => {
-    return <GenericRowView>
+    return <LineTextLineContainer>
         <Line />
         <Text style={{ padding: 5 }}>{props.text}</Text>
         <Line />
-    </GenericRowView>
+    </LineTextLineContainer>
 }

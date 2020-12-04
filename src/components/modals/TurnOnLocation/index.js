@@ -21,7 +21,7 @@ export default () => {
 
     const modalStyle = {
         overlay: {
-            backgroundColor: 'var(--opaqueAppBackgroundColor)',
+            backgroundColor: 'var(--opaqueBackgroundColor)',
         }
     }
 

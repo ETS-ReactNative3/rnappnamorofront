@@ -19,7 +19,7 @@ export function successNotification(message) {
 
 export function dangerNotification(message) {
 
-  Alert.alert('', message);
+  Alert.alert('App Namoro', message);
   // store.addNotification({
   //   message: message,
   //   type: "danger",

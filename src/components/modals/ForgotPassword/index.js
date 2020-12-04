@@ -1,33 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import Modal from 'react-modal';
-import Classes from 'classnames';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import * as Actions from '../../../actions';
-import Styles from './ForgotPassword.module.css';
+import { ForgotPasswordContainer } from './ForgotPasswordStyle';
 import Api from '../../utils/Api';
 import { successNotification } from '../../utils/Notifications';
 import { handleError } from '../../utils/Functions';
-import {
-    FormCloseButton,
-    Separator,
-    InputWithIconButton,
-    GenericBottomButton
-} from '../../utils/StatelessComponents';
+import { H2 } from '../../../GlobalStyle';
+import { GenericModalContainer, TextInputRightIconButton } from '../../commonComponents';
 
-export default () => {
-
-    Modal.setAppElement('#root');
+export default function ForgotPassword() {
 
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState('');
-
-    const changeEmail = (value) => setEmail(value.target.value);
-
-    const { isForgotPasswordModalOpen } = useSelector(state => state.modal);
-    const { showLoader } = useSelector(state => state.utils);
 
     const handleSendRecoverPasswordEmail = async (event) => {
         try {
@@ -53,24 +40,21 @@ export default () => {
         dispatch(Actions.showForgotPasswordModal(false));
     }
 
-    const modalStyle = {
-        overlay: {
-            backgroundColor: !showLoader && 'var(--opaqueAppBackgroundColor)',
-        }
-    }
+    return <ForgotPasswordContainer>
+        <GenericModalContainer title={'Digite seu email abaixo'}>
 
-    return (
-        <Modal
-            isOpen={isForgotPasswordModalOpen}
-            onRequestClose={handleClose}
-            style={modalStyle}
-            className={Classes({ [Styles.modal]: true, "modal": true })}
-        >
-            <form
-                className={Classes({ [Styles.form]: true, "form": true })}
+            <TextInputRightIconButton
+                placeholder={'Email'}
+                value={email}
+                returnKeyType={'done'}
+                onChangeText={(value) => setEmail(value)}
+            />
+
+            {/* <View
+                className={'form'}
                 onSubmit={handleSendRecoverPasswordEmail}>
 
-                <FormCloseButton handleClose={handleClose}/>
+                <FormCloseButton handleClose={handleClose} />
 
                 <h1 className="h1">Digite seu e-mail abaixo</h1>
 
@@ -92,10 +76,10 @@ export default () => {
                     buttonText={'Enviar'}
                 />
 
-                <div className={Classes({ "fullWidthDiv": true, [Styles.divSendEmail]: true })} >
+                <div className={'fullWidthDiv'} >
                     <p className="p">Enviaremos um e-mail contendo os passos para resetar sua senha!</p>
                 </div>
-            </form>
-        </Modal>
-    );
+            </View> */}
+        </GenericModalContainer>
+    </ForgotPasswordContainer>
 }

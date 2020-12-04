@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import logo from '../../../assets/logo.png';
 import appBackgroundOpaque from '../../../assets/appBackgroundOpaque.jpg';
-import { ImageBackgroundContainer, BigLogo } from '../../../GlobalStyle';
+import { ImageBackgroundContainer } from '../../../GlobalStyle';
+import { Loader, BigLogo } from '../../commonComponents';
 
-import LoginCard from './LoginCard';
+import LoginCard from './Components/LoginCard';
 import * as Actions from '../../../actions';
 
 export default function Home(props) {
@@ -13,6 +14,7 @@ export default function Home(props) {
     const dispatch = useDispatch();
 
     const { isAuthenticated } = useSelector(state => state.auth);
+    const { showLoader } = useSelector(state => state.utils);
 
     useEffect(() => {
         //dispatch(Actions.checkIfTokenHasExpired());
@@ -25,9 +27,11 @@ export default function Home(props) {
     return (
         <ImageBackgroundContainer source={appBackgroundOpaque}>
 
+            {showLoader && <Loader />}
+
             <BigLogo source={logo} />
 
-            <LoginCard />
+            <LoginCard {...props} />
 
         </ImageBackgroundContainer>
     )
