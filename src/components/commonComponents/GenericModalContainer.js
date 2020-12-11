@@ -1,22 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ScrollView } from 'react-native';
 
 import { AwesomeIcon } from '../commonComponents';
 import { GenericColumnView, H2 } from '../../GlobalStyle';
 import { theme } from '../../constants/StyledComponentsTheme';
 
-const ModalContainer = styled(GenericColumnView)`
-    padding: 10px;
-    height: auto;
+const MainContainer = styled(GenericColumnView)`
+    max-height: 100%;
     width: 100%;
-    margin: 10px;
-    border-radius: ${props => props.theme.$mediumBorderRadius};
-    text-align: center;
     background-color: white;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    elevation: 10;
+    border-radius: ${props => props.theme.$mediumBorderRadius};
 `;
 
 const Button = styled.TouchableHighlight`
@@ -28,14 +22,29 @@ const Button = styled.TouchableHighlight`
     align-self: flex-end;
 `;
 
+const H2Custom = styled(H2)`
+    margin-bottom: 20;
+    text-align: center;
+`;
+
+const ScrollViewCustom = styled(ScrollView)`
+    border-radius: ${props => props.theme.$mediumBorderRadius};
+    background-color: transparent;
+    padding: 10px;
+`;
+
 export default GenericModalContainer = (props) => {
-    return <ModalContainer>
+    return <MainContainer>
+        <ScrollViewCustom>
 
-        <Button underlayColor={theme.$lightGray} onPress={() => props.onButtonPress()}>
-            <AwesomeIcon iconName={'times'} solid />
-        </Button>
+            <Button underlayColor={theme.$lightGray} onPress={() => props.navigation.goBack()}>
+                <AwesomeIcon iconName={'times'} solid />
+            </Button>
 
-        <H2>{props.title}</H2>
+            <H2Custom>{props.title}</H2Custom>
 
-    </ModalContainer>
+            {props.children}            
+
+        </ScrollViewCustom>
+    </MainContainer>
 }

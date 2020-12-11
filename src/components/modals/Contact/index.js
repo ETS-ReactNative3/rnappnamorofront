@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import Classes from 'classnames';
-import AsyncStorage from '@react-native-community/async-storage';
 
 import { successNotification } from '../../utils/Notifications';
 import { handleError } from '../../utils/Functions';
@@ -35,13 +34,13 @@ export default () => {
 
     const { isContactModalOpen } = useSelector(state => state.modal);
     const { showLoader } = useSelector(state => state.utils);
+    const { accessToken } = useSelector(state => state.auth);
 
     const handleCreateNewUserContact = async (event) => {
         try {
             event.preventDefault();
             dispatch(Actions.showLoader(true));
 
-            const accessToken = AsyncStorage.getItem('accessToken');
             await Api({ accessToken }).post('users/contact', { name, email, subject, message });
 
             dispatch(Actions.showLoader(false));

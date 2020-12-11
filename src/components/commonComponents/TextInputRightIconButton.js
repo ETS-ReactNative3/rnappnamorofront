@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { GenericRowView } from '../../GlobalStyle';
 import { AwesomeIcon } from '../commonComponents';
 
-const MainView = styled(GenericRowView)`
+const MainContainer = styled(GenericRowView)`
     height: ${props => props.theme.$heightOfGenericComponents}px;
     width: 100%;
     margin-top: 10px;
@@ -35,22 +35,38 @@ const Button = styled.TouchableHighlight`
 `;
 
 export default TextInputRightIconButton = (props) => {
-    return <MainView>
-        <Input type={props.type !== 'password' ? props.type : hidePassword ? props.type : 'text'}
-            placeholder={props.placeholder}
-            value={props.value}
-            onChangeText={props.onChangeText}
-            secureTextEntry={props.secureTextEntry}
-            returnKeyType={props.returnKeyType}
-            onSubmitEditing={props.onSubmitEditing}
-            ref={props.reference}
+
+    const {
+        placeholder,
+        value,
+        onChangeText,
+        secureTextEntry,
+        returnKeyType,
+        onSubmitEditing,
+        keyboardType,
+        reference,
+        showRightButton,
+        customButtonStyle,
+        underlayColor
+    } = props;
+
+    return <MainContainer>
+        <Input
+            placeholder={placeholder}
+            value={value}
+            onChangeText={onChangeText}
+            secureTextEntry={secureTextEntry}
+            returnKeyType={returnKeyType}
+            onSubmitEditing={onSubmitEditing}
+            keyboardType={keyboardType}
+            ref={reference}
         />
 
         {
-            props.showRightButton &&
-            <Button style={props.customButtonStyle} underlayColor={props.underlayColor} onPress={() => props.onButtonPress()}>
+            showRightButton &&
+            <Button style={customButtonStyle} underlayColor={underlayColor} onPress={() => props.onButtonPress()}>
                 <AwesomeIcon {...props} />
             </Button>
         }
-    </MainView >
+    </MainContainer >
 }

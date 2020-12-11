@@ -1,6 +1,6 @@
 import fileSize from 'filesize';
 import { uniqueId } from 'lodash';
-import AsyncStorage from '@react-native-community/async-storage';
+import { useSelector } from 'react-redux';
 
 import { dangerNotification } from '../../../../../utils/Notifications';
 import { decodeJwtToken, handleError } from '../../../../../utils/Functions';
@@ -33,9 +33,10 @@ export const uploadMedia = (files, userImages, dispatch) => {
 
 const uploadImages = (selectedFiles, dispatch) => {
 
+    const { accessToken } = useSelector(state => state.auth);
+
     selectedFiles.map(item => {
 
-        const accessToken = AsyncStorage.getItem('accessToken');
         const userId = decodeJwtToken(accessToken).id;
 
         const data = new FormData();

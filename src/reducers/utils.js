@@ -1,4 +1,4 @@
-import { SHOW_LOADER, MOUSE_BUTTON_DOWN, IS_GEOLOCATION_ENABLE } from '../actions/types'
+import { SHOW_LOADER, MOUSE_BUTTON_DOWN, IS_GEOLOCATION_ENABLE } from '../constants/Types';
 
 const INITIAL_STATE = {
     showLoader: false,

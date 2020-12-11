@@ -1,33 +1,40 @@
 import React, { useState } from "react";
+import { Keyboard } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import AsyncStorage from '@react-native-community/async-storage';
 
 import * as Actions from '../../../actions';
-import { ForgotPasswordContainer } from './ForgotPasswordStyle';
+import { ForgotPasswordContainer, PCustom } from './ForgotPasswordStyle';
 import Api from '../../utils/Api';
-import { successNotification } from '../../utils/Notifications';
-import { handleError } from '../../utils/Functions';
-import { H2 } from '../../../GlobalStyle';
-import { GenericModalContainer, TextInputRightIconButton } from '../../commonComponents';
+import { successNotification, dangerNotification } from '../../utils/Notifications';
+import { handleError, emailValidator } from '../../utils/Functions';
+import { GenericModalContainer, TextInputRightIconButton, GenericAppButton } from '../../commonComponents';
 
-export default function ForgotPassword() {
+export default function ForgotPassword(props) {
 
     const dispatch = useDispatch();
 
-    const [email, setEmail] = useState('');
+    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
 
-    const handleSendRecoverPasswordEmail = async (event) => {
+    const { accessToken } = useSelector(state => state.auth);
+
+    const sendRecoverPasswordEmail = async () => {
         try {
-            event.preventDefault();
-            dispatch(Actions.showLoader(true));
 
-            const accessToken = AsyncStorage.getItem('accessToken');
-            await Api({ accessToken }).post('account/send_recovery_password_email', { email });
+            if (emailValidator(forgotPasswordEmail)) {
 
-            dispatch(Actions.showLoader(false));
-            successNotification('E-mail enviado, verifique sua caixa de entrada.');
+                Keyboard.dismiss();
 
-            handleClose();
+                dispatch(Actions.showLoader(true));
+
+                await Api({ accessToken }).post('account/send_recovery_password_email', { email: forgotPasswordEmail });
+
+                dispatch(Actions.showLoader(false));
+                successNotification('E-mail enviado, verifique sua caixa de entrada.');
+
+                props.navigation.goBack();
+            }
+            else dangerNotification('Digite um email válido!');
+
         } catch (err) {
 
             dispatch(Actions.showLoader(false));
@@ -35,51 +42,24 @@ export default function ForgotPassword() {
         }
     }
 
-    const handleClose = () => {
-        setEmail('');
-        dispatch(Actions.showForgotPasswordModal(false));
-    }
-
     return <ForgotPasswordContainer>
-        <GenericModalContainer title={'Digite seu email abaixo'}>
+        <GenericModalContainer {...props} title={'Digite seu email abaixo'}>
 
             <TextInputRightIconButton
                 placeholder={'Email'}
-                value={email}
+                value={forgotPasswordEmail}
                 returnKeyType={'done'}
-                onChangeText={(value) => setEmail(value)}
+                onChangeText={(value) => setForgotPasswordEmail(value)}
             />
 
-            {/* <View
-                className={'form'}
-                onSubmit={handleSendRecoverPasswordEmail}>
+            <GenericAppButton
+                customButtonStyle={{ margin: 30, width: 'auto' }}
+                textButton={'ENVIAR'}
+                onPress={() => sendRecoverPasswordEmail()}
+            />
 
-                <FormCloseButton handleClose={handleClose} />
+            <PCustom>Enviaremos um e-mail contendo os passos para resetar sua senha!</PCustom>
 
-                <h1 className="h1">Digite seu e-mail abaixo</h1>
-
-                <Separator text={null} />
-
-                <InputWithIconButton
-                    type={"email"}
-                    name={"email"}
-                    placeholder={"E-mail"}
-                    required={true}
-                    value={email}
-                    onChange={changeEmail}
-                    showRightButton={false}
-                />
-
-                <GenericBottomButton
-                    type={'submit'}
-                    onClick={() => null}
-                    buttonText={'Enviar'}
-                />
-
-                <div className={'fullWidthDiv'} >
-                    <p className="p">Enviaremos um e-mail contendo os passos para resetar sua senha!</p>
-                </div>
-            </View> */}
         </GenericModalContainer>
     </ForgotPasswordContainer>
 }

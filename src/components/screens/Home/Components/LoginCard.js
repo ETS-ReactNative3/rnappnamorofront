@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { View, Text } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { theme } from '../../../../constants/StyledComponentsTheme';
 
@@ -36,7 +35,7 @@ export default function LoginCard(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordSecureTextEntry, setPasswordSecureTextEntry] = useState(true);
-    const tiPassword = useRef(null);
+    const tiPassword = useRef();
 
     const localLogin = () => {
 
@@ -82,7 +81,7 @@ export default function LoginCard(props) {
 
         <ForgotPassword {...props} />
 
-        <SignUpNow />
+        <SignUpNow {...props} />
 
     </LoginCardContainer>
 }

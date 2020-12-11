@@ -1,8 +1,12 @@
 export { default as SocialButton } from './SocialButton';
 export { default as LineTextLine } from './LineTextLine';
 export { default as Loader } from './Loader';
-export { default as BigLogo } from './BigLogo';
+export { default as AppLogo } from './AppLogo';
 export { default as AwesomeIcon } from './AwesomeIcon';
 export { default as TextInputRightIconButton } from './TextInputRightIconButton';
 export { default as GenericAppButton } from './GenericAppButton';
 export { default as GenericModalContainer } from './GenericModalContainer';
+export { default as ImageBackgroundContainer } from './ImageBackgroundContainer';
+export { default as DatePickerButton } from './DatePickerButton';
+export { default as ModalSelector } from './ModalSelector';
+export { default as MultiSlider } from './MultiSlider';

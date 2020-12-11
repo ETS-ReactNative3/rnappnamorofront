@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const BigLogoImage = styled.Image`
+const AppLogoImage = styled.Image`
     max-width: 450px;
     min-width: 300px;
     min-height: 120px;
@@ -21,6 +21,6 @@ const BigLogoImage = styled.Image`
     }
 `;
 
-export default BigLogo = (props) => {
-    return <BigLogoImage source={props.source} />
+export default AppLogo = (props) => {
+    return <AppLogoImage source={props.source} />
 }

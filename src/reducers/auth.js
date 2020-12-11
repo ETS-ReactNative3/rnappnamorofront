@@ -1,7 +1,9 @@
-import * as Types from '../actions/types'
+import * as Types from '../constants/Types';
 
 const INITIAL_STATE = {
-    isAuthenticated: false,
+    isAuthenticated: true,
+    accessToken: '',
+    firebaseUid: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -15,6 +17,10 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, isAuthenticated: action.isAuthenticated }
         case Types.AUTH_SIGN_OUT:
             return { ...state, isAuthenticated: false }
+        case Types.UPDATE_ACCESS_TOKEN:
+            return { ...state, accessToken: action.accessToken }
+        case Types.UPDATE_FIREBASE_UID:
+            return { ...state, firebaseUid: action.firebaseUid }
         default:
             return state;
     }

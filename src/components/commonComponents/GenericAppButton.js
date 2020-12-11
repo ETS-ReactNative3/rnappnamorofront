@@ -9,7 +9,6 @@ const Button = styled.TouchableHighlight`
     justify-content: center;
     align-items: center;
     border-radius: ${props => props.theme.$bigBorderRadius};
-    background-color: orange;
 `;
 
 const ButtonText = styled.Text`

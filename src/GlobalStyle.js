@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.View`
+export const GenericContainer = styled.View`
     height: 100%;
     width: 100%;
     align-items: center;
@@ -8,12 +8,14 @@ export const Container = styled.View`
     flex-direction: column;
 `;
 
-export const ImageBackgroundContainer = styled.ImageBackground`
-    height: 100%;
+export const GenericRowView = styled.View`
+    flex-direction: row;
     width: 100%;
-    align-items: center;
-    justify-content: center;
+`;
+
+export const GenericColumnView = styled.View`
     flex-direction: column;
+    width: 100%;
 `;
 
 export const H2 = styled.Text`
@@ -25,14 +27,4 @@ export const P = styled.Text`
     font-weight: 100;
     font-size: 15px;
     color: ${props => props.theme.$lightTextColor};
-`;
-
-export const GenericRowView = styled.View`
-    flex-direction: row;
-    width: 100%;
-`;
-
-export const GenericColumnView = styled.View`
-    flex-direction: column;
-    width: 100%;
 `;

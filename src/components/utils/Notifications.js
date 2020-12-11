@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 
 export function successNotification(message) {
 
-  Alert.alert('', message);
+  Alert.alert('App Namoro', message);
   // store.addNotification({
   //   message: message,
   //   type: "success",

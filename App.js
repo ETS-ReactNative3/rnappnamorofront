@@ -1,21 +1,15 @@
 import React from 'react';
 import firebase from 'firebase';
 import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import reduxThunk from 'redux-thunk'
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
+import { Loader } from './src/components/commonComponents';
 import { theme } from './src/constants/StyledComponentsTheme';
 import reducers from './src/reducers';
-import Home from './src/components/screens/Home';
-import Dashboard from './src/components/screens/Dashboard';
-import ForgotPassword from './src/components/modals/ForgotPassword';
-// import Terms from './src/components/screens/Terms';
-// import PasswordReset from './src/components/screens/PasswordReset';
-// import EmailVerification from './src/components/screens/EmailVerification';
+import Application from './src';
 
 // const firebaseConfig = {
 //   apiKey: REACT_APP_FIREBASE_API_KEY,
@@ -31,46 +25,19 @@ import ForgotPassword from './src/components/modals/ForgotPassword';
 //firebase.initializeApp(firebaseConfig);
 EStyleSheet.build(theme);
 
-export default function App() {  
+export default function App() {
 
-  const modalOptions = {
-    headerShown: false,
-    cardStyle: { backgroundColor: theme.$opaqueBackgroundColor },
-    cardOverlayEnabled: true,
-    cardStyleInterpolator: ({ current: { progress } }) => ({
-      overlayStyle: {
-        opacity: progress.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, 0.6],
-          extrapolate: "clamp"
-        })
-      }
-    })
-  };
+  const TheLoader = () => {
+    const { showLoader } = useSelector(state => state.utils);
 
-  const RootStack = createStackNavigator();
-  const MainStack = createStackNavigator();
-
-  const MainStackNavigator = () => {
-    return <MainStack.Navigator mode={'card'} headerMode={'none'} initialRouteName='Home'>
-      <MainStack.Screen name="Home" component={Home} />
-      <MainStack.Screen name="Dashboard" component={Dashboard} />
-    </MainStack.Navigator>
+    return showLoader && <Loader />
   }
 
   return (
     <ThemeProvider theme={theme}>
       <Provider store={createStore(reducers, {}, applyMiddleware(reduxThunk))}>
-        <NavigationContainer>
-
-          <RootStack.Navigator mode={'modal'} headerMode={'none'} initialRouteName='Home'>
-
-            <RootStack.Screen name="MainStack" component={MainStackNavigator} />
-            <RootStack.Screen options={modalOptions} name="ForgotPassword" component={ForgotPassword} />
-
-          </RootStack.Navigator>
-
-        </NavigationContainer>
+        <TheLoader />
+        <Application />
       </Provider>
     </ThemeProvider>
   );

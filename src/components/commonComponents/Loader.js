@@ -4,7 +4,7 @@ import { Bars } from 'react-native-loader';
 
 import { GenericRowView } from '../../GlobalStyle';
 
-const LoaderView = styled(GenericRowView)`
+const LoaderContainer = styled(GenericRowView)`
     height: 100%;
     width: 100%;
     position: absolute;
@@ -15,7 +15,7 @@ const LoaderView = styled(GenericRowView)`
 `;
 
 export default Loader = () => {
-    return <LoaderView>
+    return <LoaderContainer>
         <Bars size={10} color={'white'} />
-    </LoaderView>
+    </LoaderContainer>
 }

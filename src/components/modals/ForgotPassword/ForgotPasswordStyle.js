@@ -1,6 +1,11 @@
 import styled from 'styled-components';
-import { Container } from '../../../GlobalStyle';
+import { GenericContainer, P } from '../../../GlobalStyle';
 
-export const ForgotPasswordContainer = styled(Container)`
+export const ForgotPasswordContainer = styled(GenericContainer)`
     padding: 10px;
+`;
+
+export const PCustom = styled(P)`
+    margin-top: 10px;
+    text-align: center;
 `;

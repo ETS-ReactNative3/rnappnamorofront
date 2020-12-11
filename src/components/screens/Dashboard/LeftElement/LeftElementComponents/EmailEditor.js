@@ -18,6 +18,7 @@ export default () => {
     const dispatch = useDispatch();
 
     const { userData } = useSelector(state => state.dashboard);
+    const { accessToken } = useSelector(state => state.auth);
 
     const [email, setEmail] = useState(userData.email);
     const [isSendButtonEnable, setIsSendEmailButtonEnable] = useState(userData.email !== email || !userData.verifiedEmail ? true : false);
@@ -35,7 +36,6 @@ export default () => {
             try {
                 dispatch(Actions.showLoader(true));
 
-                const accessToken = AsyncStorage.getItem('accessToken');
                 const userId = decodeJwtToken(accessToken).id;
 
                 await Api({ accessToken }).post('account/send_email_verification', { email, id: userId });

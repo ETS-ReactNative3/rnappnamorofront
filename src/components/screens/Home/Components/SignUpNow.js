@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 
 import { P, GenericRowView } from '../../../../GlobalStyle';
-import * as Actions from '../../../../actions';
 
 const SignUpNowContainer = styled(GenericRowView)`
     margin-top: 40px;
@@ -19,11 +17,9 @@ const Text2 = styled(P)`
     font-size: 14px;
 `;
 
-export default function SignUpNow() {
+export default function SignUpNow(props) {
 
-    const dispatch = useDispatch();
-
-    const showSignUpModal = () => dispatch(Actions.showSignUpModal(true));
+    const showSignUpModal = () => props.navigation.push('SignUp');
 
     return <SignUpNowContainer>
         <Text1>Ainda não possui conta? <Text2 className="p" onPress={showSignUpModal}>Cadastre-se agora!</Text2></Text1>

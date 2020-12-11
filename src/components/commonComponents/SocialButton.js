@@ -21,7 +21,7 @@ const ButtonText = styled.Text`
     font-size: 17px;
 `;
 
-const IconView = styled.View`
+const IconContainer = styled.View`
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -33,9 +33,9 @@ export default SocialButton = (props) => {
     return <Button style={props.customButtonStyle} underlayColor={props.underlayColor} onPress={() => props.onPress()}>
         <ButtonContainer>
 
-            <IconView>
+            <IconContainer>
                 <AwesomeIcon {...props} customIconStyle={{ color: 'white' }} />
-            </IconView>
+            </IconContainer>
 
             <ButtonText>
                 {'Entrar com '}

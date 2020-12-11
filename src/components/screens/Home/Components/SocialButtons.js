@@ -28,8 +28,7 @@ export default function SocialButtons() {
             await GoogleSignin.hasPlayServices();
 
             const isUserSigned = await GoogleSignin.isSignedIn();
-            console.log('isUserSigned')
-            console.log(isUserSigned)
+
             !isUserSigned && await GoogleSignin.signIn();
 
             const tokens = await GoogleSignin.getTokens();

@@ -1,4 +1,4 @@
-import * as Types from '../actions/types'
+import * as Types from '../constants/Types';
 
 const defaultUserData = {
     ageRange: ['25', '35'],
@@ -26,8 +26,7 @@ const INITIAL_STATE = {
     firebaseUser: {},
     realTimeFirebaseUsers: [],
     realTimeFirebaseChat: [],
-
-    counter: 0
+    profileIdsAlreadyDownloaded: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -37,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, isLeftProfileEditorOpen: action.isLeftProfileEditorOpen };
         case Types.SHOW_LEFT_PROFILE:
             return { ...state, isLeftProfileOpen: action.isLeftProfileOpen };
-        case Types.UPDATE_USER_DATA_ON_REDUX:
+        case Types.UPDATE_USER_DATA:
             return { ...state, userData: action.userData ? action.userData : defaultUserData };
         case Types.UPDATE_SELECTED_LEFT_PROFILE_EDITOR:
             return { ...state, selectedLeftProfileEditor: action.selectedLeftProfileEditor };
@@ -84,6 +83,10 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, isMobileConfigOpen: action.isMobileConfigOpen }
         case Types.OPEN_MOBILE_EDIT_INFO:
             return { ...state, isMobileEditInfoOpen: action.isMobileEditInfoOpen }
+        case Types.UPDATE_PROFILE_IDS_ALREADY_DOWNLOADED:
+            return { ...state, profileIdsAlreadyDownloaded: [...state.profileIdsAlreadyDownloaded, action.userId] }
+        case Types.REMOVE_ALL_IDS_FROM_PROFILE_IDS_ALREADY_DOWNLOADED:
+            return { ...state, profileIdsAlreadyDownloaded: [] }
         default:
             return state;
     }
