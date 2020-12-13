@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import RNModalSelector from 'react-native-modal-selector'
 
 import { GenericRowView, P } from '../../GlobalStyle';
@@ -9,7 +9,7 @@ const MainContainer = styled(GenericRowView)`
     width: 100%;
     margin-top: 10px;
     background-color: ${props => props.theme.$lightGray};
-    border-radius: ${props => props.theme.$smallBorderRadius};
+    border-radius: ${props => props.theme.$smallBorderRadius}px;
     padding: 1px 4px;
     align-items: center;
     justify-content: center;

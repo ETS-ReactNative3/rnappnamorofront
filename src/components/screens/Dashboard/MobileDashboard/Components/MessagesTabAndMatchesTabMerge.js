@@ -2,7 +2,6 @@ import React from 'react';
 
 import MessagesTab from '../../LeftElement/LeftElementComponents/TabItems/MessagesTab';
 import MatchesTab from '../../LeftElement/LeftElementComponents/TabItems/MatchesTab';
-import Styles from '../MobileDashboard.module.css';
 
 export default () => {
 

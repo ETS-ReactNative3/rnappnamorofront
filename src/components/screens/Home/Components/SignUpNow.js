@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 import { P, GenericRowView } from '../../../../GlobalStyle';
 
@@ -19,7 +19,7 @@ const Text2 = styled(P)`
 
 export default function SignUpNow(props) {
 
-    const showSignUpModal = () => props.navigation.push('SignUp');
+    const showSignUpModal = () => props.navigation.push('SignUpModal');
 
     return <SignUpNowContainer>
         <Text1>Ainda não possui conta? <Text2 className="p" onPress={showSignUpModal}>Cadastre-se agora!</Text2></Text1>

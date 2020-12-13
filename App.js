@@ -29,15 +29,17 @@ export default function App() {
 
   const TheLoader = () => {
     const { showLoader } = useSelector(state => state.utils);
-
     return showLoader && <Loader />
-  }
+  }  
 
   return (
     <ThemeProvider theme={theme}>
       <Provider store={createStore(reducers, {}, applyMiddleware(reduxThunk))}>
+
         <TheLoader />
+        
         <Application />
+
       </Provider>
     </ThemeProvider>
   );

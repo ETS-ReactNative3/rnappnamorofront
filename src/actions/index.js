@@ -3,22 +3,18 @@ import { Keyboard } from 'react-native';
 import { auth, firestore } from 'firebase';
 const { detect } = require('detect-browser');
 import AsyncStorage from '@react-native-community/async-storage';
-import { REACT_APP_GEOCODE_API_KEY } from "react-native-expand-dotenv";
 
+import { REACT_APP_GEOCODE_API_KEY } from "react-native-expand-dotenv";
 import * as Types from '../constants/Types';
 import * as Options from '../components/utils/Options';
 import {
     handleError,
     calculateDistanceFromLatLonInKm,
     calculateAge,
-    decodeJwtToken,
-    convertDateFormatToHHMM
+    convertDateFormatToHHMM,
+    decodeJwtToken
 } from '../components/utils/Functions';
 import Api from '../components/utils/Api';
-
-/*
-ActionCreators -> create/return Actions ({ }) -> dispatched -> middlewares -> reducers
-*/
 
 Geocode.setLanguage("pt");
 Geocode.setRegion("br");
@@ -26,17 +22,11 @@ Geocode.setApiKey(REACT_APP_GEOCODE_API_KEY);
 
 const unsubscribeFirebaseListeners = [];
 
-const helper = {
-    accessToken: AsyncStorage.getItem('accessToken'),
-    userData: { id: AsyncStorage.getItem('accessToken').then((value) => decodeJwtToken(value).id) },
-    currentLongitude: 0,
-    currentLatitude: 0,
-    firebaseUid: '',
-};
-
-const setAccessTokenOnStorageAndRedux = async (accessToken) => {
-    AsyncStorage.setItem('accessToken', accessToken || '');
-    dispatch(updateAccessTokenOnRedux(accessToken));
+export function setAccessTokenOnStorageAndRedux(accessToken) {
+    return async dispatch => {
+        AsyncStorage.setItem('accessToken', accessToken || '');
+        dispatch(updateAccessTokenOnRedux(accessToken));
+    }
 }
 
 export function updateAccessTokenOnRedux(accessToken) {
@@ -49,6 +39,9 @@ export function updateAccessTokenOnRedux(accessToken) {
 export function checkIfTokenHasExpired() {
     return async (dispatch, getState) => {
         try {
+
+            dispatch(checkingIfTokenHasExpiredStatus(true));
+
             await Api({ accessToken: getState().auth.accessToken }).post('account/check_if_token_has_expired', { /*body*/ });
 
             dispatch({
@@ -56,9 +49,19 @@ export function checkIfTokenHasExpired() {
                 isAuthenticated: true
             });
 
+            dispatch(checkingIfTokenHasExpiredStatus(false));
+
         } catch (err) {
+            dispatch(checkingIfTokenHasExpiredStatus(false));
             dispatch(handleActionError(err));
         }
+    }
+}
+
+export function checkingIfTokenHasExpiredStatus(checkingIfTokenHasExpired) {
+    return {
+        type: Types.CHECKING_IF_TOKEN_HAS_EXPIRED,
+        checkingIfTokenHasExpired
     }
 }
 
@@ -240,7 +243,7 @@ export function updateFirebaseUser(user) {
 
 export function signOut() {
     return async (dispatch, getState) => {
-
+        console.log('signOut()')
         try {
             getState().auth.firebaseUid && dispatch(updateFirebaseUser({ isOnline: false }));
 
@@ -255,24 +258,30 @@ export function signOut() {
             dispatch(cleanMatchSearcherArrayAndGetNextProfile(false));
             dispatch(updateMatchProfileArray([]));
 
-            setAccessTokenOnStorageAndRedux(null);
-
-            dispatch({ type: Types.AUTH_SIGN_OUT });
+            dispatch(setAccessTokenOnStorageAndRedux(''));
+            dispatch(signOutAction());
 
         } catch (error) {
-            dispatch({ type: Types.AUTH_SIGN_OUT });
+            dispatch(setAccessTokenOnStorageAndRedux(''));
+            dispatch(signOutAction());
         }
-
     }
 }
 
-export function getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles) {
+export function signOutAction() {
+    return { type: Types.AUTH_SIGN_OUT };
+}
 
+export function getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles) {
     return dispatch => {
 
         const geolocationError = () => {
+            console.log(`geolocationError`)
 
-            dispatch(showTurnOnLocationModal(true));
+            dispatch({
+                type: Types.NAVIGATION_PUSH,
+                routeName: 'TurnOnLocationModal',
+            });
 
             dispatch({
                 type: Types.IS_GEOLOCATION_ENABLE,
@@ -335,12 +344,10 @@ export function getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatc
                             dispatch(getMatchProfiles());
                     },
                     error => {
-                        console.error(error);
                         handleError(error);
                     }
                 );
             }, (error) => {
-                console.error(error);
                 handleError(error);
                 geolocationError();
             });
@@ -565,6 +572,7 @@ export function getUserData(
     shouldSignInOnFirebase,
     shouldGetMatchProfiles
 ) {
+
     const populateSearchingByDesc = (userData) => {
         const searchingByOptions = Options.searchingByOptions();
 
@@ -607,11 +615,11 @@ export function getUserData(
         const authState = getState().auth;
 
         try {
+            console.log('getUserData()')
             const res = await Api({ accessToken: authState.accessToken }).get(`users/get_user/${dashboardState.userData.id}`, {});
-
+            console.log('getUserData()2')
             const userData = res.data;
-
-            //doing the following verification because getAddress() gets match profile too... so it won't get it twice
+            // doing the following verification because getAddress() gets match profile too... so it won't get it twice
             if (shouldGetAddress)
                 dispatch(getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles));
             else {
@@ -644,7 +652,6 @@ export function getUserData(
             dispatch(openCompleteYourProfileModal(!userData.profileComplete && true));
 
         } catch (err) {
-
             dispatch(handleActionError(err));
         }
     }
@@ -756,7 +763,7 @@ export function signUpAction(userData) {
 
             const res = await Api({ accessToken: getState().auth.accessToken }).post('account/signup', userData);
 
-            setAccessTokenOnStorageAndRedux(res.data.token);
+            dispatch(setAccessTokenOnStorageAndRedux(res.data.token));
 
             dispatch({
                 type: Types.AUTH_SIGN_UP,
@@ -877,7 +884,8 @@ export function signInLocalAction(userData) {
 
             const res = await Api({ accessToken: null }).post('account/signin', userData);
 
-            setAccessTokenOnStorageAndRedux(res.data.token);
+            dispatch(setAccessTokenOnStorageAndRedux(res.data.token));
+            dispatch(updateUserDataOnRedux({ id: decodeJwtToken(res.data.token).id }));
 
             dispatch(showLoader(false));
 
@@ -888,19 +896,6 @@ export function signInLocalAction(userData) {
         } catch (err) {
             dispatch(handleActionError(err));
         }
-    }
-}
-
-export function handleActionError(err) {
-    return dispatch => {
-
-        dispatch(showLoader(false));
-
-        //status 401 is Unauthorized, which means that the token expired
-        if (err.response && err.response.status == 401 && err.response.data == 'Unauthorized')
-            dispatch(signOut());
-        else
-            handleError(err);
     }
 }
 
@@ -924,7 +919,8 @@ export function signInOauthAction(oauthAccessToken, type) {
                     break;
             }
 
-            setAccessTokenOnStorageAndRedux(res.data.token);
+            dispatch(setAccessTokenOnStorageAndRedux(res.data.token));
+            dispatch(updateUserDataOnRedux({ id: decodeJwtToken(res.data.token).id }));
 
             dispatch(showLoader(false));
 
@@ -936,11 +932,17 @@ export function signInOauthAction(oauthAccessToken, type) {
     }
 }
 
-export function showTurnOnLocationModal(show) {
-    return ({
-        type: Types.OPEN_TURN_ON_LOCATION_MODAL,
-        isTurnOnLocationModalOpen: show
-    })
+export function handleActionError(err) {
+    return dispatch => {
+
+        dispatch(showLoader(false));
+
+        //status 401 is Unauthorized, which means that the token expired
+        if (err.response && err.response.status == 401 && err.response.data == 'Unauthorized')
+            dispatch(signOut());
+        else
+            handleError(err);
+    }
 }
 
 export function showContactModal(show) {

@@ -11,7 +11,7 @@ const MainContainer = styled(GenericRowView)`
     width: 100%;
     margin-top: 10px;
     background-color: ${props => props.theme.$lightGray};
-    border-radius: ${props => props.theme.$smallBorderRadius};
+    border-radius: ${props => props.theme.$smallBorderRadius}px;
     padding: 1px 4px;
     align-items: center;
     justify-content: center;
@@ -23,8 +23,8 @@ const Button = styled.TouchableHighlight`
     align-items: flex-start;
     justify-content: center;
     background-color: white;
-    border-top-right-radius: ${props => props.theme.$smallBorderRadius};
-    border-bottom-right-radius: ${props => props.theme.$smallBorderRadius};
+    border-top-right-radius: ${props => props.theme.$smallBorderRadius}px;
+    border-bottom-right-radius: ${props => props.theme.$smallBorderRadius}px;
     padding-left: 9px;
 `;
 

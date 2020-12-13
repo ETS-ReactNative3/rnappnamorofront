@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
 const Awesome5Icon = styled(FontAwesome)`

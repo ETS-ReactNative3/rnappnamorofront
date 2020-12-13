@@ -1,50 +1,27 @@
 import React from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import Modal from 'react-modal';
-import Classes from 'classnames';
+import { useDispatch } from 'react-redux';
 
+import { TurnOnLocationContainer, PCustom } from './TurnOnLocationStyle';
+import { GenericModalContainer, GenericAppButton } from '../../commonComponents';
 import * as Actions from '../../../actions';
-import Styles from './TurnOnLocation.module.css';
-import { FormCloseButton, WeFoundALocationProblem, GenericBottomButton } from '../../utils/StatelessComponents';
 
-export default () => {
-
-    Modal.setAppElement('#root');
-
+export default function TurnOnLocation(props) {
     const dispatch = useDispatch();
+    return <TurnOnLocationContainer>
+        <GenericModalContainer {...props} title={'Encontramos um probleminha!'}>
 
-    const { isTurnOnLocationModalOpen } = useSelector(state => state.modal);
+            <PCustom>
+                Para usar o App Namoro você precisa ativar o Compartilhamento de Localização.
+                Acesse as configurações do seu navegador.
+            </PCustom>
 
-    const handleClose = () => {
-        dispatch(Actions.showTurnOnLocationModal(false));
-    }
+            <GenericAppButton
+                customButtonStyle={{ margin: 30, width: 'auto' }}
+                textButton={'ENTENDI'}
+                // onPress={() => props.navigation.goBack()}
+                onPress={() => dispatch(Actions.signOut())}
+            />
 
-    const modalStyle = {
-        overlay: {
-            backgroundColor: 'var(--opaqueBackgroundColor)',
-        }
-    }
-
-    return (
-        <Modal
-            isOpen={isTurnOnLocationModalOpen}
-            onRequestClose={handleClose}
-            style={modalStyle}
-            className={Classes({ [Styles.modal]: true, "modal": true })}
-        >
-            <form
-                className={Classes({ [Styles.form]: true, "form": true })}
-                onSubmit={handleClose}>
-                    
-                <FormCloseButton handleClose={handleClose} />
-
-                <WeFoundALocationProblem />
-
-                <GenericBottomButton
-                    onClick={() => null}
-                    buttonText={'Entendi'}
-                />
-            </form>
-        </Modal>
-    );
+        </GenericModalContainer>
+    </TurnOnLocationContainer>
 }

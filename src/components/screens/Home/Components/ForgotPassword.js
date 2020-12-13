@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { useDispatch } from 'react-redux';
 
 import { P, GenericRowView } from '../../../../GlobalStyle';
@@ -10,7 +10,7 @@ export default function ForgotPassword(props) {
     const dispatch = useDispatch();
 
     // const showForgotPasswordModal = () => dispatch(Actions.showForgotPasswordModal(true));
-    const showForgotPasswordModal = () => props.navigation.push('ForgotPassword');
+    const showForgotPasswordModal = () => props.navigation.push('ForgotPasswordModal');
 
     const ForgotPasswordContainer = styled(GenericRowView)`
         margin-top: 15px;

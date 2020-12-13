@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { GenericRowView } from '../../GlobalStyle';
 import { AwesomeIcon } from '../commonComponents';
 
@@ -12,7 +12,7 @@ const Button = styled.TouchableHighlight`
     height: ${props => props.theme.$heightOfGenericComponents}px;
     width: 100%;
     justify-content: center;
-    border-radius: ${props => props.theme.$smallBorderRadius};
+    border-radius: ${props => props.theme.$smallBorderRadius}px;
     margin-top: 10px;
 `;
 

@@ -9,7 +9,7 @@ const MainContainer = styled(GenericRowView)`
     width: 100%;
     margin-top: 10px;
     background-color: ${props => props.theme.$lightGray};
-    border-radius: ${props => props.theme.$smallBorderRadius};
+    border-radius: ${props => props.theme.$smallBorderRadius}px;
     padding: 3px;
     align-items: center;
 `;
@@ -20,7 +20,7 @@ const Input = styled.TextInput`
     background-color: white;
     border-width: 1px;
     border-color: ${props => props.theme.$lightGray};
-    border-radius: ${props => props.theme.$smallBorderRadius};
+    border-radius: ${props => props.theme.$smallBorderRadius}px;
     padding-left: 10px;
     color: ${props => props.theme.$defaultTextColor};
 `;
@@ -30,8 +30,8 @@ const Button = styled.TouchableHighlight`
     width: ${props => props.theme.$heightOfGenericComponents}px;
     justify-content: center;
     background-color: ${props => props.theme.$lightGray};
-    border-top-right-radius: ${props => props.theme.$smallBorderRadius};
-    border-bottom-right-radius: ${props => props.theme.$smallBorderRadius};
+    border-top-right-radius: ${props => props.theme.$smallBorderRadius}px;
+    border-bottom-right-radius: ${props => props.theme.$smallBorderRadius}px;
 `;
 
 export default TextInputRightIconButton = (props) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import RNMultiSlider from '@ptomasroos/react-native-multi-slider';
 
 import { GenericColumnView, P, GenericRowView } from '../../GlobalStyle';

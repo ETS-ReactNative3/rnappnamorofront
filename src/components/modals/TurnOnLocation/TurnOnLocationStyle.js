@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { GenericContainer, P } from '../../../GlobalStyle';
 
-export const ForgotPasswordContainer = styled(GenericContainer)`
+export const TurnOnLocationContainer = styled(GenericContainer)`
     padding: 10px;
 `;
 

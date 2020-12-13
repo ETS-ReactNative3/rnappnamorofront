@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { ScrollView } from 'react-native';
 
 import { AwesomeIcon } from '../commonComponents';
@@ -10,7 +10,7 @@ const MainContainer = styled(GenericColumnView)`
     max-height: 100%;
     width: 100%;
     background-color: white;
-    border-radius: ${props => props.theme.$mediumBorderRadius};
+    border-radius: ${props => props.theme.$mediumBorderRadius}px;
 `;
 
 const Button = styled.TouchableHighlight`
@@ -18,17 +18,17 @@ const Button = styled.TouchableHighlight`
     width: ${props => props.theme.$heightOfGenericComponents}px;
     justify-content: center;
     background-color: white;
-    border-radius: ${props => props.theme.$mediumBorderRadius};
+    border-radius: ${props => props.theme.$mediumBorderRadius}px;
     align-self: flex-end;
 `;
 
 const H2Custom = styled(H2)`
-    margin-bottom: 20;
+    margin-bottom: 20px;
     text-align: center;
 `;
 
 const ScrollViewCustom = styled(ScrollView)`
-    border-radius: ${props => props.theme.$mediumBorderRadius};
+    border-radius: ${props => props.theme.$mediumBorderRadius}px;
     background-color: transparent;
     padding: 10px;
 `;
@@ -43,7 +43,7 @@ export default GenericModalContainer = (props) => {
 
             <H2Custom>{props.title}</H2Custom>
 
-            {props.children}            
+            {props.children}
 
         </ScrollViewCustom>
     </MainContainer>

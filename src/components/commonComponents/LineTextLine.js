@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { GenericRowView } from '../../GlobalStyle';
 
 const LineTextLineContainer = styled(GenericRowView)`

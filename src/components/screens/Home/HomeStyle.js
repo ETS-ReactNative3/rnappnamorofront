@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 export const LoginCardContainer = styled.View`
     padding: 30px 15px 15px;
-    border-radius: ${props => props.theme.$mediumBorderRadius};
+    border-radius: ${props => props.theme.$mediumBorderRadius}px;
     text-align: center;
     background-color: white;
     flex-direction: column;

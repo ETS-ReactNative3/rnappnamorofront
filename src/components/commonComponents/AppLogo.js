@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 const AppLogoImage = styled.Image`
     max-width: 450px;
@@ -10,15 +10,7 @@ const AppLogoImage = styled.Image`
     resize-mode: contain;
     display: flex;
     justify-content: center;
-    align-items: center;
-
-    @media (min-width: 0px) {
-        margin-bottom: 10px;
-    }
-      
-    @media (min-width: 768px) {
-        margin-bottom: 30px;
-    }
+    align-items: center;    
 `;
 
 export default AppLogo = (props) => {

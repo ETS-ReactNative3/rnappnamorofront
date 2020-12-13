@@ -1,10 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Scrollbars from 'react-custom-scrollbars';
+import { ScrollView } from 'react-native';
 
-import { WeFoundALocationProblem } from '../../../utils/StatelessComponents';
-import CoreElements from './CoreElements';
-import Styles from './MatchSearcher.module.css';
+//import CoreElements from './CoreElements';
 
 export default () => {
 
@@ -43,24 +41,29 @@ export default () => {
     }
 
     const WeFoundALocationProblemDiv = () => {
-        return <div className={Styles.profileCard}>
-            <WeFoundALocationProblem />
+        return <div className={Styles.weFoundALocationProblem}>
+            <h2 className="h2">Encontramos um probleminha!</h2>
+
+            <Separator text={null} />
+
+            <p className="p">
+                Para usar o App Namoro você precisa ativar o Compartilhamento de Localização.
+                Acesse as configurações do seu navegador.
+            </p>
         </div>
     }
 
-    return <Scrollbars autoHide>
-        <div className={Styles.mainDiv}>
-            {
-                !isGeolocationEnabled ? WeFoundALocationProblemDiv()
+    return <ScrollView>
+        {/* {
+            !isGeolocationEnabled ? WeFoundALocationProblemDiv()
+                :
+                !userData.showMeOnApp ? turnOnShowMeOnApp()
                     :
-                    !userData.showMeOnApp ? turnOnShowMeOnApp()
+                    isSearchingProfiles && matchSearcherProfiles.length === 0 ? searchingProfiles()
                         :
-                        isSearchingProfiles && matchSearcherProfiles.length === 0 ? searchingProfiles()
+                        matchSearcherProfiles.length === 0 ? weFoundNobody()
                             :
-                            matchSearcherProfiles.length === 0 ? weFoundNobody()
-                                :
-                                <CoreElements />
-            }
-        </div >
-    </Scrollbars>
+                            <CoreElements />
+        } */}
+    </ScrollView>
 }
