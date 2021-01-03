@@ -34,21 +34,13 @@ export default () => {
 
     const { isContactModalOpen } = useSelector(state => state.modal);
     const { showLoader } = useSelector(state => state.utils);
-    const { accessToken } = useSelector(state => state.auth);
 
-    const handleCreateNewUserContact = async (event) => {
+    const sendNewUserContact = async () => {
         try {
-            event.preventDefault();
-            dispatch(Actions.showLoader(true));
 
-            await Api({ accessToken }).post('users/contact', { name, email, subject, message });
+            dispatch(Actions.sendNewUserContact(name, email, subject, message)).then(() => handleClose());
 
-            dispatch(Actions.showLoader(false));
-            successNotification('Contato enviado com sucesso! Obrigado por nos contactar.');
-
-            handleClose();
         } catch (err) {
-
             dispatch(Actions.showLoader(false));
             handleError(err);
         }
@@ -125,7 +117,7 @@ export default () => {
                 {contactFields()}
 
                 <GenericBottomButton
-                    onClick={() => handleCreateNewUserContact()}
+                    onClick={sendNewUserContact}
                     buttonText={'Enviar'}
                 />
             </form>

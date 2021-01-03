@@ -1,10 +1,11 @@
-import Geocode from "react-geocode";
+//import Geocode from "react-geocode";
+import Geolocation from 'react-native-geolocation-service';
 import { Keyboard } from 'react-native';
-import { auth, firestore } from 'firebase';
+import { auth as firebaseAuth, firestore } from 'firebase';
 const { detect } = require('detect-browser');
+import { PermissionsAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { REACT_APP_GEOCODE_API_KEY } from "react-native-expand-dotenv";
 import * as Types from '../constants/Types';
 import * as Options from '../components/utils/Options';
 import {
@@ -14,11 +15,11 @@ import {
     convertDateFormatToHHMM,
     decodeJwtToken
 } from '../components/utils/Functions';
-import Api from '../components/utils/Api';
+import { Api } from '../components/utils/Api';
 
-Geocode.setLanguage("pt");
-Geocode.setRegion("br");
-Geocode.setApiKey(REACT_APP_GEOCODE_API_KEY);
+// Geocode.setLanguage("pt");
+// Geocode.setRegion("br");
+// Geocode.setApiKey(REACT_APP_GEOCODE_API_KEY);
 
 const unsubscribeFirebaseListeners = [];
 
@@ -72,7 +73,7 @@ export function updateFirebaseUidOnRedux(firebaseUid) {
     }
 }
 
-export function signInOrSignUpToFirebase() {//try sign in, if there's no record, sign up then
+export function signInOrSignUpToFirebase() {//try sign in, if there's no record, then sign up
     return async (dispatch, getState) => {
 
         const dashboardState = getState().dashboard;
@@ -98,7 +99,7 @@ export function signInOrSignUpToFirebase() {//try sign in, if there's no record,
             };
         }
 
-        auth().signInWithEmailAndPassword(dashboardState.userData.email, dashboardState.userData.email).then(user => {
+        firebaseAuth().signInWithEmailAndPassword(dashboardState.userData.email, dashboardState.userData.email).then(user => {
 
             dispatch(updateFirebaseUidOnRedux(user.user.uid));
             dispatch(updateFirebaseUser({ isOnline: true }));
@@ -114,7 +115,7 @@ export function signInOrSignUpToFirebase() {//try sign in, if there's no record,
 
             if (error.code === 'auth/user-not-found') {
 
-                auth().createUserWithEmailAndPassword(dashboardState.userData.email, dashboardState.userData.email).then(user => {
+                firebaseAuth().createUserWithEmailAndPassword(dashboardState.userData.email, dashboardState.userData.email).then(user => {
 
                     createUserOnFirebase({ uid: user.user.uid });
 
@@ -243,17 +244,12 @@ export function updateFirebaseUser(user) {
 
 export function signOut() {
     return async (dispatch, getState) => {
-        console.log('signOut()')
         try {
             getState().auth.firebaseUid && dispatch(updateFirebaseUser({ isOnline: false }));
 
             unsubscribeFirebaseListeners.map(item => item());
 
-            auth().signOut();//firebase sign out
-
-            dispatch(openCompleteYourProfileModal(false));
-            dispatch(showGenericYesNoModal(false))
-            dispatch(showLeftProfile(false));
+            firebaseAuth().signOut();//firebase sign out
 
             dispatch(cleanMatchSearcherArrayAndGetNextProfile(false));
             dispatch(updateMatchProfileArray([]));
@@ -273,15 +269,10 @@ export function signOutAction() {
 }
 
 export function getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles) {
-    return dispatch => {
+    return async dispatch => {
 
         const geolocationError = () => {
             console.log(`geolocationError`)
-
-            dispatch({
-                type: Types.NAVIGATION_PUSH,
-                routeName: 'TurnOnLocationModal',
-            });
 
             dispatch({
                 type: Types.IS_GEOLOCATION_ENABLE,
@@ -294,66 +285,89 @@ export function getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatc
             })
         }
 
-        if ("geolocation" in navigator) {
+        await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+                title: "Libere o acesso a localização!",
+                message: 'O App Namoro precisa acessar sua localização para encontrar pessoas próximas.',
+                buttonNeutral: "Perguntar depois",
+                buttonNegative: "Cancelar",
+                buttonPositive: "OK"
+            }
+        );
 
-            navigator.geolocation.getCurrentPosition((position) => {
-
-                Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
-                    response => {
-
-                        let address = response.results[0].formatted_address.split(',');
-
-                        const browser = detect();
-
-                        let cityState;
-                        let country;
-
-                        switch (browser.name) {
-                            case 'chrome':
-                                cityState = address[2];
-                                country = address[4];
-                                break;
-                            default:
-                                cityState = address[1];
-                                country = address[2];
-                                break;
-                        }
-
-                        address = `${cityState && cityState}, ${country && country}`;
-
-                        dispatch({
-                            type: Types.IS_GEOLOCATION_ENABLE,
-                            isGeolocationEnabled: true
-                        })
-
-                        dispatch({
-                            type: Types.UPDATE_ADDRESS,
-                            address
-                        })
-
-                        dispatch(updateUser({
-                            lastLongitude: position.coords.longitude,
-                            lastLatitude: position.coords.latitude
-                        }));
-
-                        //this 2 methods are here cause I need call it after get geolocation
-                        shouldGetMatchProfilesForMatchSearcher &&
-                            dispatch(getNextProfileForTheMatchSearcher());
-
-                        shouldGetMatchProfiles &&
-                            dispatch(getMatchProfiles());
-                    },
-                    error => {
-                        handleError(error);
-                    }
-                );
-            }, (error) => {
-                handleError(error);
+        Geolocation.getCurrentPosition(
+            (position) => {
+                console.log(position);
+            },
+            (error) => {
+                // See error code charts below.
+                console.log(error.code, error.message);
                 geolocationError();
-            });
-        } else {
-            geolocationError();
-        }
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        )
+
+        // if ("geolocation" in navigator) {
+
+        //     navigator.geolocation.getCurrentPosition((position) => {
+
+        //         Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
+        //             response => {
+
+        //                 let address = response.results[0].formatted_address.split(',');
+
+        //                 const browser = detect();
+
+        //                 let cityState;
+        //                 let country;
+
+        //                 switch (browser.name) {
+        //                     case 'chrome':
+        //                         cityState = address[2];
+        //                         country = address[4];
+        //                         break;
+        //                     default:
+        //                         cityState = address[1];
+        //                         country = address[2];
+        //                         break;
+        //                 }
+
+        //                 address = `${cityState && cityState}, ${country && country}`;
+
+        //                 dispatch({
+        //                     type: Types.IS_GEOLOCATION_ENABLE,
+        //                     isGeolocationEnabled: true
+        //                 })
+
+        //                 dispatch({
+        //                     type: Types.UPDATE_ADDRESS,
+        //                     address
+        //                 })
+
+        //                 dispatch(updateUser({
+        //                     lastLongitude: position.coords.longitude,
+        //                     lastLatitude: position.coords.latitude
+        //                 }));
+
+        //                 //this 2 methods are here cause I need call it after get geolocation
+        //                 shouldGetMatchProfilesForMatchSearcher &&
+        //                     dispatch(getNextProfileForTheMatchSearcher());
+
+        //                 shouldGetMatchProfiles &&
+        //                     dispatch(getMatchProfiles());
+        //             },
+        //             error => {
+        //                 handleError(error);
+        //             }
+        //         );
+        //     }, (error) => {
+        //         handleError(error);
+        //         geolocationError();
+        //     });
+        // } else {
+        //     geolocationError();
+        // }
     }
 }
 
@@ -483,7 +497,7 @@ export function updateUser(user, shouldShowLoader, closeLeftProfileEditor, shoul
             await dispatch(getUserData());
             dispatch(showLoader(false));
 
-            closeLeftProfileEditor && dispatch(showLeftProfileEditor(false));
+            //closeLeftProfileEditor && dispatch(showLeftProfileEditor(false));
             shouldCleanMatchSearcherArray && dispatch(cleanMatchSearcherArrayAndGetNextProfile(true));
 
         } catch (err) {
@@ -525,21 +539,6 @@ export function likeCurrentProfile(profile, superLike) {
     }
 }
 
-export function openYouHaveAMatchModal(open) {
-    return {
-        type: Types.OPEN_YOU_HAVE_A_MATCH_MODAL,
-        isYouHaveAMatchModalOpen: open,
-    }
-}
-
-export function removeUserFromMatchSearcher(userId, removeAll) {
-    return ({
-        type: Types.REMOVE_USER_FROM_THE_MATCH_SEARCHER_ARRAY,
-        userId,
-        removeAll
-    });
-}
-
 export function createOrUpdateUserMatch(profile, superLike) {
     return async (dispatch, getState) => {
 
@@ -564,6 +563,21 @@ export function createOrUpdateUserMatch(profile, superLike) {
             dispatch(handleActionError(err));
         }
     }
+}
+
+export function openYouHaveAMatchModal(open) {
+    return {
+        type: Types.OPEN_YOU_HAVE_A_MATCH_MODAL,
+        isYouHaveAMatchModalOpen: open,
+    }
+}
+
+export function removeUserFromMatchSearcher(userId, removeAll) {
+    return ({
+        type: Types.REMOVE_USER_FROM_THE_MATCH_SEARCHER_ARRAY,
+        userId,
+        removeAll
+    });
 }
 
 export function getUserData(
@@ -615,19 +629,10 @@ export function getUserData(
         const authState = getState().auth;
 
         try {
-            console.log('getUserData()')
-            const res = await Api({ accessToken: authState.accessToken }).get(`users/get_user/${dashboardState.userData.id}`, {});
-            console.log('getUserData()2')
-            const userData = res.data;
-            // doing the following verification because getAddress() gets match profile too... so it won't get it twice
-            if (shouldGetAddress)
-                dispatch(getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles));
-            else {
-                shouldGetMatchProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
-                shouldGetMatchProfiles && dispatch(getMatchProfiles());
-            }
 
-            shouldSignInOnFirebase && dispatch(signInOrSignUpToFirebase());
+            const res = await Api({ accessToken: authState.accessToken }).get(`users/get_user/${dashboardState.userData.id}`, {});
+
+            const userData = res.data;
 
             populateSearchingByDesc(userData);
             populateSchoolingDesc(userData);
@@ -649,7 +654,17 @@ export function getUserData(
             });
 
             dispatch(updateUserDataOnRedux(userData));
-            dispatch(openCompleteYourProfileModal(!userData.profileComplete && true));
+            // dispatch(openCompleteYourProfileModal(!userData.profileComplete && true));
+
+            // doing the following verification because getAddress() gets match profile too... so it won't get it twice
+            // if (shouldGetAddress)
+            //     dispatch(getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles));
+            // else {
+            //     shouldGetMatchProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
+            //     shouldGetMatchProfiles && dispatch(getMatchProfiles());
+            // }
+
+            // shouldSignInOnFirebase && dispatch(signInOrSignUpToFirebase());
 
         } catch (err) {
             dispatch(handleActionError(err));
@@ -671,6 +686,138 @@ export function isMouseButtonDown(isMouseButtonDown) {
     };
 }
 
+export function uploadImageToServer(imageData, selectedFile) {
+    return async (dispatch, getState) => {
+
+        const { id: userId } = getState().dashboard.userData;
+        const { accessToken } = getState().auth;
+
+        try {
+
+            await Api({ accessToken }).post(`users/user_images/${userId}`, imageData, {
+                onUploadProgress: e => {
+
+                    const progress = parseInt(Math.round((e.loaded * 100) / e.total));
+                    dispatch(updateUploadingImagesPreview({ ...selectedFile, progress }));
+                }
+            });
+
+            dispatch(updateUploadingImagesPreview(null, selectedFile.id));
+            dispatch(getUserData(true));
+
+        } catch (err) {
+            dispatch(handleActionError(err));
+        }
+    }
+}
+
+export function sendNewUserContact(name, email, subject, message) {
+    return async (dispatch, getState) => {
+
+        const { accessToken } = getState().auth;
+
+        try {
+
+            dispatch(showLoader(true));
+
+            await Api({ accessToken }).post('users/contact', { name, email, subject, message });
+
+            dispatch(showLoader(false));
+
+            successNotification('Contato enviado com sucesso! Obrigado por nos contactar.');
+
+        } catch (err) {
+            dispatch(handleActionError(err));
+        }
+    }
+}
+
+export function sendRecoverPasswordEmail(email) {
+    return async (dispatch, getState) => {
+
+        const { accessToken } = getState().auth;
+
+        try {
+
+            dispatch(showLoader(true));
+
+            await Api({ accessToken }).post('account/send_recovery_password_email', { email });
+
+            dispatch(showLoader(false));
+
+            successNotification('E-mail enviado, verifique sua caixa de entrada.');
+
+        } catch (err) {
+            dispatch(handleActionError(err));
+        }
+    }
+}
+
+export function sendVerificationEmail(email) {
+    return async (dispatch, getState) => {
+
+        const { accessToken } = getState().auth;
+
+        try {
+
+            dispatch(showLoader(true));
+
+            const userId = decodeJwtToken(accessToken).id;
+
+            await Api({ accessToken }).post('account/send_email_verification', { email, id: userId });
+
+            dispatch(showLoader(false));
+
+            successNotification('E-mail enviado, verifique sua caixa de entrada.');
+
+            //dispatch(showLeftProfileEditor(false));
+
+        } catch (err) {
+            dispatch(handleActionError(err));
+        }
+    }
+}
+
+export function updateVerifiedEmail(id, token, email) {
+    return async (dispatch, getState) => {
+
+        const { accessToken } = getState().auth;
+
+        try {
+
+            dispatch(showLoader(true));
+
+            await Api({ accessToken }).post('account/update_verified_email', { email, token, id });
+
+            dispatch(Actions.showLoader(false));
+
+        } catch (err) {
+            dispatch(handleActionError(err));
+        }
+    }
+}
+
+export function resetPassword(email, token, password, passwordConfirmation) {
+    return async (dispatch, getState) => {
+
+        const { accessToken } = getState().auth;
+
+        try {
+
+            dispatch(showLoader(true));
+
+            const res = await Api({ accessToken }).post('account/passwordreset', { email, token, password, passwordConfirmation });
+
+            dispatch(showLoader(false));
+
+            return res;
+
+        } catch (err) {
+            dispatch(handleActionError(err));
+        }
+    }
+}
+
 export function updateUploadingImagesPreview(image, removeImageByThisId) {
     return {
         type: Types.UPLOADING_IMAGES,
@@ -687,22 +834,8 @@ export function updateSelectedLeftProfileEditor(selectedLeftProfileEditor) {
             selectedLeftProfileEditor
         });
 
-        dispatch(showLeftProfileEditor(true));
+        //dispatch(showLeftProfileEditor(true));
     }
-}
-
-export function showLeftProfileEditor(isLeftProfileEditorOpen) {
-    return ({
-        type: Types.SHOW_LEFT_PROFILE_EDITOR,
-        isLeftProfileEditorOpen
-    });
-}
-
-export function showLeftProfile(isLeftProfileOpen) {
-    return ({
-        type: Types.SHOW_LEFT_PROFILE,
-        isLeftProfileOpen
-    });
 }
 
 export function openCompleteYourProfileModal(isCompleteYourProfileModalOpen) {
@@ -730,13 +863,6 @@ export function openChatPanel(isChatPanelOpen) {
     return {
         type: Types.OPEN_CHAT_PANEL,
         isChatPanelOpen
-    }
-}
-
-export function openMobileConfig(isMobileConfigOpen) {
-    return {
-        type: Types.OPEN_MOBILE_CONFIG,
-        isMobileConfigOpen
     }
 }
 
@@ -934,7 +1060,9 @@ export function signInOauthAction(oauthAccessToken, type) {
 
 export function handleActionError(err) {
     return dispatch => {
-
+        console.log('err')
+        console.log(err)
+        console.log(err.response)
         dispatch(showLoader(false));
 
         //status 401 is Unauthorized, which means that the token expired
@@ -963,13 +1091,6 @@ export function showGenericYesNoModal(show, title, subtitle, acceptText, denyTex
     return ({
         type: Types.OPEN_GENERIC_YES_NO_MODAL,
         isGenericYesNoModalOpen: show
-    })
-}
-
-export function showForgotPasswordModal(show) {
-    return ({
-        type: Types.OPEN_FORGOT_PASSWORD_MODAL,
-        isForgotPasswordModalOpen: show
     })
 }
 

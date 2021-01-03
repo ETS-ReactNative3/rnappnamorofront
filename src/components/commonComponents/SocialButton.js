@@ -2,14 +2,14 @@ import React from 'react';
 import { Text } from 'react-native';
 import styled from 'styled-components/native';
 import { GenericRowView } from '../../GlobalStyle';
-import { AwesomeIcon } from '../commonComponents';
+import AwesomeIcon from '../commonComponents/AwesomeIcon';
 
 const ButtonContainer = styled(GenericRowView)`
     align-items: center;
 `;
 
 const Button = styled.TouchableHighlight`
-    height: ${props => props.theme.$heightOfGenericComponents}px;
+    height: ${props => props.theme.$heightOfGenericComponent}px;
     width: 100%;
     justify-content: center;
     border-radius: ${props => props.theme.$smallBorderRadius}px;
@@ -25,8 +25,8 @@ const IconContainer = styled.View`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: ${props => props.theme.$heightOfGenericComponents + 10}px;
-    height: ${props => props.theme.$heightOfGenericComponents}px;
+    width: ${props => props.theme.$heightOfGenericComponent + 10}px;
+    height: ${props => props.theme.$heightOfGenericComponent}px;
 `;
 
 export default SocialButton = (props) => {

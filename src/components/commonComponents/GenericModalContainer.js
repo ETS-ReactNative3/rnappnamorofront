@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { ScrollView } from 'react-native';
 
-import { AwesomeIcon } from '../commonComponents';
+import AwesomeIcon from '../commonComponents/AwesomeIcon';
 import { GenericColumnView, H2 } from '../../GlobalStyle';
 import { theme } from '../../constants/StyledComponentsTheme';
 
@@ -14,8 +14,8 @@ const MainContainer = styled(GenericColumnView)`
 `;
 
 const Button = styled.TouchableHighlight`
-    height: ${props => props.theme.$heightOfGenericComponents}px;
-    width: ${props => props.theme.$heightOfGenericComponents}px;
+    height: ${props => props.theme.$heightOfGenericComponent}px;
+    width: ${props => props.theme.$heightOfGenericComponent}px;
     justify-content: center;
     background-color: white;
     border-radius: ${props => props.theme.$mediumBorderRadius}px;

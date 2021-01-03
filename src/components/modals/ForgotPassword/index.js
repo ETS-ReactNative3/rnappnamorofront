@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Keyboard } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import * as Actions from '../../../actions';
 import { ForgotPasswordContainer, PCustom } from './ForgotPasswordStyle';
-import Api from '../../utils/Api';
-import { successNotification, dangerNotification } from '../../utils/Notifications';
+import { dangerNotification } from '../../utils/Notifications';
 import { handleError, emailValidator } from '../../utils/Functions';
 import { GenericModalContainer, TextInputRightIconButton, GenericAppButton } from '../../commonComponents';
 
@@ -15,8 +14,6 @@ export default function ForgotPassword(props) {
 
     const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
 
-    const { accessToken } = useSelector(state => state.auth);
-
     const sendRecoverPasswordEmail = async () => {
         try {
 
@@ -24,14 +21,8 @@ export default function ForgotPassword(props) {
 
                 Keyboard.dismiss();
 
-                dispatch(Actions.showLoader(true));
+                dispatch(Actions.sendRecoverPasswordEmail(email)).then(() => props.navigation.goBack());
 
-                await Api({ accessToken }).post('account/send_recovery_password_email', { email: forgotPasswordEmail });
-
-                dispatch(Actions.showLoader(false));
-                successNotification('E-mail enviado, verifique sua caixa de entrada.');
-
-                props.navigation.goBack();
             }
             else dangerNotification('Digite um email válido!');
 

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Classes from 'classnames';
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import * as Actions from '../../../actions';
-import Api from '../../utils/Api';
 import Styles from './EmailVerification.module.css';
 import { handleError } from '../../utils/Functions';
-import { useDispatch } from "react-redux";
 import { Separator, GenericBottomButton } from '../../utils/StatelessComponents';
 import logo from '../../../assets/logo.png';
 
@@ -18,23 +17,15 @@ export default (props) => {
     const [succesfullyVerified, setSuccessfullyVerified] = useState('2');
 
     useEffect(() => {
-        verifyEmail();
+        updateVerifiedEmail();
     }, [])
 
-    const verifyEmail = async () => {
+    const updateVerifiedEmail = async () => {
         try {
 
-            dispatch(Actions.showLoader(true));
+            const { id, token, email } = props.match.params;
 
-            let id = props.match.params.id;
-            let token = props.match.params.token;
-            let email = props.match.params.email;
-
-            const accessToken = localStorage.getItem('accessToken');
-            await Api({ accessToken }).post('account/update_verified_email', { email, token, id });
-
-            setSuccessfullyVerified('1');
-            dispatch(Actions.showLoader(false));
+            dispatch(Actions.updateVerifiedEmail(id, token, email)).then(() => setSuccessfullyVerified('1'));
 
         } catch (err) {
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text } from 'react-native';
 import styled from 'styled-components/native';
-import { GenericRowView } from '../../GlobalStyle';
+import { GenericRowView, P } from '../../GlobalStyle';
 
 const LineTextLineContainer = styled(GenericRowView)`
     width: auto;
@@ -19,7 +18,7 @@ const Line = styled.View`
 export default LineTextLine = (props) => {
     return <LineTextLineContainer>
         <Line />
-        <Text style={{ padding: 5 }}>{props.text}</Text>
+        <P style={{ padding: 5 }}>{props.text}</P>
         <Line />
     </LineTextLineContainer>
 }

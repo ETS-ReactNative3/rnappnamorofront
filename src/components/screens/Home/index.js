@@ -11,7 +11,10 @@ export default function Home(props) {
     const { isAuthenticated } = useSelector(state => state.auth);
 
     useEffect(() => {
-        isAuthenticated && props.navigation.push('Dashboard');
+         isAuthenticated && props.navigation.reset({
+            index: 0,
+            routes: [{ name: 'Dashboard' }],
+        });
     }, [isAuthenticated]);
 
     return (

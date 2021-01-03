@@ -37,7 +37,7 @@ export default (state = INITIAL_STATE, action) => {
         case Types.SHOW_LEFT_PROFILE:
             return { ...state, isLeftProfileOpen: action.isLeftProfileOpen };
         case Types.UPDATE_USER_DATA:
-            return { ...state, userData: action.userData ? action.userData : defaultUserData };
+            return { ...state, userData: { ...state.userData, ...action.userData } };
         case Types.UPDATE_SELECTED_LEFT_PROFILE_EDITOR:
             return { ...state, selectedLeftProfileEditor: action.selectedLeftProfileEditor };
         case Types.UPDATE_ADDRESS:

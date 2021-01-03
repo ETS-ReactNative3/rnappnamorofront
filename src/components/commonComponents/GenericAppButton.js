@@ -1,10 +1,11 @@
 import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
-import { theme } from '../../constants/StyledComponentsTheme';
 import styled from 'styled-components/native';
+import LinearGradient from 'react-native-linear-gradient';
+
+import { theme } from '../../constants/StyledComponentsTheme';
 
 const Button = styled.TouchableHighlight`
-    height: ${props => props.theme.$heightOfGenericComponents}px;
+    height: ${props => props.theme.$heightOfGenericComponent}px;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -17,7 +18,7 @@ const ButtonText = styled.Text`
 `;
 
 const Gradient = styled(LinearGradient)`
-    flex: 1;
+    height: 100%;
     width: 100%;
     justify-content: center;
     align-items: center;

@@ -4,7 +4,6 @@ const INITIAL_STATE = {
     showLoader: false,
     isMouseButtonDown: false,
     isGeolocationEnabled: true,
-    routeName: '',
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -16,8 +15,6 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, isMouseButtonDown: action.isMouseButtonDown }
         case IS_GEOLOCATION_ENABLE:
             return { ...state, isGeolocationEnabled: action.isGeolocationEnabled }
-        case NAVIGATION_PUSH:
-            return { ...state, routeName: action.routeName }
         default:
             return state;
     }

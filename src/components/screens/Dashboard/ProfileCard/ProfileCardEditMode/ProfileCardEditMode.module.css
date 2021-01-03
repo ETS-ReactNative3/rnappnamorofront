@@ -1,6 +1,0 @@
-.profileInfoEditor {
-  display: flex;
-  flex-direction: column;
-  padding: calc(var(--defaultComponentPadding) * 2);
-  text-align: left;
-}

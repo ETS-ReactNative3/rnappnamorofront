@@ -24,7 +24,7 @@ export const theme = {
     $pictureBackgroundColor: 'rgb(233, 233, 233)',
     $defaultComponentPadding: 7,
     $defaultComponentMargin: 10,
-    $heightOfGenericComponents: 45,
+    $heightOfGenericComponent: 45,
     $smallBorderRadius: 4,
     $mediumBorderRadius: 10,
     $bigBorderRadius: 20,

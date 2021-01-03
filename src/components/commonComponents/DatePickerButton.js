@@ -7,7 +7,7 @@ import { convertDateFormatToDDMMYYYY } from '../utils/Functions';
 import { GenericRowView, P } from '../../GlobalStyle';
 
 const MainContainer = styled(GenericRowView)`
-    height: ${props => props.theme.$heightOfGenericComponents}px;
+    height: ${props => props.theme.$heightOfGenericComponent}px;
     width: 100%;
     margin-top: 10px;
     background-color: ${props => props.theme.$lightGray};

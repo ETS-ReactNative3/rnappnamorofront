@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
 
 import { theme } from './constants/StyledComponentsTheme';
 import Home from './components/screens/Home';
@@ -12,6 +11,9 @@ import TurnOnLocationModal from './components/modals/TurnOnLocation';
 // import Terms from './src/components/screens/Terms';
 // import PasswordReset from './src/components/screens/PasswordReset';
 // import EmailVerification from './src/components/screens/EmailVerification';
+
+const MainStack = createStackNavigator();
+const RootStack = createStackNavigator();
 
 export default function Application() {
 
@@ -30,17 +32,7 @@ export default function Application() {
         })
     };
 
-    const MainStack = createStackNavigator();
-    const RootStack = createStackNavigator();
-
-    const MainStackNavigator = (props) => {
-
-        const { routeName } = useSelector(state => state.utils);
-
-        useEffect(() => {
-            routeName && props.navigation.push(routeName);
-        }, [routeName]);
-
+    const MainStackNavigator = () => {
         return <MainStack.Navigator mode={'card'} headerMode={'none'} initialRouteName='Dashboard'>
             <MainStack.Screen name="Home" component={Home} />
             <MainStack.Screen name="Dashboard" component={Dashboard} />
@@ -49,7 +41,6 @@ export default function Application() {
 
     return (
         <NavigationContainer>
-
             <RootStack.Navigator mode={'modal'} headerMode={'none'}>
 
                 <RootStack.Screen name="MainStack" component={MainStackNavigator} />

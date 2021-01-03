@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import { GenericRowView } from '../../GlobalStyle';
-import { AwesomeIcon } from '../commonComponents';
+import AwesomeIcon from '../commonComponents/AwesomeIcon';
 
 const MainContainer = styled(GenericRowView)`
-    height: ${props => props.theme.$heightOfGenericComponents}px;
+    height: ${props => props.theme.$heightOfGenericComponent}px;
     width: 100%;
     margin-top: 10px;
     background-color: ${props => props.theme.$lightGray};
@@ -16,7 +16,7 @@ const MainContainer = styled(GenericRowView)`
 
 const Input = styled.TextInput`
     flex: 1;
-    height: ${props => props.theme.$heightOfGenericComponents}px;
+    height: ${props => props.theme.$heightOfGenericComponent}px;
     background-color: white;
     border-width: 1px;
     border-color: ${props => props.theme.$lightGray};
@@ -27,7 +27,7 @@ const Input = styled.TextInput`
 
 const Button = styled.TouchableHighlight`
     height: 100%;
-    width: ${props => props.theme.$heightOfGenericComponents}px;
+    width: ${props => props.theme.$heightOfGenericComponent}px;
     justify-content: center;
     background-color: ${props => props.theme.$lightGray};
     border-top-right-radius: ${props => props.theme.$smallBorderRadius}px;

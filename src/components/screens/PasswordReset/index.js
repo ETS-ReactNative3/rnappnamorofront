@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import Classes from 'classnames';
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import * as Actions from '../../../actions';
-import Api from '../../utils/Api';
 import Styles from './PasswordReset.module.css';
 import { successNotification, dangerNotification } from '../../utils/Notifications';
 import { handleError } from '../../utils/Functions';
-import { useDispatch } from "react-redux";
 import { Separator, InputWithIconButton, GenericBottomButton } from '../../utils/StatelessComponents';
 import logo from '../../../assets/logo.png';
 
@@ -23,25 +22,21 @@ export default (props) => {
     const changePasswordConfirmation = (value) => setPasswordConfirmation(value.target.value);
 
     const handlePasswordReset = async (event) => {
+
         try {
             event.preventDefault();
-            dispatch(Actions.showLoader(true));
 
-            let email = props.match.params.email;
-            let token = props.match.params.token;
+            const { email, token } = props.match.params;
 
-            const accessToken = localStorage.getItem('accessToken');
-            const res = await Api({ accessToken }).post('account/passwordreset', { email, token, password, passwordConfirmation });
+            dispatch(Actions.resetPassword(email, token, password, passwordConfirmation))
+                .then((res) =>
+                    res.data == 'Senha atualizada com sucesso!' ? (
 
-            dispatch(Actions.showLoader(false));
+                        successNotification(res.data),
+                        history.push("/")
 
-            if (res.data == 'Senha atualizada com sucesso!') {
-
-                successNotification(res.data);
-                history.push("/");
-            }
-            else
-                dangerNotification(res.data);
+                    ) : dangerNotification(res.data)
+                );
 
         } catch (err) {
 
