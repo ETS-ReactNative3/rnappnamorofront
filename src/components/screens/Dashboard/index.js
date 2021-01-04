@@ -4,8 +4,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import * as Actions from '../../../actions';
 import { decodeJwtToken } from '../../utils/Functions';
-import DashboardComponents from './DashboardComponents';
-import { GenericColumnView, GenericContainer } from '../../../GlobalStyle';
+import DashboardTabNavigator from './components/DashboardTabNavigator';
+import { GenericContainer } from '../../../GlobalStyle';
 
 export default function Dashboard(props) {
 
@@ -40,7 +40,7 @@ export default function Dashboard(props) {
 
     return (
         <GenericContainer>
-            <DashboardComponents />
+            <DashboardTabNavigator />
         </GenericContainer>
     )
 }

@@ -1,8 +1,13 @@
 import React from "react";
+import styled from 'styled-components';
 
 import SignUpFields from './Components/SignUpFields';
 import { GenericModalContainer } from '../../commonComponents';
-import { SignUpContainer } from './SignUpStyle';
+import { GenericContainer } from '../../../GlobalStyle';
+
+export const SignUpContainer = styled(GenericContainer)`
+    padding: 10px;
+`;
 
 export default function SignUp(props) {
     return (

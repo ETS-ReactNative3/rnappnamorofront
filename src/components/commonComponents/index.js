@@ -14,3 +14,5 @@ export { default as AppVersion } from './AppVersion';
 export { default as DevelopedBy } from './DevelopedBy';
 export { default as RoundIconButton } from './RoundIconButton';
 export { default as Toolbar } from './Toolbar';
+export { default as SectionTitle } from './SectionTitle';
+export { default as ConfigItem } from './ConfigItem';

@@ -15,7 +15,7 @@ import {
     GenericAppButton
 } from '../../../commonComponents';
 
-export default function LoginCard() {
+export default function SignUpFields() {
 
     const dispatch = useDispatch();
 

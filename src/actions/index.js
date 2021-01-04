@@ -491,10 +491,12 @@ export function updateUser(user, shouldShowLoader, closeLeftProfileEditor, shoul
             if (shouldShowLoader)
                 dispatch(showLoader(true));
 
-            user.id = dashboardState.userData.id;
+            user = { ...user, id: dashboardState.userData.id };
+
             await Api({ accessToken: authState.accessToken }).post(`users/update_user`, { user });
 
             await dispatch(getUserData());
+
             dispatch(showLoader(false));
 
             //closeLeftProfileEditor && dispatch(showLeftProfileEditor(false));
@@ -640,12 +642,15 @@ export function getUserData(
 
             //treatment on userData fields to be correctly "read" by the app
             const ageRange = userData.ageRange.split(',');
-            userData.ageRange = ageRange;
+            userData.ageRange = ageRange.map(item => parseInt(item));
             userData.schooling = { key: userData.schooling, label: userData.schoolingDesc };
             userData.gender = { key: userData.gender, label: userData.genderDesc };
             userData.searchingBy = { key: userData.searchingBy, label: userData.searchingByDesc };
             userData.birthday = new Date(userData.birthday);//necessary to work properly on datePicker
             userData.age = calculateAge(userData.birthday);
+            userData.showMeOnApp = userData.showMeOnApp == 1;
+            userData.emailNotification = userData.emailNotification == 1;
+            userData.pushNotification = userData.pushNotification == 1;
 
             userData.UserImages.map(item => {
                 item.progress = 0;

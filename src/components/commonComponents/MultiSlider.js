@@ -23,12 +23,19 @@ const PCustom = styled(P)`
     text-align: right;
 `;
 
-export default MultiSlider = (props) => {
+export default MultiSlider = ({
+    values,
+    title,
+    rightText,
+    min,
+    max,
+    onValuesChange,
+    customContainerStyle,
+    onValuesChangeFinish
+}) => {
 
-    const { values, title, rightText, min, max } = props;
+    return <MainContainer style={customContainerStyle}>
 
-    return <MainContainer>
-        
         <GenericRowView>
 
             <P>{title}</P>
@@ -50,8 +57,8 @@ export default MultiSlider = (props) => {
             markerStyle={{ height: 30, width: 30, borderRadius: 40, backgroundColor: theme.$primaryColor }}
             selectedStyle={{ backgroundColor: theme.$primaryColor }}
             containerStyle={{ alignItems: 'center' }}
-            onValuesChange={(value) => props.onValuesChange(value)}
-            onValuesChangeFinish={(value) => props.onValuesChangeFinish && props.onValuesChangeFinish(value)}
+            onValuesChange={onValuesChange}
+            onValuesChangeFinish={onValuesChangeFinish}
         />
     </MainContainer>
 }

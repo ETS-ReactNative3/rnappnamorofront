@@ -1,7 +1,8 @@
 import * as Types from '../constants/Types';
 
 const defaultUserData = {
-    ageRange: ['25', '35'],
+    ageRange: [25, 35],
+    maxDistance: [80],
     firstName: '',
     lastName: '',
     showMeOnApp: true
