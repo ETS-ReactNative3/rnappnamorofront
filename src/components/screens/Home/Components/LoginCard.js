@@ -2,10 +2,10 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { theme } from '../../../../constants/StyledComponentsTheme';
+import styled from 'styled-components/native';
 
 import { dangerNotification } from '../../../utils/Notifications'
 import * as Actions from '../../../../actions';
-import { LoginCardContainer } from '../HomeStyle';
 import SocialButtons from './SocialButtons';
 import ForgotPassword from './ForgotPassword';
 import SignUpNow from './SignUpNow';
@@ -15,18 +15,37 @@ import { LineTextLine, TextInputRightIconButton, GenericAppButton } from '../../
 const Styles = EStyleSheet.create({
     '@media (min-width: 0)': {
         loginCardContainer: {
-            height: '$matchSearcherCardHeightMin0Width',
-            width: '$matchSearcherCardWidthMin0Width'
+            height: '$loginCardHeightMin0Width',
+            width: '$loginCardWidthMin0Width'
         },
     },
 
     '@media(min-width: 768px)': {
         loginCardContainer: {
-            height: '$matchSearcherCardHeightMin768Width',
-            width: '$matchSearcherCardWidthMin768Width'
+            height: '$loginCardHeightMin768Width',
+            width: '$loginCardWidthMin768Width'
+        },
+    },
+
+    '@media(min-width: 1024px)': {
+        loginCardContainer: {
+            height: '$loginCardHeightMin1024Width',
+            width: '$loginCardWidthMin1024Width'
         },
     }
 });
+
+export const LoginCardContainer = styled.View`
+    padding: 30px 15px 15px;
+    border-radius: ${props => props.theme.$mediumBorderRadius}px;
+    text-align: center;
+    background-color: white;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    elevation: 10;
+`;
 
 export default function LoginCard(props) {
 

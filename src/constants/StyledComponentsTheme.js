@@ -27,12 +27,12 @@ export const theme = {
     $profileMediaHeight: 460,
     $dashboardLeftElementWidth: 500,
     /*iPhone / phones*/
-    $matchSearcherCardHeightMin0Width: 500,
-    $matchSearcherCardWidthMin0Width: 300,
+    $loginCardHeightMin0Width: 500,
+    $loginCardWidthMin0Width: 300,
     /*iPad*/
-    $matchSearcherCardHeightMin768Width: 600,
-    $matchSearcherCardWidthMin768Width: 400,
+    $loginCardHeightMin768Width: 600,
+    $loginCardWidthMin768Width: 400,
     /*iPad Pro*/
-    $matchSearcherCardHeightMin1024Width: 800,
-    $matchSearcherCardWidthMin1024Width: 500,
+    $loginCardHeightMin1024Width: 800,
+    $loginCardWidthMin1024Width: 500,
 };

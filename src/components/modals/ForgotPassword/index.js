@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { Keyboard } from 'react-native';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components/native';
+import { P } from '../../../GlobalStyle';
 
 import * as Actions from '../../../actions';
-import { ForgotPasswordContainer, PCustom } from './ForgotPasswordStyle';
 import { dangerNotification } from '../../utils/Notifications';
-import { handleError, emailValidator } from '../../utils/Functions';
+import { emailValidator } from '../../utils/Functions';
 import { GenericModalContainer, TextInputRightIconButton, GenericAppButton } from '../../commonComponents';
+
+export const PCustom = styled(P)`
+    margin-top: 10px;
+    text-align: center;
+`;
 
 export default function ForgotPassword(props) {
 
@@ -15,42 +21,32 @@ export default function ForgotPassword(props) {
     const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
 
     const sendRecoverPasswordEmail = async () => {
-        try {
+        if (emailValidator(forgotPasswordEmail)) {
 
-            if (emailValidator(forgotPasswordEmail)) {
+            Keyboard.dismiss();
 
-                Keyboard.dismiss();
+            dispatch(Actions.sendRecoverPasswordEmail(email)).then(() => props.navigation.goBack());
 
-                dispatch(Actions.sendRecoverPasswordEmail(email)).then(() => props.navigation.goBack());
-
-            }
-            else dangerNotification('Digite um email válido!');
-
-        } catch (err) {
-
-            dispatch(Actions.showLoader(false));
-            handleError(err);
         }
+        else dangerNotification('Digite um email válido!');
     }
+    
+    return <GenericModalContainer {...props} title={'Digite seu email abaixo'}>
 
-    return <ForgotPasswordContainer>
-        <GenericModalContainer {...props} title={'Digite seu email abaixo'}>
+        <TextInputRightIconButton
+            placeholder={'Email'}
+            value={forgotPasswordEmail}
+            returnKeyType={'done'}
+            onChangeText={(value) => setForgotPasswordEmail(value)}
+        />
 
-            <TextInputRightIconButton
-                placeholder={'Email'}
-                value={forgotPasswordEmail}
-                returnKeyType={'done'}
-                onChangeText={(value) => setForgotPasswordEmail(value)}
-            />
+        <GenericAppButton
+            customButtonStyle={{ margin: 30, width: 'auto' }}
+            textButton={'ENVIAR'}
+            onPress={() => sendRecoverPasswordEmail()}
+        />
 
-            <GenericAppButton
-                customButtonStyle={{ margin: 30, width: 'auto' }}
-                textButton={'ENVIAR'}
-                onPress={() => sendRecoverPasswordEmail()}
-            />
+        <PCustom>Enviaremos um e-mail contendo os passos para resetar sua senha!</PCustom>
 
-            <PCustom>Enviaremos um e-mail contendo os passos para resetar sua senha!</PCustom>
-
-        </GenericModalContainer>
-    </ForgotPasswordContainer>
+    </GenericModalContainer>
 }

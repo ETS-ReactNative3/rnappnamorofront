@@ -1,11 +1,11 @@
 import React from 'react';
+import styled from 'styled-components/native';
 import { useDispatch } from 'react-redux';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { REACT_APP_GOOGLE_CLIENT_ID } from 'react-native-expand-dotenv';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 
 import * as Actions from '../../../../actions';
-import { SocialButtonsContainer } from './../HomeStyle';
 import { SocialButton } from '../../../commonComponents';
 
 GoogleSignin.configure({
@@ -17,6 +17,11 @@ GoogleSignin.configure({
     accountName: '', // [Android] specifies an account name on the device that should be used
     iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
 });
+
+export const SocialButtonsContainer = styled.View`
+    margin-top: 15px;
+    width: 100%;
+`;
 
 export default function SocialButtons() {
 

@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { P, GenericRowView } from '../../../../GlobalStyle';
 
 const SignUpNowContainer = styled(GenericRowView)`
-    margin-top: 40px;
+    margin-top: 30px;
     justify-content: center;      
 `;
 

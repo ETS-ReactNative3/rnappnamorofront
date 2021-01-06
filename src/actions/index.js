@@ -5,6 +5,7 @@ import { auth as firebaseAuth, firestore } from 'firebase';
 const { detect } = require('detect-browser');
 import { PermissionsAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { NavigationActions } from 'react-navigation'
 
 import * as Types from '../constants/Types';
 import * as Options from '../components/utils/Options';
@@ -15,6 +16,7 @@ import {
     convertDateFormatToHHMM,
     decodeJwtToken
 } from '../components/utils/Functions';
+import { successNotification } from '../components/utils/Notifications';
 import { Api } from '../components/utils/Api';
 
 // Geocode.setLanguage("pt");
@@ -257,7 +259,11 @@ export function signOut() {
             dispatch(setAccessTokenOnStorageAndRedux(''));
             dispatch(signOutAction());
 
+            dispatch(showLoader(false));
+
         } catch (error) {
+
+            dispatch(showLoader(false));
             dispatch(setAccessTokenOnStorageAndRedux(''));
             dispatch(signOutAction());
         }
@@ -732,6 +738,7 @@ export function sendNewUserContact(name, email, subject, message) {
             successNotification('Contato enviado com sucesso! Obrigado por nos contactar.');
 
         } catch (err) {
+            dispatch(showLoader(false));
             dispatch(handleActionError(err));
         }
     }
@@ -753,6 +760,8 @@ export function sendRecoverPasswordEmail(email) {
             successNotification('E-mail enviado, verifique sua caixa de entrada.');
 
         } catch (err) {
+
+            dispatch(Actions.showLoader(false));
             dispatch(handleActionError(err));
         }
     }
@@ -989,6 +998,8 @@ export function removeAllConversationsFromThisMatch(profileId) {
 export function deleteAccount() {
     return async (dispatch, getState) => {
 
+        dispatch(showLoader(true));
+
         const dashboardState = getState().dashboard;
         const authState = getState().auth;
 
@@ -1001,7 +1012,7 @@ export function deleteAccount() {
             );
 
         } catch (err) {
-
+            dispatch(showLoader(false));
             dispatch(handleActionError(err));
         }
     }
@@ -1085,18 +1096,17 @@ export function showContactModal(show) {
     })
 }
 
-export function showGenericYesNoModal(show, title, subtitle, acceptText, denyText, selectedMethod) {
+export function showGenericYesNoModal(title, subtitle, acceptText, denyText, selectedMethod) {
+    return async dispatch => {
 
-    AsyncStorage.setItem('genericYesNoModalTitle', title);
-    AsyncStorage.setItem('genericYesNoModalSubtitle', subtitle);
-    AsyncStorage.setItem('genericYesNoModalAcceptText', acceptText);
-    AsyncStorage.setItem('genericYesNoModalDenyText', denyText);
-    AsyncStorage.setItem('genericYesNoModalSelectedMethod', selectedMethod);
+        await AsyncStorage.setItem('genericYesNoModalTitle', title);
+        await AsyncStorage.setItem('genericYesNoModalSubtitle', subtitle);
+        await AsyncStorage.setItem('genericYesNoModalAcceptText', acceptText);
+        await AsyncStorage.setItem('genericYesNoModalDenyText', denyText);
+        await AsyncStorage.setItem('genericYesNoModalSelectedMethod', selectedMethod);
 
-    return ({
-        type: Types.OPEN_GENERIC_YES_NO_MODAL,
-        isGenericYesNoModalOpen: show
-    })
+        dispatch(NavigationActions.navigate({ routeName: 'GenericYesNoModal' }));
+    }
 }
 
 export function showLoader(show) {

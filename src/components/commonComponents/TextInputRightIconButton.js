@@ -10,13 +10,15 @@ const MainContainer = styled(GenericRowView)`
     margin-top: 10px;
     background-color: ${props => props.theme.$lightGray};
     border-radius: ${props => props.theme.$smallBorderRadius}px;
-    padding: 3px;
+    padding: 0.5px;
     align-items: center;
 `;
 
 const Input = styled.TextInput`
     flex: 1;
-    height: ${props => props.theme.$heightOfGenericComponent}px;
+    margin-left: 3px;
+    margin-right: 3px;
+    height: 100%;
     background-color: white;
     border-width: 1px;
     border-color: ${props => props.theme.$lightGray};
@@ -34,23 +36,24 @@ const Button = styled.TouchableHighlight`
     border-bottom-right-radius: ${props => props.theme.$smallBorderRadius}px;
 `;
 
-export default TextInputRightIconButton = (props) => {
+export default TextInputRightIconButton = ({
+    placeholder,
+    value,
+    onChangeText,
+    secureTextEntry,
+    returnKeyType,
+    onSubmitEditing,
+    keyboardType,
+    reference,
+    showRightButton,
+    customButtonStyle,
+    underlayColor,
+    multiline,
+    customContainerStyle,
+    textAlignVertical
+}) => {
 
-    const {
-        placeholder,
-        value,
-        onChangeText,
-        secureTextEntry,
-        returnKeyType,
-        onSubmitEditing,
-        keyboardType,
-        reference,
-        showRightButton,
-        customButtonStyle,
-        underlayColor
-    } = props;
-
-    return <MainContainer>
+    return <MainContainer style={customContainerStyle}>
         <Input
             placeholder={placeholder}
             value={value}
@@ -59,6 +62,8 @@ export default TextInputRightIconButton = (props) => {
             returnKeyType={returnKeyType}
             onSubmitEditing={onSubmitEditing}
             keyboardType={keyboardType}
+            multiline={multiline}
+            textAlignVertical={textAlignVertical}
             ref={reference}
         />
 

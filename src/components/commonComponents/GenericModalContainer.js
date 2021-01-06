@@ -7,8 +7,13 @@ import { GenericColumnView, H2 } from '../../GlobalStyle';
 import { theme } from '../../constants/StyledComponentsTheme';
 
 const MainContainer = styled(GenericColumnView)`
-    max-height: 100%;
-    width: 100%;
+    flex: 1; 
+    justify-content: center;
+`;
+
+const ModalContainer = styled(GenericColumnView)`
+    margin: 10px;
+    width: auto;
     background-color: white;
     border-radius: ${props => props.theme.$mediumBorderRadius}px;
 `;
@@ -33,18 +38,20 @@ const ScrollViewCustom = styled(ScrollView)`
     padding: 10px;
 `;
 
-export default GenericModalContainer = (props) => {
+export default GenericModalContainer = ({ title, children, navigation }) => {
     return <MainContainer>
-        <ScrollViewCustom>
+        <ModalContainer>
+            <ScrollViewCustom>
 
-            <Button underlayColor={theme.$lightGray} onPress={() => props.navigation.goBack()}>
-                <AwesomeIcon iconName={'times'} solid />
-            </Button>
+                <Button underlayColor={theme.$lightGray} onPress={() => navigation.goBack()}>
+                    <AwesomeIcon iconName={'times'} solid />
+                </Button>
 
-            <H2Custom>{props.title}</H2Custom>
+                <H2Custom>{title}</H2Custom>
 
-            {props.children}
+                {children}
 
-        </ScrollViewCustom>
+            </ScrollViewCustom>
+        </ModalContainer>
     </MainContainer>
 }

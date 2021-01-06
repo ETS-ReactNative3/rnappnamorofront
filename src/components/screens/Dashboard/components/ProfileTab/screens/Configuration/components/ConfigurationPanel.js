@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Linking } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
@@ -45,7 +46,6 @@ export default function ConfigurationPanel() {
     const [pushNotificationLocal, setPushNotificationLocal] = useState(pushNotification);
 
     useEffect(() => {
-        console.log(userData)
         setMaxDistanceLocal([maxDistance]);
         setAgeRangeLocal([ageRange[0], ageRange[1]]);
         setShowMeOnAppLocal(showMeOnApp);
@@ -61,22 +61,36 @@ export default function ConfigurationPanel() {
         height: 90
     };
 
-    const changeScreenToConfigurationEditor = () => navigation.push('ConfigurationEditor');
+    const handleDeleteAccountPress = () => {
+        dispatch(Actions.showGenericYesNoModal(
+            'Excluir conta?',
+            'Todos os dados serão apagados, esta ação não pode ser desfeita!',
+            'Excluir',
+            'Cancelar',
+            'genericYesNoModalDeleteAccount'
+        ));
+
+        changeScreen('GenericYesNoModal');
+    }
+
+    const changeScreen = (screenName) => navigation.push(screenName);
 
     const updateUserData = (newUserData) => dispatch(Actions.updateUser(newUserData));
+
+    const handleTermsPress = () => Linking.openURL('https://www.appnamoro.com/terms');
 
     return <ScrollViewCustom>
 
         <SectionTitle titleText='CONFIGURAÇÕES DA CONTA' />
 
-        <ConfigItem leftText='E-mail' rightText={email} onPress={changeScreenToConfigurationEditor} />
+        <ConfigItem leftText='E-mail' rightText={email} onPress={() => changeScreen('ConfigurationEditor')} />
 
-        <ConfigItem leftText='Número de telefone' rightText={phone} onPress={changeScreenToConfigurationEditor} />
+        <ConfigItem leftText='Número de telefone' rightText={phone} onPress={() => changeScreen('ConfigurationEditor')} />
 
         <SectionTitle titleText='AJUSTES DE DESCOBERTA' />
 
         <ConfigItem
-            onPress={changeScreenToConfigurationEditor}
+            onPress={() => changeScreen('ConfigurationEditor')}
             leftText='Localização'
             rightText={address ? address : 'Não definida'}
         />
@@ -102,7 +116,7 @@ export default function ConfigurationPanel() {
             max={500}
         />
 
-        <ConfigItem leftText='Procurando por' rightText={searchingByDesc} onPress={changeScreenToConfigurationEditor} />
+        <ConfigItem leftText='Procurando por' rightText={searchingByDesc} onPress={() => changeScreen('ConfigurationEditor')} />
 
         <ConfigItem
             handleSwitchChange={(value) => {
@@ -135,13 +149,18 @@ export default function ConfigurationPanel() {
 
         <SectionTitle titleText='CONTATO' />
 
-        <ConfigItem leftText='Ajuda e Suporte' />
+        <ConfigItem onPress={() => changeScreen('ContactModal')} leftText='Ajuda e Suporte' />
 
         <SectionTitle titleText='JURÍDICO' />
 
-        <ConfigItem leftText='Termos e uso' />
+        <ConfigItem onPress={handleTermsPress} leftText='Termos e uso' />
 
-        <ConfigItem leftText='Excluir conta' customButtonStyle={{ marginTop: 10 }} />
+        <SectionTitle titleText='ZONA DE PERIGO' />
+
+        <ConfigItem
+            leftText='Excluir conta'
+            onPress={handleDeleteAccountPress}
+        />
 
         <DevelopedBy />
 
