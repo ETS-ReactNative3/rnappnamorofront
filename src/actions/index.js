@@ -1076,9 +1076,7 @@ export function signInOauthAction(oauthAccessToken, type) {
 
 export function handleActionError(err) {
     return dispatch => {
-        console.log('err')
-        console.log(err)
-        console.log(err.response)
+
         dispatch(showLoader(false));
 
         //status 401 is Unauthorized, which means that the token expired
@@ -1113,5 +1111,12 @@ export function showLoader(show) {
     return ({
         type: Types.SHOW_LOADER,
         showLoader: show
+    })
+}
+
+export function setSelectedConfigMenu(selectedConfigMenu) {
+    return ({
+        type: Types.SET_SELECTED_CONFIG_MENU,
+        selectedConfigMenu
     })
 }

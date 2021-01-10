@@ -50,7 +50,8 @@ export default TextInputRightIconButton = ({
     underlayColor,
     multiline,
     customContainerStyle,
-    textAlignVertical
+    textAlignVertical,
+    props
 }) => {
 
     return <MainContainer style={customContainerStyle}>

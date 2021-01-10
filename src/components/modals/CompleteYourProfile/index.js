@@ -79,7 +79,7 @@ export default () => {
 
     const modalStyle = {
         overlay: {
-            backgroundColor: !showLoader && 'var(--opaqueBackgroundColor)',
+            backgroundColor: !showLoader && 'var(--opaqueBlackBackgroundColor)',
         }
     }
 

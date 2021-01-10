@@ -20,7 +20,7 @@ const ScrollViewCustom = styled.ScrollView`
     background-color: ${props => props.theme.$defaultDarkerBackgroundColor};
 `;
 
-export default function ConfigurationPanel() {
+export default function EmailEditor() {
 
     const dispatch = useDispatch();
     const navigation = useNavigation();
@@ -71,10 +71,6 @@ export default function ConfigurationPanel() {
         ));
 
         changeScreen('GenericYesNoModal');
-    }
-
-    const setSelectedMenuAndChangeScreen = () => {
-        
     }
 
     const changeScreen = (screenName) => navigation.push(screenName);

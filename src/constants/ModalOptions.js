@@ -2,7 +2,7 @@ import { theme } from './StyledComponentsTheme';
 
 export const modalOptions = {
     headerShown: false,
-    cardStyle: { backgroundColor: theme.$opaqueBackgroundColor },
+    cardStyle: { backgroundColor: theme.$opaqueBlackBackgroundColor },
     cardOverlayEnabled: true,
     cardStyleInterpolator: ({ current: { progress } }) => ({
         overlayStyle: {
