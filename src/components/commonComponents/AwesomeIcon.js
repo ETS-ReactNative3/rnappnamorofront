@@ -19,12 +19,12 @@ const IconContainer = styled.View`
     height: ${props => props.theme.$heightOfGenericComponent}px;
 `;
 
-export default AwesomeIcon = (props) => {
-    return <IconContainer style={props.customIconContainer}>
+export default AwesomeIcon = ({ customIconContainer, evilIcon, iconName, customIconStyle, solidIcon }) => {
+    return <IconContainer style={customIconContainer}>
         {
-            props.evilIcon ?
-                <EvilIcon name={props.iconName} style={props.customIconStyle} solid={props.solidIcon} />
-                : <Awesome5Icon name={props.iconName} style={props.customIconStyle} solid={props.solidIcon} />
+            evilIcon ?
+                <EvilIcon name={iconName} style={customIconStyle} solid={solidIcon} />
+                : <Awesome5Icon name={iconName} style={customIconStyle} solid={solidIcon} />
         }
     </IconContainer>
 }

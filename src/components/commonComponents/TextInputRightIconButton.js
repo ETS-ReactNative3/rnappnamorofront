@@ -12,6 +12,7 @@ const MainContainer = styled(GenericRowView)`
     border-radius: ${props => props.theme.$smallBorderRadius}px;
     padding: 0.5px;
     align-items: center;
+    align-self: center;
 `;
 
 const Input = styled.TextInput`
@@ -36,23 +37,25 @@ const Button = styled.TouchableHighlight`
     border-bottom-right-radius: ${props => props.theme.$smallBorderRadius}px;
 `;
 
-export default TextInputRightIconButton = ({
-    placeholder,
-    value,
-    onChangeText,
-    secureTextEntry,
-    returnKeyType,
-    onSubmitEditing,
-    keyboardType,
-    reference,
-    showRightButton,
-    customButtonStyle,
-    underlayColor,
-    multiline,
-    customContainerStyle,
-    textAlignVertical,
-    props
-}) => {
+export default TextInputRightIconButton = (props) => {
+
+    const {
+        placeholder,
+        value,
+        onChangeText,
+        secureTextEntry,
+        returnKeyType,
+        onSubmitEditing,
+        keyboardType,
+        reference,
+        showRightButton,
+        customButtonStyle,
+        underlayColor,
+        multiline,
+        customContainerStyle,
+        textAlignVertical,
+        onButtonPress
+    } = props;
 
     return <MainContainer style={customContainerStyle}>
         <Input
@@ -70,7 +73,10 @@ export default TextInputRightIconButton = ({
 
         {
             showRightButton &&
-            <Button style={customButtonStyle} underlayColor={underlayColor} onPress={() => props.onButtonPress()}>
+            <Button
+                style={customButtonStyle}
+                underlayColor={underlayColor}
+                onPress={onButtonPress}>
                 <AwesomeIcon {...props} />
             </Button>
         }

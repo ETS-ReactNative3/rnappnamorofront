@@ -73,8 +73,10 @@ export default function ConfigurationPanel() {
         changeScreen('GenericYesNoModal');
     }
 
-    const setSelectedMenuAndChangeScreen = () => {
-        
+    const setSelectedConfigMenuAndChangeScreen = (selectedMenu, selectedConfigMenuTitle) => {
+        dispatch(Actions.setSelectedConfigMenu(selectedMenu, selectedConfigMenuTitle));
+
+        changeScreen('ConfigurationEditor');
     }
 
     const changeScreen = (screenName) => navigation.push(screenName);
@@ -87,14 +89,22 @@ export default function ConfigurationPanel() {
 
         <SectionTitle titleText='CONFIGURAÇÕES DA CONTA' />
 
-        <ConfigItem leftText='E-mail' rightText={email} onPress={() => changeScreen('ConfigurationEditor')} />
+        <ConfigItem
+            leftText='E-mail'
+            rightText={email}
+            onPress={() => setSelectedConfigMenuAndChangeScreen('emailEditor', 'CONFIGURAÇÕES DA CONTA')}
+        />
 
-        <ConfigItem leftText='Número de telefone' rightText={phone} onPress={() => changeScreen('ConfigurationEditor')} />
+        <ConfigItem
+            leftText='Número de telefone'
+            rightText={phone}
+            onPress={() => setSelectedConfigMenuAndChangeScreen('phoneEditor', 'CONFIGURAÇÕES DA CONTA')}
+        />
 
         <SectionTitle titleText='AJUSTES DE DESCOBERTA' />
 
         <ConfigItem
-            onPress={() => changeScreen('ConfigurationEditor')}
+            onPress={() => setSelectedConfigMenuAndChangeScreen('locationEditor', 'AJUSTES DE DESCOBERTA')}
             leftText='Localização'
             rightText={address ? address : 'Não definida'}
         />
@@ -120,7 +130,11 @@ export default function ConfigurationPanel() {
             max={500}
         />
 
-        <ConfigItem leftText='Procurando por' rightText={searchingByDesc} onPress={() => changeScreen('ConfigurationEditor')} />
+        <ConfigItem
+            leftText='Procurando por'
+            rightText={searchingByDesc}
+            onPress={() => setSelectedConfigMenuAndChangeScreen('searchingByEditor', 'AJUSTES DE DESCOBERTA')}
+        />
 
         <ConfigItem
             handleSwitchChange={(value) => {

@@ -163,7 +163,7 @@ export default function SignUpFields() {
             customIconStyle={{ color: theme.$gray }}
             iconName={passwordSecureTextEntry ? 'eye' : 'eye-slash'}
             secureTextEntry={passwordSecureTextEntry}
-            underlayColor={theme.$darkGray}
+            underlayColor={theme.$gray}
             onButtonPress={() => setPasswordSecureTextEntry(!passwordSecureTextEntry)}
             onSubmitEditing={() => tiPasswordConfirmation.current.focus()}
         />
@@ -178,7 +178,7 @@ export default function SignUpFields() {
             customIconStyle={{ color: theme.$gray }}
             iconName={passwordConfirmationSecureTextEntry ? 'eye' : 'eye-slash'}
             secureTextEntry={passwordConfirmationSecureTextEntry}
-            underlayColor={theme.$darkGray}
+            underlayColor={theme.$gray}
             onButtonPress={() => setPasswordConfirmationSecureTextEntry(!passwordConfirmationSecureTextEntry)}
         />
 

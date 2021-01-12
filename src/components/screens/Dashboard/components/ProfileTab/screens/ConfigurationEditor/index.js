@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { GenericContainer } from '../../../../../../../GlobalStyle';
 import ConfigToolbar from '../Configuration/components/ConfigToolbar';
 import EmailEditor from './components/EmailEditor';
+import { SectionTitle } from '../../../../../../commonComponents';
 
 const ConfigurationContainer = styled(GenericContainer)`
     justify-content: flex-start;
@@ -12,7 +13,7 @@ const ConfigurationContainer = styled(GenericContainer)`
 
 export default function ConfigurationEditor(props) {
 
-    const { selectedConfigMenu } = useSelector(state => state.dashboard);
+    const { selectedConfigMenu, selectedConfigMenuTitle } = useSelector(state => state.dashboard);
 
     const RenderBody = () => {
         switch (selectedConfigMenu) {
@@ -32,6 +33,8 @@ export default function ConfigurationEditor(props) {
     return <ConfigurationContainer>
 
         <ConfigToolbar {...props} />
+
+        <SectionTitle titleText={selectedConfigMenuTitle} />
 
         <RenderBody />
 

@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
+import { Dimensions } from 'react-native';
 
 import { theme } from '../../constants/StyledComponentsTheme';
 
 const Button = styled.TouchableHighlight`
     height: ${props => props.theme.$heightOfGenericComponent}px;
     width: 100%;
+    max-width: 350px;
     justify-content: center;
     align-items: center;
     border-radius: ${props => props.theme.$bigBorderRadius}px;
@@ -26,9 +28,17 @@ const Gradient = styled(LinearGradient)`
 `;
 
 export default GenericAppButton = (props) => {
-    return <Button style={props.customButtonStyle} underlayColor={props.underlayColor} onPress={() => props.onPress()}>
-        <Gradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={[theme.$degradeColor_1, theme.$degradeColor_2]}>
-            <ButtonText>{props.textButton}</ButtonText>
-        </Gradient>
+
+    const { customButtonStyle, underlayColor, onPress, textButton } = props;
+console.log(underlayColor)
+    return <Button style={customButtonStyle} underlayColor={underlayColor} onPress={onPress}>
+        {
+            !customButtonStyle.backgroundColor ?
+                <Gradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={[theme.$degradeColor_1, theme.$degradeColor_2]}>
+                    <ButtonText>{textButton}</ButtonText>
+                </Gradient>
+                :
+                <ButtonText>{textButton}</ButtonText>
+        }
     </Button>
 }

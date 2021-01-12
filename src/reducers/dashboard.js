@@ -29,6 +29,7 @@ const INITIAL_STATE = {
     realTimeFirebaseChat: [],
     profileIdsAlreadyDownloaded: [],
     selectedConfigMenu: '',
+    selectedConfigMenuTitle: '',
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -90,7 +91,11 @@ export default (state = INITIAL_STATE, action) => {
         case Types.REMOVE_ALL_IDS_FROM_PROFILE_IDS_ALREADY_DOWNLOADED:
             return { ...state, profileIdsAlreadyDownloaded: [] }
         case Types.SET_SELECTED_CONFIG_MENU:
-            return { ...state, selectedConfigMenu: action.selectedConfigMenu }
+            return {
+                ...state,
+                selectedConfigMenu: action.selectedConfigMenu,
+                selectedConfigMenuTitle: action.selectedConfigMenuTitle
+            }
         default:
             return state;
     }

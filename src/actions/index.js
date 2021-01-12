@@ -2,10 +2,8 @@
 import Geolocation from 'react-native-geolocation-service';
 import { Keyboard } from 'react-native';
 import { auth as firebaseAuth, firestore } from 'firebase';
-const { detect } = require('detect-browser');
 import { PermissionsAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { NavigationActions } from 'react-navigation'
 
 import * as Types from '../constants/Types';
 import * as Options from '../components/utils/Options';
@@ -1096,14 +1094,11 @@ export function showContactModal(show) {
 
 export function showGenericYesNoModal(title, subtitle, acceptText, denyText, selectedMethod) {
     return async dispatch => {
-
         await AsyncStorage.setItem('genericYesNoModalTitle', title);
         await AsyncStorage.setItem('genericYesNoModalSubtitle', subtitle);
         await AsyncStorage.setItem('genericYesNoModalAcceptText', acceptText);
         await AsyncStorage.setItem('genericYesNoModalDenyText', denyText);
         await AsyncStorage.setItem('genericYesNoModalSelectedMethod', selectedMethod);
-
-        dispatch(NavigationActions.navigate({ routeName: 'GenericYesNoModal' }));
     }
 }
 
@@ -1114,9 +1109,10 @@ export function showLoader(show) {
     })
 }
 
-export function setSelectedConfigMenu(selectedConfigMenu) {
+export function setSelectedConfigMenu(selectedConfigMenu, selectedConfigMenuTitle) {
     return ({
         type: Types.SET_SELECTED_CONFIG_MENU,
+        selectedConfigMenuTitle,
         selectedConfigMenu
     })
 }
