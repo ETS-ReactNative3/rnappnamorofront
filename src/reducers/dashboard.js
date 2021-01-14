@@ -3,6 +3,7 @@ import * as Types from '../constants/Types';
 const defaultUserData = {
     ageRange: [25, 35],
     maxDistance: [80],
+    searchingBy: { key: 2, label: 'TODOS' },
     firstName: '',
     lastName: '',
     showMeOnApp: true
@@ -23,7 +24,6 @@ const INITIAL_STATE = {
     uploadingImagesPreview: [],
     UserMatch: [],
     selectedLeftProfileEditor: '',
-    address: '',
     firebaseUser: {},
     realTimeFirebaseUsers: [],
     realTimeFirebaseChat: [],
@@ -43,8 +43,6 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, userData: { ...state.userData, ...action.userData } };
         case Types.UPDATE_SELECTED_LEFT_PROFILE_EDITOR:
             return { ...state, selectedLeftProfileEditor: action.selectedLeftProfileEditor };
-        case Types.UPDATE_ADDRESS:
-            return { ...state, address: action.address };
         case Types.UPLOADING_IMAGES:
             return {
                 ...state, uploadingImagesPreview:

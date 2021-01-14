@@ -5,20 +5,12 @@ import styled from 'styled-components';
 import { P } from '../../../../../../../../GlobalStyle';
 import { theme } from '../../../../../../../../constants/StyledComponentsTheme';
 import * as Actions from '../../../../../../../../actions';
-import { GenericAppButton, TextInputRightIconButton } from '../../../../../../../commonComponents';
+import { GenericAppButton, TextInputRightIconButton, GenericScrollView } from '../../../../../../../commonComponents';
 import { dangerNotification } from '../../../../../../../utils/Notifications';
 import { emailValidator } from '../../../../../../../utils/Functions';
 
-const ScrollViewCustom = styled.ScrollView`
-    width: 100%;
-    height: 100%;
-    background-color: ${props => props.theme.$defaultDarkerBackgroundColor};
-`;
-
 const PCustom = styled(P)`
-    margin-left: 10px;
     margin-top: 15px;
-    background-color: ${props => props.theme.$defaultDarkerBackgroundColor};
 `;
 
 export default function EmailEditor() {
@@ -33,7 +25,9 @@ export default function EmailEditor() {
     const sendVerificationEmail = async () => {
 
         if (!verifiedEmailLocal)
+
             if (emailValidator(emailLocal)) {
+                
                 if (emailLocal && emailLocal !== email)
                     dispatch(Actions.sendVerificationEmail(emailLocal));
                 else dangerNotification('Preencha o campo antes de continuar!')
@@ -54,18 +48,17 @@ export default function EmailEditor() {
 
     const customButtonStyle = {
         backgroundColor: verifiedEmailLocal && theme.$lightGray,
-        width: '80%',
         alignSelf: 'center',
         marginTop: 20
     }
 
-    return <ScrollViewCustom>
+    return <GenericScrollView>
 
         <TextInputRightIconButton
             placeholder={'Digite seu email aqui'}
             showRightButton
+            keyboardType={'email-address'}
             solidIcon
-            customContainerStyle={{ width: '96%' }}
             value={emailLocal}
             onChangeText={changeEmailText}
             customIconStyle={{ color: verifiedEmailLocal ? theme.$blue : theme.$red }}
@@ -79,8 +72,8 @@ export default function EmailEditor() {
             underlayColor={verifiedEmailLocal && theme.$lightGray}
             customButtonStyle={customButtonStyle}
             textButton='Me envie um email de verificação'
-            onPress={() => sendVerificationEmail()}
+            onPress={sendVerificationEmail}
         />
 
-    </ScrollViewCustom>
+    </GenericScrollView>
 }

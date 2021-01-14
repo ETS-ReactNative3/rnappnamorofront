@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { ScrollView } from 'react-native';
 
 import AwesomeIcon from '../commonComponents/AwesomeIcon';
 import { GenericColumnView, H2 } from '../../GlobalStyle';
@@ -32,7 +31,7 @@ const H2Custom = styled(H2)`
     text-align: center;
 `;
 
-const ScrollViewCustom = styled(ScrollView)`
+const ScrollViewCustom = styled.ScrollView`
     border-radius: ${props => props.theme.$mediumBorderRadius}px;
     background-color: transparent;
     padding: 10px;

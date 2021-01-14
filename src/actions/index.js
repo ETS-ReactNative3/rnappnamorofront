@@ -4,7 +4,10 @@ import { Keyboard } from 'react-native';
 import { auth as firebaseAuth, firestore } from 'firebase';
 import { PermissionsAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import Geocoder from 'react-native-geocoding';
+import * as RootNavigationRef from '../routes/RootNavigationRef';
 
+import { REACT_APP_GEOCODE_API_KEY } from 'react-native-expand-dotenv';
 import * as Types from '../constants/Types';
 import * as Options from '../components/utils/Options';
 import {
@@ -17,9 +20,7 @@ import {
 import { successNotification } from '../components/utils/Notifications';
 import { Api } from '../components/utils/Api';
 
-// Geocode.setLanguage("pt");
-// Geocode.setRegion("br");
-// Geocode.setApiKey(REACT_APP_GEOCODE_API_KEY);
+Geocoder.init(REACT_APP_GEOCODE_API_KEY, { language: 'pt-br' });
 
 const unsubscribeFirebaseListeners = [];
 
@@ -63,6 +64,69 @@ export function checkingIfTokenHasExpiredStatus(checkingIfTokenHasExpired) {
     return {
         type: Types.CHECKING_IF_TOKEN_HAS_EXPIRED,
         checkingIfTokenHasExpired
+    }
+}
+
+export function getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles) {
+    return async dispatch => {
+
+        const geolocationError = () => {
+            dispatch({
+                type: Types.IS_GEOLOCATION_ENABLE,
+                isGeolocationEnabled: false
+            })
+
+            RootNavigationRef.navigate('TurnOnLocationModal');
+        }
+
+        await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+                title: "Libere o acesso a sua localização!",
+                message: 'O App Namoro precisa acessar sua localização para encontrar pessoas próximas.',
+                buttonNeutral: "Perguntar depois",
+                buttonNegative: "Cancelar",
+                buttonPositive: "OK"
+            }
+        );
+
+        Geolocation.getCurrentPosition(
+            (position) => {
+
+                let lat = position.coords.latitude;
+                let lng = position.coords.longitude;
+
+                Geocoder.from({ lat, lng }).then(json => {
+
+                    const address = json.results[6].formatted_address;
+
+                    dispatch({
+                        type: Types.IS_GEOLOCATION_ENABLE,
+                        isGeolocationEnabled: true
+                    })
+
+                    dispatch(updateUserDataOnRedux({ address }));
+
+                    dispatch(updateUser({
+                        lastLongitude: lng,
+                        lastLatitude: lat
+                    }));
+
+                    //this 2 methods are here cause I need call it after get geolocation
+                    shouldGetMatchProfilesForMatchSearcher &&
+                        dispatch(getNextProfileForTheMatchSearcher());
+
+                    shouldGetMatchProfiles &&
+                        dispatch(getMatchProfiles());
+
+                }).catch(error => console.warn(error));
+            },
+            (error) => {
+                // See error code charts below.
+                geolocationError();
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        )
     }
 }
 
@@ -270,109 +334,6 @@ export function signOut() {
 
 export function signOutAction() {
     return { type: Types.AUTH_SIGN_OUT };
-}
-
-export function getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles) {
-    return async dispatch => {
-
-        const geolocationError = () => {
-            console.log(`geolocationError`)
-
-            dispatch({
-                type: Types.IS_GEOLOCATION_ENABLE,
-                isGeolocationEnabled: false
-            })
-
-            dispatch({
-                type: Types.UPDATE_ADDRESS,
-                address: 'Ative a geolocalização do seu navegador'
-            })
-        }
-
-        await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-                title: "Libere o acesso a localização!",
-                message: 'O App Namoro precisa acessar sua localização para encontrar pessoas próximas.',
-                buttonNeutral: "Perguntar depois",
-                buttonNegative: "Cancelar",
-                buttonPositive: "OK"
-            }
-        );
-
-        Geolocation.getCurrentPosition(
-            (position) => {
-                console.log(position);
-            },
-            (error) => {
-                // See error code charts below.
-                console.log(error.code, error.message);
-                geolocationError();
-            },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-        )
-
-        // if ("geolocation" in navigator) {
-
-        //     navigator.geolocation.getCurrentPosition((position) => {
-
-        //         Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
-        //             response => {
-
-        //                 let address = response.results[0].formatted_address.split(',');
-
-        //                 const browser = detect();
-
-        //                 let cityState;
-        //                 let country;
-
-        //                 switch (browser.name) {
-        //                     case 'chrome':
-        //                         cityState = address[2];
-        //                         country = address[4];
-        //                         break;
-        //                     default:
-        //                         cityState = address[1];
-        //                         country = address[2];
-        //                         break;
-        //                 }
-
-        //                 address = `${cityState && cityState}, ${country && country}`;
-
-        //                 dispatch({
-        //                     type: Types.IS_GEOLOCATION_ENABLE,
-        //                     isGeolocationEnabled: true
-        //                 })
-
-        //                 dispatch({
-        //                     type: Types.UPDATE_ADDRESS,
-        //                     address
-        //                 })
-
-        //                 dispatch(updateUser({
-        //                     lastLongitude: position.coords.longitude,
-        //                     lastLatitude: position.coords.latitude
-        //                 }));
-
-        //                 //this 2 methods are here cause I need call it after get geolocation
-        //                 shouldGetMatchProfilesForMatchSearcher &&
-        //                     dispatch(getNextProfileForTheMatchSearcher());
-
-        //                 shouldGetMatchProfiles &&
-        //                     dispatch(getMatchProfiles());
-        //             },
-        //             error => {
-        //                 handleError(error);
-        //             }
-        //         );
-        //     }, (error) => {
-        //         handleError(error);
-        //         geolocationError();
-        //     });
-        // } else {
-        //     geolocationError();
-        // }
-    }
 }
 
 export function getMatchProfiles() {
@@ -665,13 +626,13 @@ export function getUserData(
             dispatch(updateUserDataOnRedux(userData));
             // dispatch(openCompleteYourProfileModal(!userData.profileComplete && true));
 
-            // doing the following verification because getAddress() gets match profile too... so it won't get it twice
-            // if (shouldGetAddress)
-            //     dispatch(getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles));
-            // else {
-            //     shouldGetMatchProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
-            //     shouldGetMatchProfiles && dispatch(getMatchProfiles());
-            // }
+            //doing the following verification because getAddress() gets match profile too... so it won't get it twice
+            if (shouldGetAddress)
+                dispatch(getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles));
+            else {
+                shouldGetMatchProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
+                shouldGetMatchProfiles && dispatch(getMatchProfiles());
+            }
 
             // shouldSignInOnFirebase && dispatch(signInOrSignUpToFirebase());
 
@@ -924,7 +885,7 @@ export function deleteUserImage(imageId) {
             await Api({ accessToken: getState().auth.accessToken }).delete(`users/user_images/${imageId}`);
 
             dispatch(getUserData(true));
-            dispatch(showGenericYesNoModal(false));
+            //dispatch(showGenericYesNoModal(false));
 
         } catch (err) {
 
@@ -948,7 +909,7 @@ export function unmatch(profileId) {
             await dispatch(removeAllConversationsFromThisMatch(profileId));
             dispatch(setSelectedMatchProfileDataAndOpenChatPanel(null, false));
             dispatch(getUserData(true, true, false, true));
-            dispatch(showGenericYesNoModal(false));
+            //dispatch(showGenericYesNoModal(false));
 
         } catch (err) {
 
@@ -1090,16 +1051,6 @@ export function showContactModal(show) {
         type: Types.OPEN_CONTACT_MODAL,
         isContactModalOpen: show
     })
-}
-
-export function showGenericYesNoModal(title, subtitle, acceptText, denyText, selectedMethod) {
-    return async dispatch => {
-        await AsyncStorage.setItem('genericYesNoModalTitle', title);
-        await AsyncStorage.setItem('genericYesNoModalSubtitle', subtitle);
-        await AsyncStorage.setItem('genericYesNoModalAcceptText', acceptText);
-        await AsyncStorage.setItem('genericYesNoModalDenyText', denyText);
-        await AsyncStorage.setItem('genericYesNoModalSelectedMethod', selectedMethod);
-    }
 }
 
 export function showLoader(show) {

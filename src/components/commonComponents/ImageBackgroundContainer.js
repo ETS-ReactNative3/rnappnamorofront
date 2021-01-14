@@ -9,8 +9,8 @@ const ImageBackground = styled.ImageBackground`
     flex-direction: column;
 `;
 
-export default ImageBackgroundContainer = (props) => {
-    return <ImageBackground source={props.source}>
-        {props.children}
+export default ImageBackgroundContainer = ({ source, children }) => {
+    return <ImageBackground source={source}>
+        {children}
     </ImageBackground>
 }

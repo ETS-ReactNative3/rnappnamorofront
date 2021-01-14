@@ -13,6 +13,6 @@ const AppLogoImage = styled.Image`
     align-items: center;    
 `;
 
-export default AppLogo = (props) => {
-    return <AppLogoImage source={props.source} />
+export default AppLogo = ({ source }) => {
+    return <AppLogoImage source={source} />
 }

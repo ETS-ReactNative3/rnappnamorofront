@@ -49,7 +49,8 @@ export default ConfigItem = ({ leftText,
     isThisSwitch,
     isSwitchOn,
     handleSwitchChange,
-    customButtonStyle
+    customButtonStyle,
+    rightIconName
 }) => {
 
     const { $primaryColor, $lightGray, $gray } = theme;
@@ -66,7 +67,7 @@ export default ConfigItem = ({ leftText,
             :
             <ButtonContainer>
                 <RightText>{rightText}</RightText>
-                <Awesome5Icon name={'chevron-right'} />
+                {rightIconName != 'none' && <Awesome5Icon name={rightIconName ? rightIconName : 'chevron-right'} />}
             </ButtonContainer>
     }
 

@@ -30,7 +30,7 @@ const Gradient = styled(LinearGradient)`
 export default GenericAppButton = (props) => {
 
     const { customButtonStyle, underlayColor, onPress, textButton } = props;
-console.log(underlayColor)
+
     return <Button style={customButtonStyle} underlayColor={underlayColor} onPress={onPress}>
         {
             !customButtonStyle.backgroundColor ?

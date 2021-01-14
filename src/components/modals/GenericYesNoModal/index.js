@@ -6,15 +6,9 @@ import { GenericModalContainer } from '../../commonComponents';
 
 export default function GenericYesNoModal(props) {
 
-    const [modalTitle, setModalTitle] = useState('');
+    const { title } = props.route.params;
 
-    useEffect(() => {
-        getModalTitle();
-    }, []);
-
-    const getModalTitle = async () => setModalTitle(await AsyncStorage.getItem('genericYesNoModalTitle'));
-
-    return <GenericModalContainer {...props} title={modalTitle}>
-        <GenericYesNoModalContent />
+    return <GenericModalContainer {...props} title={title}>
+        <GenericYesNoModalContent {...props} />
     </GenericModalContainer>
 }

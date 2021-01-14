@@ -1,27 +1,22 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { useDispatch } from 'react-redux';
 
 import { P, GenericRowView } from '../../../../GlobalStyle';
-import * as Actions from '../../../../actions';
+
+const ForgotPasswordContainer = styled(GenericRowView)`
+    margin-top: 15px;
+    justify-content: flex-end;      
+    width: 100%;
+`;
+
+const Text = styled(P)`
+    font-size: 14px;
+    color: ${props => props.theme.$defaultGreen};
+`;
 
 export default function ForgotPassword(props) {
 
-    const dispatch = useDispatch();
-
-    // const showForgotPasswordModal = () => dispatch(Actions.showForgotPasswordModal(true));
     const showForgotPasswordModal = () => props.navigation.push('ForgotPasswordModal');
-
-    const ForgotPasswordContainer = styled(GenericRowView)`
-        margin-top: 15px;
-        justify-content: flex-end;      
-        width: 100%;
-    `;
-
-    const Text = styled(P)`
-    font-size: 14px;
-        color: ${props => props.theme.$defaultGreen};
-    `;
 
     return <ForgotPasswordContainer>
         <Text onPress={showForgotPasswordModal}>Esqueceu a senha?</Text>

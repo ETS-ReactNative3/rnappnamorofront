@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Linking } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
 import { theme } from '../../../../../../../../constants/StyledComponentsTheme';
@@ -11,14 +10,9 @@ import {
     ConfigItem,
     MultiSlider,
     DevelopedBy,
-    AppVersion
+    AppVersion,
+    GenericScrollView
 } from '../../../../../../../commonComponents';
-
-const ScrollViewCustom = styled.ScrollView`
-    width: 100%;
-    height: 100%;
-    background-color: ${props => props.theme.$defaultDarkerBackgroundColor};
-`;
 
 export default function ConfigurationPanel() {
 
@@ -62,15 +56,13 @@ export default function ConfigurationPanel() {
     };
 
     const handleDeleteAccountPress = () => {
-        dispatch(Actions.showGenericYesNoModal(
-            'Excluir conta?',
-            'Todos os dados serão apagados, esta ação não pode ser desfeita!',
-            'Excluir',
-            'Cancelar',
-            'genericYesNoModalDeleteAccount'
-        ));
-
-        changeScreen('GenericYesNoModal');
+        navigation.push('GenericYesNoModal', {
+            title: 'Excluir conta?',
+            subtitle: 'Todos os dados serão apagados, esta ação não pode ser desfeita!',
+            acceptText: 'Excluir',
+            denyText: 'Cancelar',
+            selectedMethod: 'genericYesNoModalDeleteAccount'
+        });
     }
 
     const setSelectedConfigMenuAndChangeScreen = (selectedMenu, selectedConfigMenuTitle) => {
@@ -85,26 +77,26 @@ export default function ConfigurationPanel() {
 
     const handleTermsPress = () => Linking.openURL('https://www.appnamoro.com/terms');
 
-    return <ScrollViewCustom>
+    return <GenericScrollView>
 
         <SectionTitle titleText='CONFIGURAÇÕES DA CONTA' />
 
         <ConfigItem
             leftText='E-mail'
             rightText={email}
-            onPress={() => setSelectedConfigMenuAndChangeScreen('emailEditor', 'CONFIGURAÇÕES DA CONTA')}
+            onPress={() => setSelectedConfigMenuAndChangeScreen('emailEditor', 'SEU EMAIL')}
         />
 
         <ConfigItem
             leftText='Número de telefone'
             rightText={phone}
-            onPress={() => setSelectedConfigMenuAndChangeScreen('phoneEditor', 'CONFIGURAÇÕES DA CONTA')}
+            onPress={() => setSelectedConfigMenuAndChangeScreen('phoneEditor', 'SEU TELEFONE')}
         />
 
         <SectionTitle titleText='AJUSTES DE DESCOBERTA' />
 
         <ConfigItem
-            onPress={() => setSelectedConfigMenuAndChangeScreen('locationEditor', 'AJUSTES DE DESCOBERTA')}
+            onPress={() => setSelectedConfigMenuAndChangeScreen('locationEditor', 'LOCALIZAÇÃO')}
             leftText='Localização'
             rightText={address ? address : 'Não definida'}
         />
@@ -133,7 +125,7 @@ export default function ConfigurationPanel() {
         <ConfigItem
             leftText='Procurando por'
             rightText={searchingByDesc}
-            onPress={() => setSelectedConfigMenuAndChangeScreen('searchingByEditor', 'AJUSTES DE DESCOBERTA')}
+            onPress={() => setSelectedConfigMenuAndChangeScreen('searchingByEditor', 'PROCURO POR')}
         />
 
         <ConfigItem
@@ -171,7 +163,7 @@ export default function ConfigurationPanel() {
 
         <SectionTitle titleText='JURÍDICO' />
 
-        <ConfigItem onPress={handleTermsPress} leftText='Termos e uso' />
+        <ConfigItem onPress={handleTermsPress} leftText='Termos de uso' />
 
         <SectionTitle titleText='ZONA DE PERIGO' />
 
@@ -184,5 +176,5 @@ export default function ConfigurationPanel() {
 
         <AppVersion />
 
-    </ScrollViewCustom>
+    </GenericScrollView>
 }

@@ -1,4 +1,5 @@
 export const theme = {
+    $lightTextColor: 'rgb(141, 141, 141)',
     $defaultTextColor: '#545454',
     $defaultLightGreen: '#70c570',
     $defaultGreen: '#32a032',
@@ -6,7 +7,6 @@ export const theme = {
     $degradeColor_1: '#fd2a7b',
     $degradeColor_2: '#ff7655',
     $defaultDarkerBackgroundColor: '#f5f7fa',
-    $lightTextColor: 'rgb(141, 141, 141)',
     $lightGray: '#dbdbdb',
     $gray: 'rgb(120, 120, 120)',
     $blue: 'rgba(44, 63, 228, 0.87)',
