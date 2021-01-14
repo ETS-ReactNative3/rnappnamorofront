@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 import * as Actions from '../../../../actions';
 import { theme } from '../../../../constants/StyledComponentsTheme';
@@ -18,18 +19,19 @@ import {
 export default function SignUpFields() {
 
     const dispatch = useDispatch();
+    const navigation = useNavigation();
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
+    const [firstName, setFirstName] = useState('a');
+    const [lastName, setLastName] = useState('s');
+    const [email, setEmail] = useState('diego6d@gmail.com');
+    const [phone, setPhone] = useState('1');
     const [birthday, setBirthday] = useState(null);
-    const [gender, setGender] = useState(null);
-    const [searchingBy, setSearchingBy] = useState(null);
+    const [gender, setGender] = useState({key:0, label: 'asd'});
+    const [searchingBy, setSearchingBy] = useState({key:0, label: 'asd'});
     const [ageRange, setAgeRange] = useState([22, 35]);
     const [maxDistance, setMaxDistance] = useState([80]);
-    const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const [password, setPassword] = useState('123456789a');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('123456789a');
     const [passwordSecureTextEntry, setPasswordSecureTextEntry] = useState(true);
     const [passwordConfirmationSecureTextEntry, setPasswordConfirmationSecureTextEntry] = useState(true);
 
@@ -64,7 +66,7 @@ export default function SignUpFields() {
                         pushNotification: 1
                     });
 
-                    dispatch(Actions.signUpAction(userData));
+                    dispatch(Actions.signUpAction(userData, navigation));
                 }
                 else {
                     dangerNotification('Preencha todos os campos antes de continuar.');

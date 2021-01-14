@@ -9,7 +9,7 @@ import ConfigurationEditor from './screens/ConfigurationEditor';
 const ProfileNavigator = createStackNavigator();
 
 const TheNavigator = () => {
-    return <ProfileNavigator.Navigator mode={'card'} headerMode={'none'} initialRouteName='Configuration'>
+    return <ProfileNavigator.Navigator mode={'card'} headerMode={'none'} initialRouteName='UserProfile'>
         <ProfileNavigator.Screen name="UserProfile" component={UserProfile} />
         <ProfileNavigator.Screen name="Configuration" component={Configuration} />
         <ProfileNavigator.Screen name="ConfigurationEditor" component={ConfigurationEditor} />

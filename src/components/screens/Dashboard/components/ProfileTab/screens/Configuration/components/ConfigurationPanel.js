@@ -40,7 +40,7 @@ export default function ConfigurationPanel() {
     const [pushNotificationLocal, setPushNotificationLocal] = useState(pushNotification);
 
     useEffect(() => {
-        setMaxDistanceLocal([maxDistance]);
+        setMaxDistanceLocal(maxDistance);
         setAgeRangeLocal([ageRange[0], ageRange[1]]);
         setShowMeOnAppLocal(showMeOnApp);
         setEmailNotificationLocal(emailNotification);

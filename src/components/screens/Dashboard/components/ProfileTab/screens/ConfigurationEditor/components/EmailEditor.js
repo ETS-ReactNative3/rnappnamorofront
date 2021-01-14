@@ -22,14 +22,14 @@ export default function EmailEditor() {
     const [emailLocal, setEmailLocal] = useState(email);
     const [verifiedEmailLocal, setVerifiedEmailLocal] = useState(verifiedEmail);
 
-    const sendVerificationEmail = async () => {
+    const sendEmailVerification = async () => {
 
         if (!verifiedEmailLocal)
 
             if (emailValidator(emailLocal)) {
                 
                 if (emailLocal && emailLocal !== email)
-                    dispatch(Actions.sendVerificationEmail(emailLocal));
+                    dispatch(Actions.sendEmailVerification(emailLocal));
                 else dangerNotification('Preencha o campo antes de continuar!')
 
             }
@@ -72,7 +72,7 @@ export default function EmailEditor() {
             underlayColor={verifiedEmailLocal && theme.$lightGray}
             customButtonStyle={customButtonStyle}
             textButton='Me envie um email de verificação'
-            onPress={sendVerificationEmail}
+            onPress={sendEmailVerification}
         />
 
     </GenericScrollView>

@@ -392,7 +392,7 @@ export function getNextProfileForTheMatchSearcher() {
             const res = await Api({ accessToken: authState.accessToken }).post(`users/get_profile_to_the_match_searcher`, {
                 currentLongitude: dashboardState.userData.currentLongitude,
                 currentLatitude: dashboardState.userData.currentLatitude,
-                maxDistance: dashboardState.userData.maxDistance,
+                maxDistance: dashboardState.userData.maxDistance[0],
                 userId: dashboardState.userData.id,
                 searchingBy: dashboardState.userData.searchingBy.key,
                 profileIdsAlreadyDownloaded: dashboardState.profileIdsAlreadyDownloaded,
@@ -608,6 +608,7 @@ export function getUserData(
             //treatment on userData fields to be correctly "read" by the app
             const ageRange = userData.ageRange.split(',');
             userData.ageRange = ageRange.map(item => parseInt(item));
+            userData.maxDistance = [userData.maxDistance];
             userData.schooling = { key: userData.schooling, label: userData.schoolingDesc };
             userData.gender = { key: userData.gender, label: userData.genderDesc };
             userData.searchingBy = { key: userData.searchingBy, label: userData.searchingByDesc };
@@ -726,7 +727,7 @@ export function sendRecoverPasswordEmail(email) {
     }
 }
 
-export function sendVerificationEmail(email) {
+export function sendEmailVerification(email) {
     return async (dispatch, getState) => {
 
         const { accessToken } = getState().auth;
@@ -853,7 +854,7 @@ export function updateUserDataOnRedux(userData) {
     }
 }
 
-export function signUpAction(userData) {
+export function signUpAction(userData, navigation) {
     return async (dispatch, getState) => {
 
         try {
@@ -862,6 +863,7 @@ export function signUpAction(userData) {
 
             const res = await Api({ accessToken: getState().auth.accessToken }).post('account/signup', userData);
 
+            navigation.goBack();
             dispatch(setAccessTokenOnStorageAndRedux(res.data.token));
 
             dispatch({

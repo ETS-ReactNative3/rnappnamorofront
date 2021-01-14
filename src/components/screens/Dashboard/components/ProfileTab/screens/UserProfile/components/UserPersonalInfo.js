@@ -38,7 +38,7 @@ export default UserPersonalInfo = () => {
 
         <UserImage
             source={
-                userData && userData.UserImages ?
+                userData.UserImages && userData.UserImages.length > 0 ?
                     { uri: userData.UserImages[0].imageUrl }
                     : noProfile
             }

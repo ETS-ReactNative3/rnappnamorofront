@@ -28,7 +28,7 @@ const Button = styled.TouchableHighlight`
     padding-left: 9px;
 `;
 
-export default TextInputRightIconButton = (props) => {
+export default DatePickerButton = (props) => {
 
     const [isDateTimePickerVisible, setIsDateTimePickerVisible] = useState(false);
 
@@ -39,12 +39,14 @@ export default TextInputRightIconButton = (props) => {
 
     const { selectedDate } = props;
 
+    const maxDate = new Date((new Date().getFullYear() - 18 + '-' + new Date().getMonth() + 1 + '-' + new Date().getDate()).toString());
+
     return <MainContainer>
 
         {/* DateTimePicker is the dialog that the user interacts with */}
         <DateTimePicker
             minimumDate={new Date('01-01-1900')}
-            maximumDate={new Date(new Date().getFullYear() - 18 + '-' + new Date().getMonth() + '-' + new Date().getDate())}
+            maximumDate={maxDate}
             isVisible={isDateTimePickerVisible}
             onConfirm={(date) => handleDatePicked(date)}
             onCancel={() => setIsDateTimePickerVisible(false)}

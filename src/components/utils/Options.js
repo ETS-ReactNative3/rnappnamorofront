@@ -1,6 +1,6 @@
 export function schoolingOptions() {
     return [
-        { key: 0, label: 'Educação infantil' },
+        { key: 0, label: 'Ensino infantil' },
         { key: 1, label: 'Ensino fundamental' },
         { key: 2, label: 'Ensino médio' },
         { key: 3, label: 'Ensino técnico' },

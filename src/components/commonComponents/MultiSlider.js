@@ -10,13 +10,13 @@ const MainContainer = styled(GenericColumnView)`
     padding: 10px;
 `;
 
-const MultiSliderComponentCustom = styled(RNMultiSlider)`
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
-`;
+// const MultiSliderComponentCustom = styled(RNMultiSlider)`
+//     height: 100%;
+//     width: 100%;
+//     position: absolute;
+//     justify-content: center;
+//     align-items: center;
+// `;
 
 const PCustom = styled(P)`
     flex: 1;
@@ -33,7 +33,7 @@ export default MultiSlider = ({
     customContainerStyle,
     onValuesChangeFinish
 }) => {
-
+    console.log(values)
     return <MainContainer style={customContainerStyle}>
 
         <GenericRowView>
@@ -41,7 +41,7 @@ export default MultiSlider = ({
             <P>{title}</P>
 
             {
-                values.length > 1 ?
+                values && values.length > 1 ?
                     <PCustom>Entre {values[0]} e {values[1]}{values[1] === max && '+'}</PCustom>
                     :
                     <PCustom>{`${values[0]} ${rightText}`}{values[0] === max && '+'}</PCustom>
@@ -49,7 +49,7 @@ export default MultiSlider = ({
 
         </GenericRowView>
 
-        <MultiSliderComponentCustom
+        <RNMultiSlider
             min={min}
             max={max}
             values={values}
