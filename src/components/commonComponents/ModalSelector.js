@@ -20,24 +20,21 @@ const RNModalSelectorCustom = styled(RNModalSelector)`
     height: 100%;
     width: 100%;
     justify-content: center;
-    align-items: center;
     background-color: white;
 `;
 const TextContainer = styled(GenericRowView)`
-    flex: 1;
-    text-align: center;
+    height: 100%;
+    width: 100%;
     justify-content: center;
 `;
 
 const PCustom = styled(P)`
-    height: 100%;
-    width: 100%;
+    flex: 1;
+    align-self: center;
     padding: 10px 0 10px 10px;
 `;
 
-export default ModalSelector = (props) => {
-
-    const { selectedItem, title, data } = props;
+export default ModalSelector = ({ selectedItem, title, data, handleChange }) => {
 
     const titleSection = [
         { key: -1, section: true, label: title },
@@ -47,7 +44,7 @@ export default ModalSelector = (props) => {
         <RNModalSelectorCustom
             data={titleSection.concat(data)}
             supportedOrientations={['portrait']}
-            onChange={(option) => props.handleChange(option)}>
+            onChange={handleChange}>
 
             <TextContainer>
                 <PCustom>{selectedItem && selectedItem.label ? selectedItem.label : title}</PCustom>

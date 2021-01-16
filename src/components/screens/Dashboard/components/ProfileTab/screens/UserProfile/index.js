@@ -9,7 +9,7 @@ export default function UserProfile() {
 
     const ProfileScreenContainer = styled(GenericColumnView)`
         height: 100%;
-        background-color: ${props => props.theme.$defaultDarkerBackgroundColor};
+        background-color: ${props => props.theme.$darkerBackgroundColor};
         justify-content: flex-end;
     `;
 

@@ -21,6 +21,8 @@ const UserImage = styled.Image`
 const P1 = styled(P)`
     margin-top: 10px;
     font-size: 20px;
+    width: 100%;
+    text-align: center;
     color: black;
 `;
 

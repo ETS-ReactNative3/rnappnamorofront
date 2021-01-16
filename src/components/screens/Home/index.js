@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 
 import logo from '../../../assets/logo.png';
 import appBackgroundOpaque from '../../../assets/appBackgroundOpaque.jpg';
@@ -7,15 +6,6 @@ import { AppLogo, ImageBackgroundContainer } from '../../commonComponents';
 import LoginCard from './Components/LoginCard';
 
 export default function Home(props) {
-
-    const { isAuthenticated } = useSelector(state => state.auth);
-
-    useEffect(() => {
-         isAuthenticated && props.navigation.reset({
-            index: 0,
-            routes: [{ name: 'Dashboard' }],
-        });
-    }, [isAuthenticated]);
 
     return (
         <ImageBackgroundContainer source={appBackgroundOpaque}>

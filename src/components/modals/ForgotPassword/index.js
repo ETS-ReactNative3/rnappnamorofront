@@ -31,7 +31,7 @@ export default function ForgotPassword(props) {
         else dangerNotification('Digite um email válido!');
     }
     
-    return <GenericModalContainer {...props} title={'Digite seu email abaixo'}>
+    return <GenericModalContainer closeButtonPress={() => props.navigation.goBack()} title={'Digite seu email abaixo'}>
 
         <TextInputRightIconButton
             placeholder={'Email'}

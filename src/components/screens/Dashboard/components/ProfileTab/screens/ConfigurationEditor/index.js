@@ -12,6 +12,7 @@ import { SectionTitle } from '../../../../../../commonComponents';
 
 const MainContainer = styled(GenericContainer)`
     justify-content: flex-start;
+    background-color: ${props => props.theme.$darkerBackgroundColor};
 `;
 
 const BodyContainer = styled(GenericContainer)`

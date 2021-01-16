@@ -1,8 +1,8 @@
 import * as Types from '../constants/Types';
 
 const INITIAL_STATE = {
-    isAuthenticated: true,
-    checkingIfTokenHasExpired: true,
+    isAuthenticated: false,
+    isCheckingIfTokenHasExpired: false,
     accessToken: '',
     firebaseUid: ''
 }
@@ -23,7 +23,7 @@ export default (state = INITIAL_STATE, action) => {
         case Types.UPDATE_FIREBASE_UID:
             return { ...state, firebaseUid: action.firebaseUid }
         case Types.CHECKING_IF_TOKEN_HAS_EXPIRED:
-            return { ...state, checkingIfTokenHasExpired: action.checkingIfTokenHasExpired }
+            return { ...state, isCheckingIfTokenHasExpired: action.isCheckingIfTokenHasExpired }
         default:
             return state;
     }

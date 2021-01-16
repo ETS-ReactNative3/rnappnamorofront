@@ -8,7 +8,7 @@ export default function GenericYesNoModal(props) {
 
     const { title } = props.route.params;
 
-    return <GenericModalContainer {...props} title={title}>
+    return <GenericModalContainer closeButtonPress={() => props.navigation.goBack()} title={title}>
         <GenericYesNoModalContent {...props} />
     </GenericModalContainer>
 }

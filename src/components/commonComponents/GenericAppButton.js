@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
-import { Dimensions } from 'react-native';
 
 import { theme } from '../../constants/StyledComponentsTheme';
 

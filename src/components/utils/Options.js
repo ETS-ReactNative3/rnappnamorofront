@@ -1,3 +1,18 @@
+export function genderOptions() {
+    return [
+        { key: 0, label: 'Sou homem' },
+        { key: 1, label: 'Sou mulher' },
+    ];
+}
+
+export function searchingByOptions() {
+    return [
+        { key: 0, label: 'Procuro por Homens' },
+        { key: 1, label: 'Procuro por Mulheres' },
+        { key: 2, label: 'Procuro por Todos' },
+    ];
+}
+
 export function schoolingOptions() {
     return [
         { key: 0, label: 'Ensino infantil' },
@@ -10,18 +25,3 @@ export function schoolingOptions() {
         { key: 7, label: 'Doutorado' },
     ];
 };
-
-export function genderOptions() {
-    return [
-        { key: 0, label: 'Sou homem' },
-        { key: 1, label: 'Sou mulher' },
-    ];
-}
-
-export function searchingByOptions() {
-    return [
-        { key: 0, label: 'Homens' },
-        { key: 1, label: 'Mulheres' },
-        { key: 2, label: 'Todos' },
-    ];
-}

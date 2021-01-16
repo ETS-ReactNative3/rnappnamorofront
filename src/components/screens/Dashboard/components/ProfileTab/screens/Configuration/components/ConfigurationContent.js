@@ -14,7 +14,7 @@ import {
     GenericScrollView
 } from '../../../../../../../commonComponents';
 
-export default function ConfigurationPanel() {
+export default function ConfigurationContent() {
 
     const dispatch = useDispatch();
     const navigation = useNavigation();

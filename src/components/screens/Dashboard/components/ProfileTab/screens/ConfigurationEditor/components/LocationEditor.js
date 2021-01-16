@@ -8,7 +8,7 @@ import { P, GenericRowView, GenericColumnView } from '../../../../../../../../Gl
 import { GenericScrollView, AwesomeIcon } from '../../../../../../../commonComponents';
 
 const PTitle = styled(P)`
-    color: ${props => props.theme.$defaultTextColor};
+    color: ${props => props.theme.$textColor};
 `;
 
 const PCustom = styled(P)`

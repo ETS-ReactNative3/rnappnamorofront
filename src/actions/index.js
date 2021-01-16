@@ -42,7 +42,7 @@ export function checkIfTokenHasExpired() {
     return async (dispatch, getState) => {
         try {
 
-            dispatch(checkingIfTokenHasExpiredStatus(true));
+            dispatch(isCheckingIfTokenHasExpiredStatus(true));
 
             await Api({ accessToken: getState().auth.accessToken }).post('account/check_if_token_has_expired', { /*body*/ });
 
@@ -51,19 +51,22 @@ export function checkIfTokenHasExpired() {
                 isAuthenticated: true
             });
 
-            dispatch(checkingIfTokenHasExpiredStatus(false));
+            dispatch(isCheckingIfTokenHasExpiredStatus(false));
+
+            dispatch(getUserData(true, true, true, true))
 
         } catch (err) {
-            dispatch(checkingIfTokenHasExpiredStatus(false));
+
+            dispatch(isCheckingIfTokenHasExpiredStatus(false));
             dispatch(handleActionError(err));
         }
     }
 }
 
-export function checkingIfTokenHasExpiredStatus(checkingIfTokenHasExpired) {
+export function isCheckingIfTokenHasExpiredStatus(isCheckingIfTokenHasExpired) {
     return {
         type: Types.CHECKING_IF_TOKEN_HAS_EXPIRED,
-        checkingIfTokenHasExpired
+        isCheckingIfTokenHasExpired
     }
 }
 
@@ -313,7 +316,9 @@ export function signOut() {
 
             unsubscribeFirebaseListeners.map(item => item());
 
-            firebaseAuth().signOut();//firebase sign out
+            await AsyncStorage.setItem('accessToken', '');
+
+            //firebaseAuth().signOut();//firebase sign out
 
             dispatch(cleanMatchSearcherArrayAndGetNextProfile(false));
             dispatch(updateMatchProfileArray([]));
@@ -322,6 +327,8 @@ export function signOut() {
             dispatch(signOutAction());
 
             dispatch(showLoader(false));
+
+            RootNavigationRef.reset('Home');
 
         } catch (error) {
 
@@ -445,7 +452,7 @@ export function addUserIntoMatchSearcherArray(user) {
     };
 }
 
-export function updateUser(user, shouldShowLoader, closeLeftProfileEditor, shouldCleanMatchSearcherArray) {
+export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArray ) {
     return async (dispatch, getState) => {
 
         const dashboardState = getState().dashboard;
@@ -460,11 +467,10 @@ export function updateUser(user, shouldShowLoader, closeLeftProfileEditor, shoul
 
             await Api({ accessToken: authState.accessToken }).post(`users/update_user`, { user });
 
-            await dispatch(getUserData());
+            dispatch(getUserData());
 
             dispatch(showLoader(false));
 
-            //closeLeftProfileEditor && dispatch(showLeftProfileEditor(false));
             shouldCleanMatchSearcherArray && dispatch(cleanMatchSearcherArrayAndGetNextProfile(true));
 
         } catch (err) {
@@ -597,7 +603,8 @@ export function getUserData(
 
         try {
 
-            const res = await Api({ accessToken: authState.accessToken }).get(`users/get_user/${dashboardState.userData.id}`, {});
+            const res = await Api({ accessToken: authState.accessToken })
+                .get(`users/get_user/${dashboardState.userData.id}`, {});
 
             const userData = res.data;
 
@@ -617,7 +624,7 @@ export function getUserData(
             userData.showMeOnApp = userData.showMeOnApp == 1;
             userData.emailNotification = userData.emailNotification == 1;
             userData.pushNotification = userData.pushNotification == 1;
-
+            
             userData.UserImages.map(item => {
                 item.progress = 0;
                 item.uploaded = true;
@@ -625,7 +632,8 @@ export function getUserData(
             });
 
             dispatch(updateUserDataOnRedux(userData));
-            // dispatch(openCompleteYourProfileModal(!userData.profileComplete && true));
+
+            !userData.profileComplete && RootNavigationRef.navigate('CompleteYourProfileModal');
 
             //doing the following verification because getAddress() gets match profile too... so it won't get it twice
             if (shouldGetAddress)
@@ -864,6 +872,7 @@ export function signUpAction(userData, navigation) {
             const res = await Api({ accessToken: getState().auth.accessToken }).post('account/signup', userData);
 
             navigation.goBack();
+
             dispatch(setAccessTokenOnStorageAndRedux(res.data.token));
 
             dispatch({
@@ -996,6 +1005,10 @@ export function signInLocalAction(userData) {
 
             dispatch({ type: Types.AUTH_SIGN_IN });
 
+            dispatch(getUserData(true, true, true, true))
+
+            RootNavigationRef.reset('Dashboard');
+
         } catch (err) {
             dispatch(handleActionError(err));
         }
@@ -1028,6 +1041,10 @@ export function signInOauthAction(oauthAccessToken, type) {
             dispatch(showLoader(false));
 
             dispatch({ type: Types.AUTH_SIGN_IN });
+
+            dispatch(getUserData(true, true, true, true))
+
+            RootNavigationRef.reset('Dashboard');
 
         } catch (err) {
             dispatch(handleActionError(err));

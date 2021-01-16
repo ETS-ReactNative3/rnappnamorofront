@@ -23,7 +23,7 @@ export default function ControlButtonsContainer() {
     }
 
     const handleEditInfoButtonClick = () => {
-        dispatch(Actions.openMobileEditInfo(true));
+        navigation.push('EditInfo');
     }
 
     const ControlButtonsContainer = styled(GenericColumnView)`

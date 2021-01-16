@@ -15,13 +15,13 @@ export const PCustom = styled(P)`
 
 export default function TurnOnLocation(props) {
     return <TurnOnLocationContainer>
-        <GenericModalContainer {...props} title={'Encontramos um probleminha!'}>
+        <GenericModalContainer closeButtonPress={() => props.navigation.goBack()} title={'Encontramos um probleminha!'}>
 
             <PCustom>
                 {`Para usar o App Namoro você precisa ativar o Compartilhamento de Localização. Acesse as configurações do aplicativo.
 
 Caso tenha dúvidas em como fazer, um jeito fácil de resolver é desinstalar o app e instalar novamente.
-Assim quando você entrar pela primeira vez, o App Namoro irá pedir permissão para acessar sua localização, então você seleciona "Permitir".`}
+Assim, quando entrar pela primeira vez, o App Namoro irá pedir permissão para acessar sua localização, então você seleciona "Permitir".`}
             </PCustom>
 
             <GenericAppButton

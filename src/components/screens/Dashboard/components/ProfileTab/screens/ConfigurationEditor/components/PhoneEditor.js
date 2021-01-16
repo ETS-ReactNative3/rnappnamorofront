@@ -25,7 +25,8 @@ export default function PhoneEditor({ navigation }) {
     }
 
     const updateUserPhone = () => {
-        isUpdateButtonEnable && dispatch(Actions.updateUser({ phone: phoneLocal }, true)).then(() => navigation.goBack());
+        isUpdateButtonEnable && dispatch(Actions.updateUser({ phone: phoneLocal }, true))
+            .then(() => navigation.goBack());
     }
 
     return <GenericScrollView>
@@ -33,7 +34,7 @@ export default function PhoneEditor({ navigation }) {
         <TextInputRightIconButton
             placeholder={'Digite seu telefone aqui'}
             keyboardType={'phone-pad'}
-            value={phone}
+            value={phoneLocal}
             onChangeText={(value) => setPhoneLocal(value)}
         />
 

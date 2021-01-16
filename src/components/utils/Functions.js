@@ -36,16 +36,16 @@ export function decodeJwtToken(JWT_TOKEN) {
 export function handleError(err) {
     try {
 
-        const somethingIsWrong = 'Ops, parece que algo saiu mal. Tente novamente.';
+        // const somethingIsWrong = 'Ops, parece que algo saiu mal. Tente novamente.';
 
-        if (typeof err.response.data === "string" && err.response.data !== "Unauthorized") {
-            let helper = err.response.data.split(' ');
+        // if (typeof err.response.data === "string" && err.response.data !== "Unauthorized") {
+        //     let helper = err.response.data.split(' ');
 
-            if (helper[0] !== '<!DOCTYPE')
-                dangerNotification(err.response.data);
-            else dangerNotification(somethingIsWrong);
+        //     if (helper[0] !== '<!DOCTYPE')
+        //         dangerNotification(err.response.data);
+        //     else dangerNotification(somethingIsWrong);
 
-        } else dangerNotification(somethingIsWrong);
+        // } else dangerNotification(somethingIsWrong);
 
     } catch (error) {
 
@@ -83,6 +83,11 @@ export function convertDateFormatToDDMMYYYY(date) {
         return '';
 }
 
+export function convertDateStringFromDDMMYYYYtoMMDDYYYY(date) {
+    const splittedBirthday = date.split('/');
+    return splittedBirthday[1] + '-' + splittedBirthday[0] + '-' + splittedBirthday[2];
+}
+
 export function convertDateFormatToHHMM(date) {
     if (date !== '' && date !== null) {
 
@@ -104,4 +109,11 @@ export function convertDateFormatToHHMM(date) {
         }
     } else
         return '';
+}
+
+export function handleUserBirthday(birthday) {
+
+    //this validation is needed cause if there's no birthdayon database, it brings todays date on userData.birthday:
+    return convertDateFormatToDDMMYYYY(birthday) != convertDateFormatToDDMMYYYY(new Date()) ?
+        convertDateFormatToDDMMYYYY(birthday) : null
 }

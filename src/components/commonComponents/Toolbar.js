@@ -23,9 +23,9 @@ export default Toolbar = (props) => {
         } : null}
         style={{
             container: { height: 48, ...props.customContainerStyle },
-            titleText: { color: theme.$defaultTextColor, alignSelf: titleAlignSelf, ...props.customTitleText },
-            rightElement: { color: theme.$defaultTextColor, ...props.customRightElement },
-            leftElement: { color: theme.$defaultTextColor, ...props.customLeftElement },
+            titleText: { color: theme.$textColor, alignSelf: titleAlignSelf, ...props.customTitleText },
+            rightElement: { color: theme.$textColor, ...props.customRightElement },
+            leftElement: { color: theme.$textColor, ...props.customLeftElement },
             rightElementContainer: {}
         }}
     />

@@ -11,13 +11,13 @@ export default function Dashboard(props) {
 
     const dispatch = useDispatch();
 
-    const { isAuthenticated, checkingIfTokenHasExpired } = useSelector(state => state.auth);
+    const { isAuthenticated, isCheckingIfTokenHasExpired } = useSelector(state => state.auth);
 
     useEffect(() => {
-        handleAccessToken();
+        dashboardInitialization();
     }, []);
 
-    const handleAccessToken = async () => {
+    const dashboardInitialization = async () => {
 
         const accessToken = await AsyncStorage.getItem('accessToken');
 
@@ -26,17 +26,6 @@ export default function Dashboard(props) {
         dispatch(Actions.updateAccessTokenOnRedux(accessToken));
         dispatch(Actions.checkIfTokenHasExpired());
     }
-
-    useEffect(() => {
-
-        !checkingIfTokenHasExpired && isAuthenticated ?
-            dispatch(Actions.getUserData(true, true, true, true))
-            : !checkingIfTokenHasExpired && !isAuthenticated && props.navigation.reset({
-                index: 0,
-                routes: [{ name: 'Home' }],
-            });
-
-    }, [isAuthenticated, checkingIfTokenHasExpired]);
 
     return (
         <GenericContainer>

@@ -18,7 +18,7 @@ export default function SearchingByEditor() {
 
     const { key: searchingBy } = useSelector(state => state.dashboard.userData.searchingBy)
 
-    const updateSearchingBy = (value) => dispatch(Actions.updateUser({ searchingBy: value }, true, false, true));
+    const updateSearchingBy = (value) => dispatch(Actions.updateUser({ searchingBy: value }, true, true));
 
     const InfoText = () => {
         switch (searchingBy) {

@@ -7,6 +7,8 @@ see if detect-browser works
 
 create log out to facebook and google oauth
 
+tratar erros do servidor de maneira mais amigável, usando imagens legais como os macaquinhos do youtube
+
 *******************************
 Importants
 *******************************

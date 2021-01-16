@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import * as Actions from '../../../../actions';
 import { theme } from '../../../../constants/StyledComponentsTheme';
-import { handleError } from '../../../utils/Functions';
+import { convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../../utils/Functions';
 import { dangerNotification } from '../../../utils/Notifications';
 import { GenericColumnView } from '../../../../GlobalStyle';
 import * as Options from '../../../utils/Options';
@@ -26,8 +26,8 @@ export default function SignUpFields() {
     const [email, setEmail] = useState('diego6d@gmail.com');
     const [phone, setPhone] = useState('1');
     const [birthday, setBirthday] = useState(null);
-    const [gender, setGender] = useState({key:0, label: 'asd'});
-    const [searchingBy, setSearchingBy] = useState({key:0, label: 'asd'});
+    const [gender, setGender] = useState({ key: 0, label: 'asd' });
+    const [searchingBy, setSearchingBy] = useState({ key: 0, label: 'asd' });
     const [ageRange, setAgeRange] = useState([22, 35]);
     const [maxDistance, setMaxDistance] = useState([80]);
     const [password, setPassword] = useState('123456789a');
@@ -42,41 +42,37 @@ export default function SignUpFields() {
     const tiPasswordConfirmation = useRef();
 
     const createNewAccount = async () => {
-        try {
-            if (password === passwordConfirmation) {
+        if (password === passwordConfirmation) {
 
-                if (firstName !== '' && lastName !== '' && email !== '' && birthday && gender && searchingBy) {
-                    const userData = ({
-                        firstName,
-                        lastName,
-                        email,
-                        phone,
-                        birthday,
-                        gender: gender.key,
-                        searchingBy: searchingBy.key,
-                        ageRange: ageRange[0] + ',' + ageRange[1],
-                        maxDistance,
-                        password,
+            if (firstName !== '' && lastName !== '' && email !== '' && birthday && gender && searchingBy) {
+                const userData = ({
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    birthday: convertDateStringFromDDMMYYYYtoMMDDYYYY(birthday),
+                    gender: gender.key,
+                    searchingBy: searchingBy.key,
+                    ageRange: ageRange[0] + ',' + ageRange[1],
+                    maxDistance,
+                    password,
 
-                        //some default values:
-                        method: 'local',
-                        showMeOnApp: 1,
-                        verifiedEmail: 0,
-                        emailNotification: 1,
-                        pushNotification: 1
-                    });
+                    //some default values:
+                    method: 'local',
+                    showMeOnApp: 0,
+                    verifiedEmail: 0,
+                    emailNotification: 1,
+                    pushNotification: 1
+                });
 
-                    dispatch(Actions.signUpAction(userData, navigation));
-                }
-                else {
-                    dangerNotification('Preencha todos os campos antes de continuar.');
-                }
+                dispatch(Actions.signUpAction(userData, navigation));
             }
             else {
-                dangerNotification('As senhas devem ser iguais.');
+                dangerNotification('Preencha todos os campos antes de continuar.');
             }
-        } catch (err) {
-            handleError(err);
+        }
+        else {
+            dangerNotification('As senhas devem ser iguais.');
         }
     }
 

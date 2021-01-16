@@ -37,12 +37,12 @@ const ScrollViewCustom = styled.ScrollView`
     padding: 10px;
 `;
 
-export default GenericModalContainer = ({ title, children, navigation }) => {
+export default GenericModalContainer = ({ title, children, closeButtonPress }) => {
     return <MainContainer>
         <ModalContainer>
             <ScrollViewCustom>
 
-                <Button underlayColor={theme.$lightGray} onPress={() => navigation.goBack()}>
+                <Button underlayColor={theme.$lightGray} onPress={closeButtonPress}>
                     <AwesomeIcon iconName={'times'} solid />
                 </Button>
 

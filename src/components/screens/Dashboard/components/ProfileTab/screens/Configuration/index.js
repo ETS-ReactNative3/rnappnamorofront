@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { GenericContainer } from '../../../../../../../GlobalStyle';
-import ConfigurationPanel from './components/ConfigurationPanel';
+import ConfigurationContent from './components/ConfigurationContent';
 import ConfigToolbar from './components/ConfigToolbar';
 
 const ConfigurationContainer = styled(GenericContainer)`
@@ -15,7 +15,7 @@ export default function Configuration(props) {
 
         <ConfigToolbar {...props} />
 
-        <ConfigurationPanel />
+        <ConfigurationContent />
 
     </ConfigurationContainer>
 }

@@ -25,7 +25,7 @@ const Input = styled.TextInput`
     border-color: ${props => props.theme.$lightGray};
     border-radius: ${props => props.theme.$smallBorderRadius}px;
     padding-left: 10px;
-    color: ${props => props.theme.$defaultTextColor};
+    color: ${props => props.theme.$textColor};
 `;
 
 const Button = styled.TouchableHighlight`
