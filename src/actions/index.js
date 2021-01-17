@@ -1040,6 +1040,8 @@ export function signInOauthAction(oauthAccessToken, type) {
 
             dispatch(showLoader(false));
 
+            Keyboard.dismiss();
+
             dispatch({ type: Types.AUTH_SIGN_IN });
 
             dispatch(getUserData(true, true, true, true))

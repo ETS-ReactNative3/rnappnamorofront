@@ -58,7 +58,7 @@ export default function ConfigurationContent() {
     const handleDeleteAccountPress = () => {
         navigation.push('GenericYesNoModal', {
             title: 'Excluir conta?',
-            subtitle: 'Todos os dados serão apagados, esta ação não pode ser desfeita!',
+            subtitle: 'Todos os dados serão apagados. Esta ação não pode ser desfeita!',
             acceptText: 'Excluir',
             denyText: 'Cancelar',
             selectedMethod: 'genericYesNoModalDeleteAccount'

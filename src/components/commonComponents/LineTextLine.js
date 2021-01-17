@@ -15,10 +15,10 @@ const Line = styled.View`
     border-color: ${props => props.theme.$lightTextColor};
 `;
 
-export default LineTextLine = (props) => {
+export default LineTextLine = ({ text }) => {
     return <LineTextLineContainer>
         <Line />
-        <P style={{ padding: 5 }}>{props.text}</P>
+        <P style={{ padding: 5 }}>{text}</P>
         <Line />
     </LineTextLineContainer>
 }

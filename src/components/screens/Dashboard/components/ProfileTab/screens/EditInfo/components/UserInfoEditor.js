@@ -8,7 +8,7 @@ import {
     DatePickerButton,
     ModalSelector,
     GenericAppButton,
-    SectionTitle
+    SectionTitle,
 } from '../../../../../../../commonComponents';
 import * as Actions from '../../../../../../../../actions';
 import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../../../../../../utils/Functions';

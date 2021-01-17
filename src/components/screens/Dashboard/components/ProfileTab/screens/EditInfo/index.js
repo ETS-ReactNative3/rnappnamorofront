@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import { theme } from '../../../../../../../constants/StyledComponentsTheme';
-import { Toolbar, GenericScrollView } from '../../../../../../commonComponents';
+import { Toolbar, GenericScrollView, LineTextLine } from '../../../../../../commonComponents';
 import { GenericContainer } from '../../../../../../../GlobalStyle';
 import PicturesEditor from './components/PicturesEditor';
 import UserInfoEditor from './components/UserInfoEditor';

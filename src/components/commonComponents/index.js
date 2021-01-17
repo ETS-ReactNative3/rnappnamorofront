@@ -17,3 +17,4 @@ export { default as RoundIconButton } from './RoundIconButton';
 export { default as Toolbar } from './Toolbar';
 export { default as SectionTitle } from './SectionTitle';
 export { default as ConfigItem } from './ConfigItem';
+export { default as RoundCloseButton } from './RoundCloseButton';

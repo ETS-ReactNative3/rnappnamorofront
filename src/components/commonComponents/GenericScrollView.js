@@ -8,7 +8,7 @@ const ScrollViewCustom = styled.ScrollView`
 `;
 
 export default GenericScrollView = ({ children, customStyle }) => {
-    return <ScrollViewCustom style={customStyle}>
+    return <ScrollViewCustom keyboardShouldPersistTaps='handled' style={customStyle}>
         {children}
     </ScrollViewCustom>
 }
