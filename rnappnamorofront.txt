@@ -14,6 +14,8 @@ Importants
 *******************************
 strings.xml contains the facebook app id, so it won't will be uploaded to git's repository. File address: 'android/app/src/main/res/values/strings.xml'
 
+When using react-native-progress to show image uploaded progress, it stuck on zero the percentage. To fix that, enter on this lib folder on node_modules and change the Circle.js file from this: {formatText(progressValue)} to this: {progress ? formatText(progress._value) : 0}
+
 *******************************
 Troubleshooting
 *******************************

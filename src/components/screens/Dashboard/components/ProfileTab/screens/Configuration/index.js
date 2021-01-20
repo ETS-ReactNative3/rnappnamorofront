@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 
+import * as Actions from '../../../../../../../actions';
 import { GenericContainer } from '../../../../../../../GlobalStyle';
 import ConfigurationContent from './components/ConfigurationContent';
 import ConfigToolbar from './components/ConfigToolbar';
@@ -10,6 +12,12 @@ const ConfigurationContainer = styled(GenericContainer)`
 `;
 
 export default function Configuration(props) {
+
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        dispatch(Actions.getUserData());
+    }, []);
 
     return <ConfigurationContainer>
 

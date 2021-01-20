@@ -22,7 +22,6 @@ const INITIAL_STATE = {
     matchSearcherProfiles: [],
     matchProfiles: [],
     uploadingImagesPreview: [],
-    UserMatch: [],
     selectedLeftProfileEditor: '',
     firebaseUser: {},
     realTimeFirebaseUsers: [],

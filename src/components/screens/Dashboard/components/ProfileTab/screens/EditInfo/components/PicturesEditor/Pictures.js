@@ -3,11 +3,10 @@ import { useSelector } from 'react-redux';
 
 import { GenericRowView } from '../../../../../../../../../GlobalStyle';
 import PictureItem from './PictureItem';
-// import { uploadMedia } from './uploadMedia';
 
 export default function Pictures() {
 
-    const { UserImages } = useSelector(state => state.dashboard.userData);
+    const { userImages } = useSelector(state => state.dashboard.userData);
     const { uploadingImagesPreview } = useSelector(state => state.dashboard);
 
     const PictureItems = () => {
@@ -15,13 +14,12 @@ export default function Pictures() {
         const pictureItemsArray = [];
 
         //uploading images should appear together with profile images (but showing a progressbar):
-        const helperArray = UserImages ? UserImages.concat(uploadingImagesPreview) : [];
+        const helperArray = userImages ? userImages.concat(uploadingImagesPreview) : [];
 
         for (var i = 0; i <= 8; i++) {
             pictureItemsArray.push(
                 <PictureItem
                     key={i}
-                    //handleUpload={uploadMedia}
                     PictureItem={helperArray[i] || {}}
                 />
             )

@@ -1,7 +1,10 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
+import { useDispatch, useSelector } from 'react-redux';
+import * as Progress from 'react-native-progress';
 
+import { pickFile } from './uploadMedia';
 import { theme } from '../../../../../../../../../constants/StyledComponentsTheme';
 import { RoundCloseButton } from '../../../../../../../../commonComponents';
 import noProfile from '../../../../../../../../../assets/noProfile.png';
@@ -17,44 +20,37 @@ const UserImageContainer = styled.View`
 
 const Button = styled.TouchableHighlight`
     flex: 1;
+    border-radius: ${props => props.theme.$smallBorderRadius}px;
 `;
 
 const ButtonContainer = styled.View`
     flex: 1;
+    justify-content: center;
+    align-items: center;
 `;
 
 const UserImage = styled.Image`
     height: 100%;
     width: 100%;
-    border-radius: ${props => props.theme.$smallBorderRadius};
+    border-radius: ${props => props.theme.$smallBorderRadius}px;
+`;
+
+const ProgressBarContainer = styled.View`
+    position: absolute;
+    height: auto;
+    width: auto;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 50px;
 `;
 
 export default function PictureItem({ PictureItem }) {
 
     const dispatch = useDispatch();
-    const { userData } = useSelector(state => state.dashboard);
-    const { accessToken } = useSelector(state => state.auth);
+    const navigation = useNavigation();
 
-    const handleDeletePicture = () => {
-
-        localStorage.setItem('selectedUserImageId', PictureItem.id);
-
-        dispatch(Actions.showGenericYesNoModal(
-            true,
-            'Excluir imagem?',
-            'Esta ação não pode ser desfeita.',
-            'Excluir',
-            'Cancelar',
-            'genericYesNoModalDeleteUserImage'
-        ));
-        // navigation.push('GenericYesNoModal', {
-        //     title: 'Excluir conta?',
-        //     subtitle: 'Todos os dados serão apagados. Esta ação não pode ser desfeita!',
-        //     acceptText: 'Excluir',
-        //     denyText: 'Cancelar',
-        //     selectedMethod: 'genericYesNoModalDeleteAccount'
-        // });
-    }
+    const { userImages } = useSelector(state => state.dashboard.userData);
 
     const imageSource = PictureItem.imageUrl ? { uri: PictureItem.imageUrl } : noProfile;
 
@@ -62,43 +58,60 @@ export default function PictureItem({ PictureItem }) {
         position: 'absolute',
         height: 40,
         width: 40,
-        right: -15,
-        top: -15,
+        right: 0,
+        top: 0,
         backgroundColor: 'white'
     };
 
-    return <UserImageContainer>
-        <Button underlayColor={theme.$darkGray} onPress={() => null}>
-            <ButtonContainer>
+    const handleDeletePicture = () => {
+        navigation.push('GenericYesNoModal', {
+            title: 'Excluir imagem?',
+            subtitle: 'Esta ação não pode ser desfeita!',
+            acceptText: 'Excluir',
+            denyText: 'Cancelar',
+            selectedMethod: 'genericYesNoModalDeleteUserImage',
+            selectedUserImageId: PictureItem.id
+        });
+    }
 
-                <UserImage
-                    source={imageSource}
+    const DeleteImageButton = () => {
+        return PictureItem.imageUrl ? PictureItem.uploaded &&
+            <RoundCloseButton
+                customIconStyle={{ fontSize: 23, color: theme.$red }}
+                customButtonStyle={customButtonStyle}
+                onPress={handleDeletePicture}
+            /> : null
+    }
+
+    const UploadProgressBar = () => {
+        return PictureItem.progress > 0 ?
+            <ProgressBarContainer>
+
+                <Progress.Circle
+                    progress={PictureItem.progress / 100}
+                    color={theme.$primaryColor}
+                    textStyle={{ fontSize: 12 }}
+                    showsText={true}
                 />
 
-                {
-                    // PictureItem.progress > 0 &&
-                    // <div className={Styles.circularProgressBar}>
-                    //     <CircularProgressbar
-                    //         styles={{
-                    //             root: { width: 32, alignSelf: 'center' },
-                    //             path: { stroke: 'var(--primaryColor)' },
-                    //         }}
-                    //         strokeWidth={10}
-                    //         value={PictureItem.progress}
-                    //     />
-                    // </div>
-                }
+            </ProgressBarContainer> : null
+    }
 
-                {
-                    PictureItem.imageUrl && PictureItem.uploaded &&
-                    <RoundCloseButton
-                        customIconStyle={{ fontSize: 23, color: theme.$red }}
-                        customButtonStyle={customButtonStyle}
-                        onPress={() => null}
-                    />
-                }
+    const pickImages = () => pickFile(userImages.length, dispatch);
+
+    return <UserImageContainer>
+
+        <Button underlayColor={theme.$darkGray} onPress={pickImages}>
+            <ButtonContainer>
+
+                <UserImage source={imageSource} />
+
+                <UploadProgressBar />
 
             </ButtonContainer>
         </Button>
+
+        <DeleteImageButton />
+
     </UserImageContainer>
 }

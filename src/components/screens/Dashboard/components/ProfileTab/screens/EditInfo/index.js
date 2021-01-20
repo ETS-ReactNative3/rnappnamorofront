@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
+import * as Actions from '../../../../../../../actions';
 import { theme } from '../../../../../../../constants/StyledComponentsTheme';
-import { Toolbar, GenericScrollView, LineTextLine } from '../../../../../../commonComponents';
+import { Toolbar, GenericScrollView } from '../../../../../../commonComponents';
 import { GenericContainer } from '../../../../../../../GlobalStyle';
 import PicturesEditor from './components/PicturesEditor';
 import UserInfoEditor from './components/UserInfoEditor';
@@ -13,6 +14,12 @@ const EditInfoContainer = styled(GenericContainer)`
 `;
 
 export default function EditInfo(props) {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(Actions.getUserData());
+    }, []);
 
     return <EditInfoContainer>
 

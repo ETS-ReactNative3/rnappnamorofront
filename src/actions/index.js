@@ -79,7 +79,7 @@ export function getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatc
                 isGeolocationEnabled: false
             })
 
-            RootNavigationRef.navigate('TurnOnLocationModal');
+            RootNavigationRef.push('TurnOnLocationModal');
         }
 
         await PermissionsAndroid.request(
@@ -452,7 +452,7 @@ export function addUserIntoMatchSearcherArray(user) {
     };
 }
 
-export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArray ) {
+export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArray) {
     return async (dispatch, getState) => {
 
         const dashboardState = getState().dashboard;
@@ -624,8 +624,8 @@ export function getUserData(
             userData.showMeOnApp = userData.showMeOnApp == 1;
             userData.emailNotification = userData.emailNotification == 1;
             userData.pushNotification = userData.pushNotification == 1;
-            
-            userData.UserImages.map(item => {
+
+            userData.userImages.map(item => {
                 item.progress = 0;
                 item.uploaded = true;
                 item.error = false;
@@ -633,7 +633,7 @@ export function getUserData(
 
             dispatch(updateUserDataOnRedux(userData));
 
-            !userData.profileComplete && RootNavigationRef.navigate('CompleteYourProfileModal');
+            !userData.profileComplete && RootNavigationRef.push('CompleteYourProfileModal');
 
             //doing the following verification because getAddress() gets match profile too... so it won't get it twice
             if (shouldGetAddress)
@@ -677,14 +677,19 @@ export function uploadImageToServer(imageData, selectedFile) {
                 onUploadProgress: e => {
 
                     const progress = parseInt(Math.round((e.loaded * 100) / e.total));
+
                     dispatch(updateUploadingImagesPreview({ ...selectedFile, progress }));
+                    
                 }
             });
 
             dispatch(updateUploadingImagesPreview(null, selectedFile.id));
+            
             dispatch(getUserData(true));
 
         } catch (err) {
+            
+            dispatch(updateUploadingImagesPreview(null, selectedFile.id));
             dispatch(handleActionError(err));
         }
     }
@@ -893,13 +898,18 @@ export function deleteUserImage(imageId) {
     return async (dispatch, getState) => {
         try {
 
+            dispatch(showLoader(true));
+
             await Api({ accessToken: getState().auth.accessToken }).delete(`users/user_images/${imageId}`);
 
+            dispatch(showLoader(false));
             dispatch(getUserData(true));
-            //dispatch(showGenericYesNoModal(false));
+
+            RootNavigationRef.goBack();
 
         } catch (err) {
 
+            dispatch(showLoader(false));
             dispatch(handleActionError(err));
         }
     }

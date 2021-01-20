@@ -39,9 +39,9 @@ const TabNavigator = () => {
             showLabel: false,
         }}>
 
-        <Tab.Screen name="MobileUserProfile" options={screenOptions('user-alt')} component={ProfileStackNavigator} />
-        <Tab.Screen name="MatchSearcher" options={screenOptions('heart')} component={MatchSearcherTab} />
         <Tab.Screen name="MatchesAndMessages" options={screenOptions('comments')} component={MatchSearcherTab} />
+        <Tab.Screen name="MatchSearcher" options={screenOptions('heart')} component={MatchSearcherTab} />
+        <Tab.Screen name="MobileUserProfile" options={screenOptions('user-alt')} component={ProfileStackNavigator} />
 
     </Tab.Navigator>
 }

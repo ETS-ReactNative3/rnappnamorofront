@@ -32,15 +32,15 @@ export default () => {
         return <>
             <div className={Styles.matchPicturesDiv}>
                 {
-                    userData.UserImages && userData.UserImages.length > 0 ?
-                        <img src={userData.UserImages[0].imageUrl} />
+                    userData.userImages && userData.userImages.length > 0 ?
+                        <img src={userData.userImages[0].imageUrl} />
                         :
                         <img style={{ backgroundSize: 'contain' }} src={noProfile} />
                 }
 
                 {
-                    selectedMatchProfileData && selectedMatchProfileData.UserImages && selectedMatchProfileData.UserImages.length > 0 ?
-                        <img src={selectedMatchProfileData.UserImages[0].imageUrl} />
+                    selectedMatchProfileData && selectedMatchProfileData.userImages && selectedMatchProfileData.userImages.length > 0 ?
+                        <img src={selectedMatchProfileData.userImages[0].imageUrl} />
                         :
                         <img style={{ backgroundSize: 'contain' }} src={noProfile} />
                 }

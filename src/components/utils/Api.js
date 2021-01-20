@@ -3,7 +3,7 @@ import { REACT_APP_API_URL } from 'react-native-expand-dotenv';
 
 export function Api({ accessToken }) {
     return axios.create({
-        baseURL: REACT_APP_API_URL,//'http://192.168.0.104:3333/',//REACT_APP_API_URL,
+        baseURL: 'http://192.168.0.104:3333/',//REACT_APP_API_URL,
         headers: { 'Authorization': `Bearer ${accessToken}` }
     })
 };
