@@ -72,7 +72,7 @@ export default function UserInfoEditor() {
             placeholder={'Escreva algo sobre você'}
             value={aboutLocal}
             returnKeyType={'next'}
-            multiline={true}
+            multiline
             onChangeText={(value) => setAboutLocal(value)}
             customContainerStyle={{ height: 200 }}
             textAlignVertical='top'

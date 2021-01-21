@@ -7,6 +7,7 @@ import noProfile from '../../../../../../../../assets/noProfile.png';
 
 const UserPersonalInfoContainer = styled(GenericContainer)`
     height: auto;
+    align-items: center;
 `;
 
 const UserImage = styled.Image`
@@ -30,27 +31,31 @@ const P2 = styled(P)`
     margin-top: 2px;
     font-size: 13px;
     color: ${props => props.theme.$gray};
+    text-align: center;
 `;
 
 export default UserPersonalInfo = () => {
 
-    const { userData } = useSelector(state => state.dashboard);
+    const {
+        userImages,
+        firstName,
+        lastName,
+        age,
+        position,
+        schoolingDesc
+    } = useSelector(state => state.dashboard.userData);
+
+    const imageSource = userImages && userImages.length > 0 ? { uri: userImages[0].imageUrl } : noProfile
 
     return <UserPersonalInfoContainer>
 
-        <UserImage
-            source={
-                userData.userImages && userData.userImages.length > 0 ?
-                    { uri: userData.userImages[0].imageUrl }
-                    : noProfile
-            }
-        />
+        <UserImage source={imageSource} />
 
-        <P1>{`${userData.firstName || ''} ${userData.lastName || ''}, ${userData.age || ''}`}</P1>
+        <P1>{`${firstName || ''} ${lastName || ''}, ${age || ''}`}</P1>
 
-        <P2>{userData.position}</P2>
+        <P2>{position}</P2>
 
-        <P2>{userData.schoolingDesc}</P2>
+        <P2>{schoolingDesc}</P2>
 
     </UserPersonalInfoContainer>
 }

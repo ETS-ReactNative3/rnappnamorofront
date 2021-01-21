@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as Actions from '../../../../actions';
 import { dangerNotification } from '../../../utils/Notifications';
 import { GenericColumnView } from '../../../../GlobalStyle';
-import { convertDateFormatToDDMMYYYY, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../../utils/Functions';
+import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../../utils/Functions';
 import * as Options from '../../../utils/Options';
 import {
     TextInputRightIconButton,

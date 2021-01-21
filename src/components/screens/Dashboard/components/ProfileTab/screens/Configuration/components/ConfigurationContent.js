@@ -133,7 +133,7 @@ export default function ConfigurationContent() {
                 setShowMeOnAppLocal(value), updateUserData({ showMeOnApp: value })
             }}
             leftText='Mostrar-me no App'
-            isThisSwitch={true}
+            isThisSwitch
             isSwitchOn={showMeOnAppLocal}
         />
 
@@ -144,7 +144,7 @@ export default function ConfigurationContent() {
                 setEmailNotificationLocal(value), updateUserData({ emailNotification: value })
             }}
             leftText='Email'
-            isThisSwitch={true}
+            isThisSwitch
             isSwitchOn={emailNotificationLocal}
         />
 
@@ -153,7 +153,7 @@ export default function ConfigurationContent() {
                 setPushNotificationLocal(value), updateUserData({ pushNotification: value })
             }}
             leftText='Notificações por Push'
-            isThisSwitch={true}
+            isThisSwitch
             isSwitchOn={pushNotificationLocal}
         />
 

@@ -63,10 +63,10 @@ export default (props) => {
                         type={"password"}
                         name={"password"}
                         placeholder={"Senha"}
-                        required={true}
+                        required
                         value={password}
                         onChange={changePassword}
-                        showRightButton={true}
+                        showRightButton
                         iconName={"fa fa-eye"}
                     />
 
@@ -74,10 +74,10 @@ export default (props) => {
                         type={"password"}
                         name={"passwordConfirmation"}
                         placeholder={"Confirmar senha"}
-                        required={true}
+                        required
                         value={passwordConfirmation}
                         onChange={changePasswordConfirmation}
-                        showRightButton={true}
+                        showRightButton
                         iconName={"fa fa-eye"}
                     />
 

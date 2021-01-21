@@ -20,7 +20,7 @@ const INITIAL_STATE = {
     userData: defaultUserData,
     matchProfileData: {},
     matchSearcherProfiles: [],
-    matchProfiles: [],
+    userMatchesProfile: [],
     uploadingImagesPreview: [],
     selectedLeftProfileEditor: '',
     firebaseUser: {},
@@ -68,7 +68,7 @@ export default (state = INITIAL_STATE, action) => {
         case Types.IS_SEARCHING_PROFILES:
             return { ...state, isSearchingProfiles: action.isSearchingProfiles }
         case Types.UPDATE_MATCH_PROFILE_ARRAY:
-            return { ...state, matchProfiles: action.matchProfiles }
+            return { ...state, userMatchesProfile: action.userMatchesProfile }
         case Types.UPDATE_FIREBASE_USER:
             return { ...state, firebaseUser: action.firebaseUser }
         case Types.UPDATE_REAL_TIME_FIREBASE_USERS:

@@ -10,12 +10,11 @@ import { pickFile } from './uploadMedia';
 
 const PicturesEditorContainer = styled(GenericContainer)`
     height: auto;
-    justify-content: flex-start;
 `;
 
 const PicturesContainer = styled(GenericColumnView)`
     height: ${(Dimensions.get('window').height / 100) * 65}px;
-    margin: 10px;
+    margin-top: 10px;
 `;
 
 export default function PicturesEditor() {

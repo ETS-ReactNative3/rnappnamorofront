@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 import * as Actions from '../../../../../../../actions';
@@ -9,10 +8,6 @@ import { GenericContainer } from '../../../../../../../GlobalStyle';
 import PicturesEditor from './components/PicturesEditor';
 import UserInfoEditor from './components/UserInfoEditor';
 
-const EditInfoContainer = styled(GenericContainer)`
-    justify-content: flex-start;
-`;
-
 export default function EditInfo(props) {
 
     const dispatch = useDispatch();
@@ -21,7 +16,7 @@ export default function EditInfo(props) {
         dispatch(Actions.getUserData());
     }, []);
 
-    return <EditInfoContainer>
+    return <GenericContainer>
 
         <Toolbar
             leftElement={'arrow-back'}
@@ -41,5 +36,5 @@ export default function EditInfo(props) {
 
         </GenericScrollView>
 
-    </EditInfoContainer>
+    </GenericContainer>
 }

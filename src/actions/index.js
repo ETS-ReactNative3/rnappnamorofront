@@ -70,7 +70,7 @@ export function isCheckingIfTokenHasExpiredStatus(isCheckingIfTokenHasExpired) {
     }
 }
 
-export function getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles) {
+export function getAddress(shouldGetProfilesForMatchSearcher, shouldGetUserMatchesProfile) {
     return async dispatch => {
 
         const geolocationError = () => {
@@ -116,11 +116,9 @@ export function getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatc
                     }));
 
                     //this 2 methods are here cause I need call it after get geolocation
-                    shouldGetMatchProfilesForMatchSearcher &&
-                        dispatch(getNextProfileForTheMatchSearcher());
+                    shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
 
-                    shouldGetMatchProfiles &&
-                        dispatch(getMatchProfiles());
+                    shouldGetUserMatchesProfile && dispatch(getUserMatchesProfile());
 
                 }).catch(error => console.warn(error));
             },
@@ -321,7 +319,7 @@ export function signOut() {
             //firebaseAuth().signOut();//firebase sign out
 
             dispatch(cleanMatchSearcherArrayAndGetNextProfile(false));
-            dispatch(updateMatchProfileArray([]));
+            dispatch(updateUserMatchesProfileArray([]));
 
             dispatch(setAccessTokenOnStorageAndRedux(''));
             dispatch(signOutAction());
@@ -343,7 +341,7 @@ export function signOutAction() {
     return { type: Types.AUTH_SIGN_OUT };
 }
 
-export function getMatchProfiles() {
+export function getUserMatchesProfile() {
     return async (dispatch, getState) => {
         //get only profiles that was already matched with current user
 
@@ -365,7 +363,7 @@ export function getMatchProfiles() {
                 ))
             });
 
-            dispatch(updateMatchProfileArray(res.data));
+            dispatch(updateUserMatchesProfileArray(res.data));
 
         } catch (err) {
             dispatch(handleActionError(err));
@@ -373,10 +371,10 @@ export function getMatchProfiles() {
     }
 }
 
-export function updateMatchProfileArray(matchProfiles) {
+export function updateUserMatchesProfileArray(userMatchesProfile) {
     return {
         type: Types.UPDATE_MATCH_PROFILE_ARRAY,
-        matchProfiles
+        userMatchesProfile
     }
 }
 
@@ -528,7 +526,7 @@ export function createOrUpdateUserMatch(profile, superLike) {
             if (res.data === 'you have a match!') {
 
                 dispatch(setSelectedMatchProfileData(profile));//will be used on "YouHaveAMatchModal"
-                dispatch(getMatchProfiles());
+                dispatch(getUserMatchesProfile());
                 dispatch(openYouHaveAMatchModal(true));
             }
 
@@ -555,9 +553,9 @@ export function removeUserFromMatchSearcher(userId, removeAll) {
 
 export function getUserData(
     shouldGetAddress,
-    shouldGetMatchProfilesForMatchSearcher,
+    shouldGetProfilesForMatchSearcher,
     shouldSignInOnFirebase,
-    shouldGetMatchProfiles
+    shouldGetUserMatchesProfile
 ) {
 
     const populateSearchingByDesc = (userData) => {
@@ -637,10 +635,10 @@ export function getUserData(
 
             //doing the following verification because getAddress() gets match profile too... so it won't get it twice
             if (shouldGetAddress)
-                dispatch(getAddress(shouldGetMatchProfilesForMatchSearcher, shouldGetMatchProfiles));
+                dispatch(getAddress(shouldGetProfilesForMatchSearcher, shouldGetUserMatchesProfile));
             else {
-                shouldGetMatchProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
-                shouldGetMatchProfiles && dispatch(getMatchProfiles());
+                shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
+                shouldGetUserMatchesProfile && dispatch(getUserMatchesProfile());
             }
 
             // shouldSignInOnFirebase && dispatch(signInOrSignUpToFirebase());
@@ -679,16 +677,16 @@ export function uploadImageToServer(imageData, selectedFile) {
                     const progress = parseInt(Math.round((e.loaded * 100) / e.total));
 
                     dispatch(updateUploadingImagesPreview({ ...selectedFile, progress }));
-                    
+
                 }
             });
 
             dispatch(updateUploadingImagesPreview(null, selectedFile.id));
-            
+
             dispatch(getUserData(true));
 
         } catch (err) {
-            
+
             dispatch(updateUploadingImagesPreview(null, selectedFile.id));
             dispatch(handleActionError(err));
         }

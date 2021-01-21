@@ -70,7 +70,7 @@ export default function SignUpFields() {
             placeholder={'Mensagem'}
             value={message}
             returnKeyType={'next'}
-            multiline={true}
+            multiline
             onChangeText={(value) => setMessage(value)}
             customContainerStyle={{ height: 200 }}
             textAlignVertical='top'

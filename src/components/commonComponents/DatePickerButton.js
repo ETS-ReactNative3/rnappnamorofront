@@ -43,7 +43,6 @@ export default DatePickerButton = (props) => {
 
     return <MainContainer>
 
-        {/* DateTimePicker is the dialog that the user interacts with */}
         <DateTimePicker
             minimumDate={new Date('01-01-1900')}
             maximumDate={maxDate}
@@ -56,6 +55,6 @@ export default DatePickerButton = (props) => {
 
             <P>{selectedDate ? selectedDate : 'Data de nascimento (+18)'}</P>
 
-        </Button >
+        </Button>
     </MainContainer >
 }

@@ -13,10 +13,10 @@ const Title = styled(P)`
     color: ${props => props.theme.$lightTextColor};
 `;
 
-export default SectionTitle = ({ titleText }) => {
+export default SectionTitle = ({ titleText, customTitleStyle }) => {
     return <Container>
 
-        <Title>{titleText}</Title>
+        <Title style={customTitleStyle}>{titleText}</Title>
 
     </Container>
 }

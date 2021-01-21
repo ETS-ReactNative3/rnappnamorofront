@@ -11,12 +11,10 @@ import SearchingByEditor from './components/SearchingByEditor';
 import { SectionTitle } from '../../../../../../commonComponents';
 
 const MainContainer = styled(GenericContainer)`
-    justify-content: flex-start;
     background-color: ${props => props.theme.$darkerBackgroundColor};
 `;
 
 const BodyContainer = styled(GenericContainer)`
-    justify-content: flex-start;
     padding-left: 10px;
     padding-right: 10px;
 `;

@@ -3,8 +3,6 @@ import styled from 'styled-components/native';
 export const GenericContainer = styled.View`
     height: 100%;
     width: 100%;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
 `;
 

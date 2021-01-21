@@ -91,7 +91,7 @@ export default function PictureItem({ PictureItem }) {
                     progress={PictureItem.progress / 100}
                     color={theme.$primaryColor}
                     textStyle={{ fontSize: 12 }}
-                    showsText={true}
+                    showsText
                 />
 
             </ProgressBarContainer> : null
