@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import DateTimePicker from "react-native-modal-datetime-picker"
 
 import { theme } from '../../constants/StyledComponentsTheme';

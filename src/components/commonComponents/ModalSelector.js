@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import RNModalSelector from 'react-native-modal-selector'
 
 import { GenericRowView, P } from '../../GlobalStyle';

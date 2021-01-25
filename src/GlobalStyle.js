@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 export const GenericContainer = styled.View`
     height: 100%;

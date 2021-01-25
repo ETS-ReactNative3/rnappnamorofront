@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -22,13 +22,17 @@ export default function EmailEditor() {
     const [emailLocal, setEmailLocal] = useState(email);
     const [verifiedEmailLocal, setVerifiedEmailLocal] = useState(verifiedEmail);
 
+    useEffect(() => {
+        setVerifiedEmailLocal(!(emailLocal !== email));
+    }, [verifiedEmailLocal]);
+
     const sendEmailVerification = async () => {
 
         if (!verifiedEmailLocal)
 
             if (emailValidator(emailLocal)) {
-                
-                if (emailLocal && emailLocal !== email)
+
+                if (emailLocal !== email)
                     dispatch(Actions.sendEmailVerification(emailLocal));
                 else dangerNotification('Preencha o campo antes de continuar!')
 
@@ -43,7 +47,7 @@ export default function EmailEditor() {
 
     const EmailStatusText = () => {
         return verifiedEmailLocal ? <PCustom>{'Email já verificado'}</PCustom>
-            : <PCustom>{'Email ainda não verificado, verifique-o para aumentar sua segurança'}</PCustom>
+            : <PCustom>{'Email ainda não verificado, verifique-o para aumentar sua segurança.'}</PCustom>
     }
 
     const customButtonStyle = {

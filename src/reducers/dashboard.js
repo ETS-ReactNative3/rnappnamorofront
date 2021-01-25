@@ -18,13 +18,11 @@ const INITIAL_STATE = {
     isMobileEditInfoOpen: false,
     isSearchingProfiles: true,
     userData: defaultUserData,
-    matchProfileData: {},
     matchSearcherProfiles: [],
     userMatchesProfile: [],
     uploadingImagesPreview: [],
     selectedLeftProfileEditor: '',
     firebaseUser: {},
-    realTimeFirebaseUsers: [],
     realTimeFirebaseChat: [],
     profileIdsAlreadyDownloaded: [],
     selectedConfigMenu: '',
@@ -67,16 +65,12 @@ export default (state = INITIAL_STATE, action) => {
             }
         case Types.IS_SEARCHING_PROFILES:
             return { ...state, isSearchingProfiles: action.isSearchingProfiles }
-        case Types.UPDATE_MATCH_PROFILE_ARRAY:
+        case Types.UPDATE_USER_MATCHES_PROFILE_ARRAY:
             return { ...state, userMatchesProfile: action.userMatchesProfile }
         case Types.UPDATE_FIREBASE_USER:
             return { ...state, firebaseUser: action.firebaseUser }
-        case Types.UPDATE_REAL_TIME_FIREBASE_USERS:
-            return { ...state, realTimeFirebaseUsers: action.realTimeFirebaseUsers }
         case Types.OPEN_CHAT_PANEL:
             return { ...state, isChatPanelOpen: action.isChatPanelOpen }
-        case Types.SET_SELECTED_MATCH_PROFILE_DATA:
-            return { ...state, selectedMatchProfileData: action.selectedMatchProfileData }
         case Types.UPDATE_REAL_TIME_FIREBASE_CHAT:
             return { ...state, realTimeFirebaseChat: action.realTimeFirebaseChat }
         case Types.OPEN_MOBILE_CONFIG:

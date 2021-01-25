@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import appIcon from '../../assets/appIcon.png'
 import { GenericRowView, P } from '../../GlobalStyle';

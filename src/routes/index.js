@@ -10,6 +10,7 @@ import TurnOnLocationModal from '../components/modals/TurnOnLocation';
 import GenericYesNoModal from '../components/modals/GenericYesNoModal';
 import ContactModal from '../components/modals/Contact';
 import CompleteYourProfileModal from '../components/modals/CompleteYourProfile';
+import ChatModal from '../components/modals/Chat';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -30,6 +31,7 @@ const RootStackNavigator = () => {
         <RootStack.Screen options={modalOptions} name="TurnOnLocationModal" component={TurnOnLocationModal} />
         <RootStack.Screen options={modalOptions} name="GenericYesNoModal" component={GenericYesNoModal} />
         <RootStack.Screen options={modalOptions} name="ContactModal" component={ContactModal} />
+        <RootStack.Screen options={modalOptions} name="ChatModal" component={ChatModal} />
     </RootStack.Navigator>
 }
 

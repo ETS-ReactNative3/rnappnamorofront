@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Progress from 'react-native-progress';
 

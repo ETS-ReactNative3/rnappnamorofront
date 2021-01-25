@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { REACT_APP_GOOGLE_CLIENT_ID } from 'react-native-expand-dotenv';

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BackHandler } from 'react-native';
 
-import CompleteYourProfileContent from './Components/CompleteYourProfileContent';
+import CompleteYourProfileContent from './components/CompleteYourProfileContent';
 import { GenericModalContainer } from '../../commonComponents';
 
 export default function CompleteYourProfile(props) {

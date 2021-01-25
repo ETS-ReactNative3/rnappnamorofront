@@ -8,18 +8,18 @@ import noProfile from '../../../assets/noProfile.png';
 import itsAMatch from '../../../assets/itsAMatch.png';
 import Styles from './YouHaveAMatch.module.css';
 
-export default () => {
+export default function YouHaveAMatch({ matchProfile }) {
 
     Modal.setAppElement('#root');
 
     const dispatch = useDispatch();
 
-    const { selectedMatchProfileData, userData } = useSelector(state => state.dashboard);
+    const { userData } = useSelector(state => state.dashboard);
     const { isYouHaveAMatchModalOpen } = useSelector(state => state.modal);
     const { showLoader } = useSelector(state => state.utils);
 
     const handleSendMessage = () => {
-        dispatch(Actions.openYouHaveAMatchModal(false, selectedMatchProfileData));
+        dispatch(Actions.openYouHaveAMatchModal(false, matchProfile));
         dispatch(Actions.openChatPanel(true));
     }
 
@@ -39,8 +39,8 @@ export default () => {
                 }
 
                 {
-                    selectedMatchProfileData && selectedMatchProfileData.userImages && selectedMatchProfileData.userImages.length > 0 ?
-                        <img src={selectedMatchProfileData.userImages[0].imageUrl} />
+                    matchProfile && matchProfile.userImages && matchProfile.userImages.length > 0 ?
+                        <img src={matchProfile.userImages[0].imageUrl} />
                         :
                         <img style={{ backgroundSize: 'contain' }} src={noProfile} />
                 }
@@ -69,7 +69,7 @@ export default () => {
                 <Separator text={null} />
 
                 <h1 className="h2">
-                    {`Você e ${selectedMatchProfileData && selectedMatchProfileData.firstName} deram like um no outro.`}
+                    {`Você e ${matchProfile && matchProfile.firstName} deram like um no outro.`}
                 </h1>
 
                 {matchPictures()}

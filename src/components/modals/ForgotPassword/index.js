@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Keyboard } from 'react-native';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { P } from '../../../GlobalStyle';
 
 import * as Actions from '../../../actions';

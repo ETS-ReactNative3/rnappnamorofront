@@ -13,11 +13,9 @@ export const PCustom = styled(P)`
 
 export default function GenericYesNoModalContent(props) {
 
-    const { subtitle, acceptText, denyText, selectedMethod, selectedUserImageId } = props.route.params;
+    const { subtitle, acceptText, denyText, selectedMethod, selectedUserImageId, matchProfile } = props.route.params;
 
     const dispatch = useDispatch();
-
-    const { selectedMatchProfileData } = useSelector(state => state.dashboard);
 
     const customButtonStyle = {
         flex: 1,
@@ -36,7 +34,7 @@ export default function GenericYesNoModalContent(props) {
                     dispatch(Actions.deleteAccount());
                     break;
                 case 'genericYesNoModalUnmatch':
-                    dispatch(Actions.unmatch(selectedMatchProfileData.id));
+                    dispatch(Actions.unmatch(matchProfile.id));
                     break;
                 case 'genericYesNoModalDeleteUserImage':
                     dispatch(Actions.deleteUserImage(selectedUserImageId));

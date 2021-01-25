@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import { Switch } from 'react-native';
 

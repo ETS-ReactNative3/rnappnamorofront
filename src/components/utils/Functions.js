@@ -36,16 +36,16 @@ export function decodeJwtToken(JWT_TOKEN) {
 export function handleError(err) {
     try {
 
-        // const somethingIsWrong = 'Ops, parece que algo saiu mal. Tente novamente.';
+        const somethingIsWrong = 'Ops, parece que algo saiu mal. Tente novamente.';
 
-        // if (typeof err.response.data === "string" && err.response.data !== "Unauthorized") {
-        //     let helper = err.response.data.split(' ');
+        if (typeof err.response.data === "string" && err.response.data !== "Unauthorized") {
+            let helper = err.response.data.split(' ');
 
-        //     if (helper[0] !== '<!DOCTYPE')
-        //         dangerNotification(err.response.data);
-        //     else dangerNotification(somethingIsWrong);
+            if (helper[0] !== '<!DOCTYPE')
+                dangerNotification(err.response.data);
+            else dangerNotification(somethingIsWrong);
 
-        // } else dangerNotification(somethingIsWrong);
+        } else dangerNotification(somethingIsWrong);
 
     } catch (error) {
 

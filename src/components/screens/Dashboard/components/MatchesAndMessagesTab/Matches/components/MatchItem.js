@@ -33,7 +33,7 @@ const MatchImage = styled.Image`
 export default function MatchItem(matchItem) {
 
     const { userImages, firstName } = matchItem.item;
-    console.log(matchItem.item)
+
     const imageSource = userImages.length > 0 ? { uri: userImages[0].imageUrl } : noProfile;
 
     return <MatchItemContainer>

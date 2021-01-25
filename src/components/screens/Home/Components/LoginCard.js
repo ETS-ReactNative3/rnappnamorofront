@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { theme } from '../../../../constants/StyledComponentsTheme';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import { dangerNotification } from '../../../utils/Notifications'
 import * as Actions from '../../../../actions';
