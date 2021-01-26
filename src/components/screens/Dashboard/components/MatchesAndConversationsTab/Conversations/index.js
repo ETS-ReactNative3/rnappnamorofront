@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import MessagesContent from './components/MessagesContent';
+import ConversationsContent from './components/ConversationsContent';
 import { P } from '../../../../../../GlobalStyle';
 
 const YouHaveNoConversationsContainer = styled.View`
@@ -12,9 +12,9 @@ const YouHaveNoConversationsContainer = styled.View`
     align-items: center;
 `;
 
-export default function Messages() {
+export default function Conversations() {
 
-    const doWeHaveMessages = useSelector(state => {
+    const doWeHaveConversations = useSelector(state => {
         const { matchedProfiles, realTimeFirebaseChat } = state.dashboard;
         return matchedProfiles.length > 0 && realTimeFirebaseChat.length > 0;
     });
@@ -23,5 +23,5 @@ export default function Messages() {
         <P>{'Você ainda não iniciou nenhuma conversa.'}</P>
     </YouHaveNoConversationsContainer>
 
-    return doWeHaveMessages ? <MessagesContent /> : <YouHaveNoConversations />
+    return doWeHaveConversations ? <ConversationsContent /> : <YouHaveNoConversations />
 }

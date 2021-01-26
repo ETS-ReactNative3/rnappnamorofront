@@ -45,11 +45,11 @@ const TimeContainer = styled.View`
     justify-content: flex-end;
 `;
 
-export default function MessageItem({ messageItem, matchedProfile }) {
+export default function ConversationItem({ conversationItem, matchedProfile }) {
 
     const navigation = useNavigation();
 
-    const { hourMinute, message } = messageItem;
+    const { hourMinute, message } = conversationItem;
     const { firstName, lastName, userImages } = matchedProfile;
 
     const profileImage = userImages && userImages.length > 0 ? { uri: userImages[0].imageUrl } : noProfile;

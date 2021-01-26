@@ -5,17 +5,17 @@ import { theme } from '../../../../../constants/StyledComponentsTheme';
 import { GenericColumnView, GenericContainer } from '../../../../../GlobalStyle';
 import { SectionTitle } from '../../../../commonComponents';
 import Matches from './Matches';
-import Messages from './Messages';
+import Conversations from './Conversations';
 
 const MatchesContainer = styled(GenericColumnView)`
     height: 160px;
 `;
 
-const MessagesContainer = styled(GenericColumnView)`
+const ConversationsContainer = styled(GenericColumnView)`
     flex: 1;
 `;
 
-export default function MatchesAndMessagesTab() {
+export default function MatchesAndConversationsTab() {
 
     const CustomTitle = ({ title }) => <SectionTitle
         titleText={title}
@@ -25,17 +25,17 @@ export default function MatchesAndMessagesTab() {
         }}
     />
 
-    return <GenericContainer style={{backgroundColor: 'white'}}>
+    return <GenericContainer style={{ backgroundColor: 'white' }}>
 
         <MatchesContainer>
             <CustomTitle title={'Suas Matches'} />
             <Matches />
         </MatchesContainer>
 
-        <MessagesContainer>
+        <ConversationsContainer>
             <CustomTitle title={'Mensagens'} />
-            <Messages />
-        </MessagesContainer>
+            <Conversations />
+        </ConversationsContainer>
 
     </GenericContainer>
 }

@@ -10,6 +10,8 @@ export const theme = {
     $red: 'rgb(238, 31, 31)',
     $green: '#32a032',
     $blue: 'rgba(44, 63, 228, 0.87)',
+    $myChatMessageColor: '#3ca4ff',
+    $notMyMessageColor: '#f1f1f1',
     $primaryColor: '#ff5c5c',
     $darkPrimaryColor: 'rgba(124, 14, 14, 0.685)',
     $heightOfGenericComponent: 50,

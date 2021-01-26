@@ -26,11 +26,9 @@ const RightButtonsContainer = styled(GenericColumnView)`
     align-items: center;
 `;
 
-export default function Header(props) {
+export default function Header({ matchedProfile, profileImage }) {
 
     const navigation = useNavigation();
-
-    const { matchedProfile, profileImage } = props.route.params;
 
     const closeChat = () => navigation.goBack();
 

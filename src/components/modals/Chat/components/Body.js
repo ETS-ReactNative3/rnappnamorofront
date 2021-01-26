@@ -1,76 +1,50 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import * as Actions from '../../../../actions';
-import { RoundCloseButton } from '../../../commonComponents';
-import { convertDateFormatToDDMMYYYY } from '../../../utils/Functions';
-import { GenericRowView } from '../../../../GlobalStyle';
+import MessageItem from './MessageItem';
 
-const HeaderContainer = styled(GenericRowView)`
-    height: 200px;
-    border-bottom-width: 1px;
-    border-color: red;
+const phrases = [
+    'Quebre barreiras!',
+    'Faça uma piada sobre si mesmo.',
+    'Os elogios nunca são demais!',
+    'Seja artístico!',
+    'Convidar para comer nunca fez mal a ninguém!',
+    'Não tenha medo de ser vulnerável!'
+];
+
+const MessagesList = styled.FlatList`
+    flex: 1;
+    background-color: lightblue;
 `;
 
-const Image = styled.Image`
-    height: 65px;
-    width: 65px;
-    margin-left: 5px;
-    border-radius: 80px;
-`;
+export default function Body({ matchedProfile }) {
 
-export default function Header(props) {
+    const { realTimeFirebaseChat } = useSelector(state => state.dashboard);
+    const { id: userId } = useSelector(state => state.dashboard.userData);
 
-    const dispatch = useDispatch();
-    const { matchedProfile, profileImage } = props.route.params;
+    const [chatMessages, setChatMessages] = useState([]);
+    const [phraseIndex, setPhraseIndex] = useState([Math.floor(Math.random() * phrases.length)]);
 
-    const handleCloseChatPanel = () => {
+    useEffect(() => {//sets a random number to show a random tip message to the user:
+        setPhraseIndex([Math.floor(Math.random() * phrases.length)]);
+    }, []);
 
-    }
+    useEffect(() => {
+        setChatMessages([]);
 
-    const unmatch = () => {
-        dispatch(Actions.showGenericYesNoModal(
-            true,
-            'Desfazer match?',
-            'Deseja mesmo desfazer essa match? Você pode não encontrar essa pessoa novamente na busca!',
-            'CONTINUAR',
-            'CANCELAR',
-            'genericYesNoModalUnmatch'
-        ));
-    }
+        setChatMessages(realTimeFirebaseChat.filter(item =>
+            item.userId_1 == matchedProfile.id || item.userId_2 == matchedProfile.id && item
+        ).reverse());
+    }, [realTimeFirebaseChat]);
 
-    return (
-        <HeaderContainer>
+    useEffect(() => {
+        //scrollbars.scrollToBottom();
+    }, [chatMessages]);
 
-            <Image source={profileImage} />
-
-            {/* <label>
-                {
-                    matchedProfile && `Você deu match com 
-                            ${matchedProfile.firstName} em 
-                            ${convertDateFormatToDDMMYYYY(new Date(matchedProfile.matchInfo[0].updatedAt))}`
-                }
-            </label> */}
-
-            {/* <div>
-                <div>
-                    <RoundButtonWithIcon
-                        onClick={() => handleCloseChatPanel()}
-                        iconClass={'far fa-times-circle'}
-                        iconStyle={{ color: 'var(--separatorColor)' }}
-                    />
-                </div>
-
-                <div className={Styles.unmatchButtonDiv}>
-                    <RoundButtonWithIcon
-                        onClick={() => unmatch()}
-                        iconClass={'fas fa-user-slash'}
-                        iconStyle={{ color: 'var(--separatorColor)' }}
-                    />
-                </div>
-            </div> */}
-
-        </HeaderContainer>
-    )
+    return <MessagesList
+        data={chatMessages}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => <MessageItem userId={userId} messageItem={item} />}
+    />
 }

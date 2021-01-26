@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { GenericContainer } from '../../../GlobalStyle';
 import Header from './components/Header';
-// import Body from './components/Body';
+import Body from './components/Body';
 // import Footer from './components/Footer';
 
 export const ChatContainer = styled(GenericContainer)`
@@ -14,11 +14,11 @@ export default function Chat(props) {
 
     return <ChatContainer>
 
-        <Header {...props} />
+        <Header {...props.route.params} />
 
-        {/* <Body />
+        <Body {...props.route.params} />
 
-        <Footer /> */}
+        {/* <Footer /> */}
 
     </ChatContainer>
 }

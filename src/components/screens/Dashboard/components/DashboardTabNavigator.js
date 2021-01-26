@@ -7,7 +7,7 @@ import { GenericColumnView } from '../../../../GlobalStyle';
 
 import MatchSearcherTab from './MatchSearcherTab';
 import ProfileStackNavigator from './ProfileTab/ProfileStackNavigator';
-import MatchesAndMessagesTab from './MatchesAndMessagesTab';
+import MatchesAndConversationsTab from './MatchesAndConversationsTab';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -39,7 +39,7 @@ const TabNavigator = () => {
             showLabel: false,
         }}>
 
-        <Tab.Screen name="MatchesAndMessages" options={screenOptions('comments')} component={MatchesAndMessagesTab} />
+        <Tab.Screen name="MatchesAndConversations" options={screenOptions('comments')} component={MatchesAndConversationsTab} />
         <Tab.Screen name="MatchSearcher" options={screenOptions('heart')} component={MatchSearcherTab} />
         <Tab.Screen name="MobileUserProfile" options={screenOptions('user-alt')} component={ProfileStackNavigator} />
 
