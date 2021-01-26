@@ -6,12 +6,12 @@ import MatchItem from './MatchItem';
 
 export default function MatchesContent() {
 
-    const { userMatchesProfile } = useSelector(state => state.dashboard);
+    const { matchedProfiles } = useSelector(state => state.dashboard);
 
     return <FlatList
         horizontal
-        data={userMatchesProfile}
-        renderItem={MatchItem}
+        data={matchedProfiles}
+        renderItem={({ item }) => <MatchItem matchedProfile={item} />}
         keyExtractor={item => item.id.toString()}
     />
 }

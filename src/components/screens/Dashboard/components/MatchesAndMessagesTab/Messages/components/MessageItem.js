@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
 import { theme } from '../../../../../../../constants/StyledComponentsTheme';
+import { RoundImage } from '../../../../../../commonComponents';
 import { GenericColumnView, GenericRowView, P } from '../../../../../../../GlobalStyle';
 import noProfile from '../../../../../../../assets/noProfile.png';
 
@@ -21,13 +22,6 @@ const MainContainer = styled(GenericRowView)`
 const TextContainer = styled(GenericColumnView)`
     padding-left: 10px;
     flex: 1;
-`;
-
-const Image = styled.Image`
-    height: 65px;
-    width: 65px;
-    margin-left: 5px;
-    border-radius: 80px;
 `;
 
 const PTitle = styled(P)`
@@ -51,23 +45,21 @@ const TimeContainer = styled.View`
     justify-content: flex-end;
 `;
 
-export default function MessageItem({ messageItem }) {
+export default function MessageItem({ messageItem, matchedProfile }) {
 
     const navigation = useNavigation();
 
-    const { userImages, firstName, lastName } = messageItem.matchProfile;
     const { hourMinute, message } = messageItem;
+    const { firstName, lastName, userImages } = matchedProfile;
 
     const profileImage = userImages && userImages.length > 0 ? { uri: userImages[0].imageUrl } : noProfile;
 
-    const openChatScreen = () => {
-        navigation.push('ChatModal', { profileImage, matchProfile: messageItem.matchProfile });
-    }
+    const openChatScreen = () => navigation.push('ChatModal', { profileImage, matchedProfile });
 
     return <Button underlayColor={theme.$lightGray} onPress={openChatScreen}>
         <MainContainer>
 
-            <Image source={profileImage} />
+            <RoundImage customImageStyle={{ marginLeft: 5 }} source={profileImage} />
 
             <TextContainer>
                 <PTitle>{`${firstName} ${lastName}`}</PTitle>

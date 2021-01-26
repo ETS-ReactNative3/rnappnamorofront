@@ -6,7 +6,7 @@ import MessageItem from './MessageItem';
 
 export default function MessagesContent() {
 
-    const { realTimeFirebaseChat, userMatchesProfile } = useSelector(state => state.dashboard);
+    const { realTimeFirebaseChat, matchedProfiles } = useSelector(state => state.dashboard);
     const { id } = useSelector(state => state.dashboard.userData);
 
     const [conversations, setConversations] = useState([]);
@@ -17,24 +17,24 @@ export default function MessagesContent() {
 
     const updateMessagesArray = () => {
         //filter realTimeFirebaseChat to keep only one (the last) messageItem of each conversation:
-        const matchProfileIdsAlreadyOnMessagesHelper = [];
+        const matchedProfileIdsAlreadyOnMessagesHelper = [];
 
         const messagesHelper = realTimeFirebaseChat.filter(messageItem => {
-            const matchProfileId = messageItem.userId_1 == id ? messageItem.userId_2 : messageItem.userId_1;
+            const matchedProfileId = messageItem.userId_1 == id ? messageItem.userId_2 : messageItem.userId_1;
 
-            if (!matchProfileIdsAlreadyOnMessagesHelper.includes(matchProfileId)) {
-                matchProfileIdsAlreadyOnMessagesHelper.push(matchProfileId);
+            if (!matchedProfileIdsAlreadyOnMessagesHelper.includes(matchedProfileId)) {
+                matchedProfileIdsAlreadyOnMessagesHelper.push(matchedProfileId);
                 return messageItem;
             }
         });
 
-        //add matchProfile info into each messageItem:
+        //add matchedProfile info into each messageItem:
         const messagesFinal = messagesHelper.map(message => {
-            const matchProfileId = message.userId_1 == id ? message.userId_2 : message.userId_1;
+            const matchedProfileId = message.userId_1 == id ? message.userId_2 : message.userId_1;
 
-            const matchProfile = userMatchesProfile.filter(item => item.id == matchProfileId)[0];
+            const matchedProfile = matchedProfiles.filter(item => item.id == matchedProfileId)[0];
 
-            return { ...message, matchProfile };
+            return { ...message, matchedProfile };
         });
 
         setConversations(messagesFinal);
@@ -43,6 +43,6 @@ export default function MessagesContent() {
     return <FlatList
         data={conversations}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <MessageItem messageItem={item} />}
+        renderItem={({ item }) => <MessageItem matchedProfile={item.matchedProfile} messageItem={item} />}
     />
 }

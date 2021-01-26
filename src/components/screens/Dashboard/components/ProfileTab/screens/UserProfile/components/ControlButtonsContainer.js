@@ -43,7 +43,7 @@ export default function ControlButtonsContainer() {
             customIconStyle={{ color: theme.$gray }}
             buttonLabel={'CONFIGURAÇÕES'}
             underlayColor={theme.$lightGray}
-            onButtonPress={handleConfigButtonClick}
+            onPress={handleConfigButtonClick}
         />
 
         <ControlButton
@@ -52,7 +52,7 @@ export default function ControlButtonsContainer() {
             customIconStyle={{ color: 'white' }}
             buttonLabel={'SAIR'}
             underlayColor={theme.$darkPrimaryColor}
-            onButtonPress={handleSignOut}
+            onPress={handleSignOut}
         />
 
         <ControlButton
@@ -61,7 +61,7 @@ export default function ControlButtonsContainer() {
             customIconStyle={{ color: theme.$gray }}
             buttonLabel={'EDITAR INFO'}
             underlayColor={theme.$lightGray}
-            onButtonPress={handleEditInfoButtonClick}
+            onPress={handleEditInfoButtonClick}
         />
 
     </ControlButtonsContainer>

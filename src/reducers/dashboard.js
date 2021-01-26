@@ -19,7 +19,7 @@ const INITIAL_STATE = {
     isSearchingProfiles: true,
     userData: defaultUserData,
     matchSearcherProfiles: [],
-    userMatchesProfile: [],
+    matchedProfiles: [],
     uploadingImagesPreview: [],
     selectedLeftProfileEditor: '',
     firebaseUser: {},
@@ -65,8 +65,8 @@ export default (state = INITIAL_STATE, action) => {
             }
         case Types.IS_SEARCHING_PROFILES:
             return { ...state, isSearchingProfiles: action.isSearchingProfiles }
-        case Types.UPDATE_USER_MATCHES_PROFILE_ARRAY:
-            return { ...state, userMatchesProfile: action.userMatchesProfile }
+        case Types.UPDATE_MATCHED_PROFILES_ARRAY:
+            return { ...state, matchedProfiles: action.matchedProfiles }
         case Types.UPDATE_FIREBASE_USER:
             return { ...state, firebaseUser: action.firebaseUser }
         case Types.OPEN_CHAT_PANEL:

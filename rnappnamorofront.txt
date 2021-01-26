@@ -3,12 +3,9 @@ To Do
 *******************************
 on notification.js I reaplaced dangerNotification and successNotification by Alerts
 
-see if detect-browser works
-
-create log out to facebook and google oauth
-
 tratar erros do servidor de maneira mais amigável, usando imagens legais como os macaquinhos do youtube
 
+if is open in one device, cannot be opened in another window. Otherwise it's goind to behavior not as expected
 *******************************
 Importants
 *******************************

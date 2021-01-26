@@ -9,7 +9,7 @@ const Button = styled.TouchableHighlight`
     justify-content: center;
     align-items: center;
     border-radius: 100px;
-    background-color: ${props => props.theme.$primaryColor};
+    background-color: white;
     elevation: 2;
 `;
 
@@ -23,12 +23,12 @@ const IconContainer = styled.View`
 
 export default RoundIconButton = (props) => {
 
-    const { underlayColor, customButtonStyle } = props;
+    const { underlayColor, customButtonStyle, onPress, customIconStyle } = props;
 
-    return <Button onPress={props.onButtonPress} underlayColor={underlayColor} style={customButtonStyle}>
+    return <Button onPress={onPress} underlayColor={underlayColor} style={customButtonStyle}>
 
         <IconContainer>
-            <AwesomeIcon {...props} customIconStyle={props.customIconStyle} />
+            <AwesomeIcon {...props} customIconStyle={customIconStyle} />
         </IconContainer>
 
     </Button>

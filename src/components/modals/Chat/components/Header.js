@@ -1,11 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useNavigation } from '@react-navigation/native';
 
-import * as Actions from '../../../../actions';
-import { RoundCloseButton } from '../../../commonComponents';
+import { RoundCloseButton, RoundImage, RoundIconButton } from '../../../commonComponents';
 import { convertDateFormatToDDMMYYYY } from '../../../utils/Functions';
-import { GenericRowView, P } from '../../../../GlobalStyle';
+import { GenericRowView, GenericColumnView, P } from '../../../../GlobalStyle';
+import { theme } from '../../../../constants/StyledComponentsTheme';
 
 const HeaderContainer = styled(GenericRowView)`
     height: 100px;
@@ -14,60 +14,66 @@ const HeaderContainer = styled(GenericRowView)`
     border-color: ${props => props.theme.$lightGray};
 `;
 
-const Image = styled.Image`
-    height: 65px;
-    width: 65px;
-    margin-left: 5px;
-    border-radius: 80px;
+const PCustom = styled(P)`
+    flex: 1;
+    margin-left: 10px;
+    font-size: 16px;
+`;
+
+const RightButtonsContainer = styled(GenericColumnView)`
+    width: ${props => props.theme.$heightOfGenericComponent}px;
+    height: 100%;
+    align-items: center;
 `;
 
 export default function Header(props) {
 
-    const dispatch = useDispatch();
-    const { matchProfile, profileImage } = props.route.params;
+    const navigation = useNavigation();
 
-    const handleCloseChatPanel = () => {
+    const { matchedProfile, profileImage } = props.route.params;
 
-    }
+    const closeChat = () => navigation.goBack();
 
     const unmatch = () => {
-        dispatch(Actions.showGenericYesNoModal(
-            true,
-            'Desfazer match?',
-            'Deseja mesmo desfazer essa match? Você pode não encontrar essa pessoa novamente na busca!',
-            'CONTINUAR',
-            'CANCELAR',
-            'genericYesNoModalUnmatch'
-        ));
+        navigation.push('GenericYesNoModal', {
+            matchedProfile,
+            title: 'Desfazer match?',
+            subtitle: 'Deseja mesmo desfazer essa match? Você pode não encontrar essa pessoa novamente na busca!',
+            acceptText: 'CONTINUAR',
+            denyText: 'CANCELAR',
+            selectedMethod: 'genericYesNoModalUnmatch'
+        });
     }
 
     return (
         <HeaderContainer>
-            <Image source={profileImage} />
 
-            <P>
-                {
-                    matchProfile && `Você deu match com ${matchProfile.firstName} em ${convertDateFormatToDDMMYYYY(new Date(matchProfile.UserMatch[0].updatedAt))}`
-                }
-            </P>
+            <RoundImage customImageStyle={{ marginLeft: 5 }} source={profileImage} />
 
-            {/* <div>
-                <div>
-                    <RoundButtonWithIcon
-                        onClick={() => handleCloseChatPanel()}
-                        iconClass={'far fa-times-circle'}
-                        iconStyle={{ color: 'var(--separatorColor)' }}
-                    />
-                </div>
+            <PCustom>
+                {matchedProfile && `Você deu match com `}
+                <PCustom style={{ fontWeight: 'bold' }}>{matchedProfile.firstName.toUpperCase()}</PCustom>
+                {`\nem ${convertDateFormatToDDMMYYYY(new Date(matchedProfile.matchInfo[0].updatedAt))}`}
+            </PCustom>
 
-                <div className={Styles.unmatchButtonDiv}>
-                    <RoundButtonWithIcon
-                        onClick={() => unmatch()}
-                        iconClass={'fas fa-user-slash'}
-                        iconStyle={{ color: 'var(--separatorColor)' }}
-                    />
-                </div>
-            </div> */}
+            <RightButtonsContainer>
+
+                <RoundCloseButton customButtonStyle={{ color: theme.$primaryColor }} onPress={closeChat} />
+
+                <RoundIconButton
+                    customButtonStyle={{
+                        height: theme.$heightOfGenericComponent - 1,
+                        width: theme.$heightOfGenericComponent - 1,
+                        backgroundColor: 'white',
+                        elevation: 0
+                    }}
+                    customIconStyle={{ color: theme.$primaryColor }}
+                    iconName={'user-alt-slash'}
+                    underlayColor={theme.$lightGray}
+                    onPress={unmatch} />
+
+            </RightButtonsContainer>
+
         </HeaderContainer>
     )
 }

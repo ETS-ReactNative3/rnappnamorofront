@@ -23,7 +23,7 @@ const Image = styled.Image`
 export default function Header(props) {
 
     const dispatch = useDispatch();
-    const { matchProfile, profileImage } = props.route.params;
+    const { matchedProfile, profileImage } = props.route.params;
 
     const handleCloseChatPanel = () => {
         
@@ -46,9 +46,9 @@ export default function Header(props) {
 
             {/* <label>
                 {
-                    matchProfile && `Você deu match com 
-                            ${matchProfile.firstName} em 
-                            ${convertDateFormatToDDMMYYYY(new Date(matchProfile.UserMatch[0].updatedAt))}`
+                    matchedProfile && `Você deu match com 
+                            ${matchedProfile.firstName} em 
+                            ${convertDateFormatToDDMMYYYY(new Date(matchedProfile.matchInfo[0].updatedAt))}`
                 }
             </label> */}
 

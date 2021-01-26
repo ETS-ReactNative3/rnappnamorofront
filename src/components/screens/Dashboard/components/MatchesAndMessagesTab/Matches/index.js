@@ -14,11 +14,11 @@ const YouHaveNoMatchesContainer = styled.View`
 
 export default function Matches() {
 
-    const { userMatchesProfile } = useSelector(state => state.dashboard);
+    const { matchedProfiles } = useSelector(state => state.dashboard);
 
     const YouHaveNoMatches = () => <YouHaveNoMatchesContainer>
         <P>{'Você ainda não tem nenhuma match!'}</P>
     </YouHaveNoMatchesContainer>
 
-    return userMatchesProfile.length > 0 ? <MatchesContent /> : <YouHaveNoMatches />
+    return matchedProfiles.length > 0 ? <MatchesContent /> : <YouHaveNoMatches />
 }

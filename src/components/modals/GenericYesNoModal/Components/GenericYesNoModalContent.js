@@ -13,7 +13,7 @@ export const PCustom = styled(P)`
 
 export default function GenericYesNoModalContent(props) {
 
-    const { subtitle, acceptText, denyText, selectedMethod, selectedUserImageId, matchProfile } = props.route.params;
+    const { subtitle, acceptText, denyText, selectedMethod, selectedUserImageId, matchedProfile } = props.route.params;
 
     const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ export default function GenericYesNoModalContent(props) {
                     dispatch(Actions.deleteAccount());
                     break;
                 case 'genericYesNoModalUnmatch':
-                    dispatch(Actions.unmatch(matchProfile.id));
+                    dispatch(Actions.unmatch(matchedProfile.id));
                     break;
                 case 'genericYesNoModalDeleteUserImage':
                     dispatch(Actions.deleteUserImage(selectedUserImageId));
@@ -54,13 +54,13 @@ export default function GenericYesNoModalContent(props) {
         <GenericRowView>
             <GenericAppButton
                 customButtonStyle={customButtonStyle}
-                textButton={denyText}
+                textButton={denyText.toUpperCase()}
                 onPress={handleClose}
             />
 
             <GenericAppButton
                 customButtonStyle={customButtonStyle}
-                textButton={acceptText}
+                textButton={acceptText.toUpperCase()}
                 onPress={acceptMethod}
             />
         </GenericRowView>

@@ -80,7 +80,7 @@ export function isCheckingIfTokenHasExpiredStatus(isCheckingIfTokenHasExpired) {
     }
 }
 
-export function getAddress(shouldGetProfilesForMatchSearcher, shouldGetUserMatchesProfile) {
+export function getAddress(shouldGetProfilesForMatchSearcher, shouldGetMatchedProfiles) {
     return async dispatch => {
 
         const geolocationError = () => {
@@ -128,7 +128,7 @@ export function getAddress(shouldGetProfilesForMatchSearcher, shouldGetUserMatch
                     //this 2 methods are here cause I need call it after get geolocation
                     shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
 
-                    shouldGetUserMatchesProfile && dispatch(getUserMatchesProfile());
+                    shouldGetMatchedProfiles && dispatch(getMatchedProfiles());
 
                 }).catch(error => console.warn(error));
             },
@@ -290,7 +290,7 @@ export function signOut() {
             firebase.auth().signOut();
 
             dispatch(cleanMatchSearcherArrayAndGetNextProfile(false));
-            dispatch(updateUserMatchesProfileArray([]));
+            dispatch(updateMatchedProfilesArray([]));
 
             dispatch(setAccessTokenOnStorageAndRedux(''));
             dispatch(signOutAction());
@@ -299,11 +299,10 @@ export function signOut() {
 
             RootNavigationRef.reset('Home');
 
-        } catch (error) {
+        } catch (err) {
 
-            dispatch(showLoader(false));
+            dispatch(handleActionError(err));
             dispatch(setAccessTokenOnStorageAndRedux(''));
-            dispatch(signOutAction());
         }
     }
 }
@@ -312,7 +311,7 @@ export function signOutAction() {
     return { type: Types.AUTH_SIGN_OUT };
 }
 
-export function getUserMatchesProfile() {
+export function getMatchedProfiles() {
     return async (dispatch, getState) => {
         //get only profiles that was already matched with current user
 
@@ -334,7 +333,7 @@ export function getUserMatchesProfile() {
                 ))
             });
 
-            dispatch(updateUserMatchesProfileArray(res.data));
+            dispatch(updateMatchedProfilesArray(res.data));
 
         } catch (err) {
             dispatch(handleActionError(err));
@@ -342,10 +341,10 @@ export function getUserMatchesProfile() {
     }
 }
 
-export function updateUserMatchesProfileArray(userMatchesProfile) {
+export function updateMatchedProfilesArray(matchedProfiles) {
     return {
-        type: Types.UPDATE_USER_MATCHES_PROFILE_ARRAY,
-        userMatchesProfile
+        type: Types.UPDATE_MATCHED_PROFILES_ARRAY,
+        matchedProfiles
     }
 }
 
@@ -401,7 +400,6 @@ export function getNextProfileForTheMatchSearcher() {
 
         } catch (err) {
             dispatch(isSearchingProfileStatus(false));
-            dispatch(showLoader(false));
             dispatch(handleActionError(err));
         }
     }
@@ -443,8 +441,6 @@ export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArray
             shouldCleanMatchSearcherArray && dispatch(cleanMatchSearcherArrayAndGetNextProfile(true));
 
         } catch (err) {
-
-            dispatch(showLoader(false));
             dispatch(handleActionError(err));
         }
     }
@@ -475,13 +471,13 @@ export function ignoreCurrentProfile(profile) {
 
 export function likeCurrentProfile(profile, superLike) {
     return dispatch => {
-        dispatch(createOrUpdateUserMatch(profile, superLike));
+        dispatch(createOrUpdateMatchedProfile(profile, superLike));
         dispatch(removeUserFromMatchSearcher(profile.id));
         dispatch(getNextProfileForTheMatchSearcher());
     }
 }
 
-export function createOrUpdateUserMatch(profile, superLike) {
+export function createOrUpdateMatchedProfile(profile, superLike) {
     return async (dispatch, getState) => {
 
         const dashboardState = getState().dashboard;
@@ -496,7 +492,7 @@ export function createOrUpdateUserMatch(profile, superLike) {
 
             if (res.data === 'you have a match!') {
 
-                dispatch(getUserMatchesProfile());
+                dispatch(getMatchedProfiles());
                 dispatch(openYouHaveAMatchModal(true));
             }
 
@@ -525,7 +521,7 @@ export function getUserData(
     shouldGetAddress,
     shouldGetProfilesForMatchSearcher,
     shouldSignInOnFirebase,
-    shouldGetUserMatchesProfile
+    shouldGetMatchedProfiless
 ) {
 
     const populateSearchingByDesc = (userData) => {
@@ -607,10 +603,10 @@ export function getUserData(
 
             //doing the following verification because getAddress() gets match profile too... so it won't get it twice
             if (shouldGetAddress)
-                dispatch(getAddress(shouldGetProfilesForMatchSearcher, shouldGetUserMatchesProfile));
+                dispatch(getAddress(shouldGetProfilesForMatchSearcher, shouldGetMatchedProfiless));
             else {
                 shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
-                shouldGetUserMatchesProfile && dispatch(getUserMatchesProfile());
+                shouldGetMatchedProfiless && dispatch(getMatchedProfilessProfile());
             }
 
         } catch (err) {
@@ -678,7 +674,6 @@ export function sendNewUserContact(name, email, subject, message) {
             successNotification('Contato enviado com sucesso! Obrigado por nos contactar.');
 
         } catch (err) {
-            dispatch(showLoader(false));
             dispatch(handleActionError(err));
         }
     }
@@ -826,8 +821,6 @@ export function signUpAction(userData, navigation) {
             dispatch(showLoader(false));
 
         } catch (err) {
-
-            dispatch(showLoader(false));
             dispatch(handleActionError(err));
         }
     }
@@ -847,8 +840,6 @@ export function deleteUserImage(imageId) {
             RootNavigationRef.goBack();
 
         } catch (err) {
-
-            dispatch(showLoader(false));
             dispatch(handleActionError(err));
         }
     }
@@ -862,33 +853,38 @@ export function unmatch(profileId) {
 
         try {
 
+            dispatch(showLoader(true));
+
             await Api({ accessToken: authState.accessToken }).post(`users/unmatch`,
                 { userId: dashboardState.userData.id, profileId }
             );
 
             await dispatch(removeAllConversationsFromThisMatch(profileId));
+
+            dispatch(showLoader(false));
+
             dispatch(getUserData(true, true, false, true));
-            //dispatch(showGenericYesNoModal(false));
+
+            RootNavigationRef.goBack();//hides yesNo modal
+            RootNavigationRef.goBack();//hides chat screen modal
 
         } catch (err) {
-
             dispatch(handleActionError(err));
         }
     }
 }
 
-export function removeAllConversationsFromThisMatch(profileId) {
+export function removeAllConversationsFromThisMatch(matchedProfileId) {
     return async (dispatch, getState) => {
 
-        const dashboardState = getState().dashboard;
+        const loggedUserId = getState().dashboard.userData.id;
 
         try {
-
             const db = firebase.firestore();
 
             const conversation1 = db.collection('chat')
-                .where('userId_1', '==', dashboardState.userData.id)
-                .where('userId_2', '==', profileId);
+                .where('userId_1', '==', loggedUserId)
+                .where('userId_2', '==', matchedProfileId);
 
             conversation1.get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
@@ -897,8 +893,8 @@ export function removeAllConversationsFromThisMatch(profileId) {
             });
 
             const conversation2 = db.collection('chat')
-                .where('userId_1', '==', profileId)
-                .where('userId_2', '==', dashboardState.userData.id);
+                .where('userId_1', '==', matchedProfileId)
+                .where('userId_2', '==', loggedUserId);
 
             conversation2.get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
@@ -907,7 +903,6 @@ export function removeAllConversationsFromThisMatch(profileId) {
             });
 
         } catch (err) {
-
             dispatch(handleActionError(err));
         }
     }
@@ -923,14 +918,11 @@ export function deleteAccount() {
 
         try {
 
-            await Api({ accessToken: authState.accessToken }).delete(
-                `account/delete-account/${dashboardState.userData.id}`
-            ).then(() =>
-                dispatch(signOut())
-            );
+            await Api({ accessToken: authState.accessToken })
+                .delete(`account/delete-account/${dashboardState.userData.id}`)
+                .then(() => dispatch(signOut()));
 
         } catch (err) {
-            dispatch(showLoader(false));
             dispatch(handleActionError(err));
         }
     }

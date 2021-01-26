@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigation } from '@react-navigation/native';
 
 import { theme } from '../../../../../../../constants/StyledComponentsTheme';
 import noProfile from '../../../../../../../assets/noProfile.png';
 import { GenericColumnView, P } from '../../../../../../../GlobalStyle';
+import { RoundImage } from '../../../../../../commonComponents';
 
 const MatchItemBorderRadius = 80;
 
@@ -24,22 +26,20 @@ const MatchItemButton = styled.TouchableHighlight`
     border-color: ${props => props.theme.$primaryColor};
 `;
 
-const MatchImage = styled.Image`
-    height: 100%;
-    width: 100%;
-    border-radius: ${MatchItemBorderRadius}px;
-`;
+export default function MatchItem({ matchedProfile }) {
 
-export default function MatchItem(matchItem) {
+    const navigation = useNavigation();
 
-    const { userImages, firstName } = matchItem.item;
+    const { userImages, firstName } = matchedProfile;
 
-    const imageSource = userImages.length > 0 ? { uri: userImages[0].imageUrl } : noProfile;
+    const profileImage = userImages.length > 0 ? { uri: userImages[0].imageUrl } : noProfile;
+
+    const openChatScreen = () => navigation.push('ChatModal', { profileImage, matchedProfile });
 
     return <MatchItemContainer>
 
-        <MatchItemButton underlayColor={theme.$lightGray} onPress={() => null}>
-            <MatchImage source={imageSource} />        
+        <MatchItemButton underlayColor={theme.$lightGray} onPress={openChatScreen}>
+            <RoundImage customImageStyle={{ height: '100%', width: '100%' }} source={profileImage} />
         </MatchItemButton>
 
         <P>{firstName}</P>

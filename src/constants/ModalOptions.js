@@ -7,7 +7,7 @@ export const modalOptions = {
     cardStyleInterpolator: ({ current: { progress } }) => ({
         overlayStyle: {
             opacity: progress.interpolate({
-                inputRange: [0, 1],
+                inputRange: [0, 5],
                 outputRange: [0, 0.6],
                 extrapolate: "clamp"
             })
