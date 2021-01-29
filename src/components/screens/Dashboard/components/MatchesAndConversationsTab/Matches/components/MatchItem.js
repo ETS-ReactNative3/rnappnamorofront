@@ -6,6 +6,7 @@ import { theme } from '../../../../../../../constants/StyledComponentsTheme';
 import noProfile from '../../../../../../../assets/noProfile.png';
 import { GenericColumnView, P } from '../../../../../../../GlobalStyle';
 import { RoundImage } from '../../../../../../commonComponents';
+import { setLimitCharactereSizeToString } from '../../../../../../utils/Functions';
 
 const MatchItemBorderRadius = 80;
 
@@ -42,7 +43,7 @@ export default function MatchItem({ matchedProfile }) {
             <RoundImage customImageStyle={{ height: '100%', width: '100%' }} source={profileImage} />
         </MatchItemButton>
 
-        <P>{firstName}</P>
+        <P>{setLimitCharactereSizeToString(firstName, 10)}</P>
 
     </MatchItemContainer>
 }

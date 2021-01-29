@@ -6,6 +6,7 @@ import { theme } from '../../../../../../../constants/StyledComponentsTheme';
 import { RoundImage } from '../../../../../../commonComponents';
 import { GenericColumnView, GenericRowView, P } from '../../../../../../../GlobalStyle';
 import noProfile from '../../../../../../../assets/noProfile.png';
+import { setLimitCharactereSizeToString } from '../../../../../../utils/Functions';
 
 const Button = styled.TouchableHighlight`
     height: 80px;
@@ -62,8 +63,8 @@ export default function ConversationItem({ conversationItem, matchedProfile }) {
             <RoundImage customImageStyle={{ marginLeft: 5 }} source={profileImage} />
 
             <TextContainer>
-                <PTitle>{`${firstName} ${lastName}`}</PTitle>
-                <PMessage>{message}</PMessage>
+                <PTitle>{setLimitCharactereSizeToString(`${firstName} ${lastName}`, 30)}</PTitle>
+                <PMessage>{setLimitCharactereSizeToString(message, 37)}</PMessage>
             </TextContainer>
 
             <TimeContainer>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Text } from 'react-native';
 import styled from 'styled-components';
 
 import { GenericRowView } from '../../GlobalStyle';
@@ -40,7 +39,7 @@ export default SocialButton = (props) => {
 
             <ButtonText>
                 {'Entrar com '}
-                <Text style={{ fontWeight: 'bold' }}>{props.text}</Text>
+                <ButtonText style={{ fontWeight: 'bold' }}>{props.text}</ButtonText>
             </ButtonText>
 
         </ButtonContainer>

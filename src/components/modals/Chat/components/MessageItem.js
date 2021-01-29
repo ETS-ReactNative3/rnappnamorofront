@@ -34,7 +34,7 @@ const TimeText = styled.Text`
 
 export default class MessageItem extends React.PureComponent {
     render() {
-        const { messageItem, userId} = this.props;
+        const { messageItem, userId } = this.props;
         const { message, hourMinute, userId_1 } = messageItem;
         const { $myChatMessageColor, $notMyChatMessageColor, $bigBorderRadius, $textColor } = theme;
 

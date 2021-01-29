@@ -112,8 +112,15 @@ export function convertDateFormatToHHMM(date) {
 }
 
 export function handleUserBirthday(birthday) {
-
     //this validation is needed cause if there's no birthdayon database, it brings todays date on userData.birthday:
     return convertDateFormatToDDMMYYYY(birthday) != convertDateFormatToDDMMYYYY(new Date()) ?
         convertDateFormatToDDMMYYYY(birthday) : null
+}
+
+export function setLimitCharactereSizeToString(str, limitSize) {
+
+    let finalStr = str.substring(0, limitSize);
+    finalStr = finalStr.length >= limitSize ? finalStr + '...' : finalStr;
+
+    return finalStr;
 }
