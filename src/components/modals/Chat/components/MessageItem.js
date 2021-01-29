@@ -3,49 +3,62 @@ import styled from 'styled-components';
 
 import { theme } from '../../../../constants/StyledComponentsTheme';
 
-const MessageContainer = styled.View`
-    min-height: 40px;
+const MainContainer = styled.View`
+    min-height: 50px;
     height: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+`;
+
+const MessageContainer = styled.View`
+    min-height: 50px;
+    height: auto;
+    min-width: 60px;
     max-width: 80%;
     justify-content: center;
     border-radius: ${props => props.theme.$bigBorderRadius}px;
+    padding: 15px;
 `;
 
 const MessageText = styled.Text`
-    font-size: 15px;
-    margin-left: 10px;
+    font-size: 16px;
+    margin-bottom: 6px;
 `;
 
-const MessageTex2t = styled.Text`
-    font-size: 15px;
-    margin-left: 10px;
+const TimeText = styled.Text`
+    font-size: 11px;
+    position: absolute;
+    bottom: 3px;
 `;
 
-export default function MessageItem({ messageItem, userId }) {
+export default class MessageItem extends React.PureComponent {
+    render() {
+        const { messageItem, userId} = this.props;
+        const { message, hourMinute, userId_1 } = messageItem;
+        const { $myChatMessageColor, $notMyChatMessageColor, $bigBorderRadius, $textColor } = theme;
 
-    const { message, userId_1, userId_2 } = messageItem;
-    const { $myChatMessageColor, $notMyChatMessageColor } = theme;
+        const customContainerStyle = { alignItems: userId_1 == userId ? 'flex-end' : 'flex-start' };
 
-    const customBalloonStyle = {
-        backgroundColor: userId_1 == userId ? $myChatMessageColor : $notMyChatMessageColor
-    };
+        const customMessageContainerStyle = {
+            backgroundColor: userId_1 == userId ? $myChatMessageColor : $notMyChatMessageColor,
+            borderBottomRightRadius: userId_1 == userId ? 0 : $bigBorderRadius,
+            borderBottomLeftRadius: userId_1 != userId ? 0 : $bigBorderRadius
+        };
 
-    return <MessageContainer style={customBalloonStyle}>
-        <MessageText>{message}</MessageText>
-    </MessageContainer>
-    // return <div key={index} className={Styles.messageBalloonDiv}>
+        const customTextStyle = { color: userId_1 == userId ? 'white' : $textColor };
 
-    //     <div className={Classes({
-    //         [Styles.messageBalloon]: true,
-    //         [Styles.messageBalloonRight]: item.userId_1 == userData.id,
-    //         [Styles.messageBalloonLeft]: item.userId_1 != userData.id
-    //     })}>
+        const customTimeStyle = userId_1 == userId ? { right: 5 } : { left: 5 };
 
-    //         <label className={Styles.messageBalloonTextLabel}>{item.message}</label>
+        return <MainContainer style={customContainerStyle}>
 
-    //         <label style={{ color: item.userId_1 != userData.id && 'var(--lightTextColor)' }}
-    //             className={Styles.messageBalloonTimeLabel}>{item.hourMinute}
-    //         </label>
-    //     </div>
-    // </div>
+            <MessageContainer style={customMessageContainerStyle}>
+
+                <MessageText style={customTextStyle}>{message}</MessageText>
+                <TimeText style={[customTextStyle, customTimeStyle]}>{hourMinute}</TimeText>
+
+            </MessageContainer>
+
+        </MainContainer>
+    }
 }

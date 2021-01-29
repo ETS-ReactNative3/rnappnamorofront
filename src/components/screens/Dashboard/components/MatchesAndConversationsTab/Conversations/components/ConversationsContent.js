@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 
 import ConversationItem from './ConversationItem';
-
-const ConversationsList = styled.FlatList`
-    flex: 1;
-`;
+import { GenericDataList } from '../../../../../../commonComponents';
 
 export default function ConversationsContent() {
 
@@ -45,9 +41,13 @@ export default function ConversationsContent() {
         setConversations(conversationsFinal);
     }
 
-    return <ConversationsList
+    const ConversationItemFL = ({ item }) => <ConversationItem
+        matchedProfile={item.matchedProfile}
+        conversationItem={item}
+    />
+
+    return <GenericDataList
         data={conversations}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <ConversationItem matchedProfile={item.matchedProfile} conversationItem={item} />}
+        renderItem={ConversationItemFL}
     />
 }

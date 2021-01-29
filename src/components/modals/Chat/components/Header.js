@@ -8,7 +8,7 @@ import { GenericRowView, GenericColumnView, P } from '../../../../GlobalStyle';
 import { theme } from '../../../../constants/StyledComponentsTheme';
 
 const HeaderContainer = styled(GenericRowView)`
-    height: 100px;
+    height: 80px;
     border-bottom-width: 0.9px;
     align-items: center;
     border-color: ${props => props.theme.$lightGray};
@@ -56,19 +56,29 @@ export default function Header({ matchedProfile, profileImage }) {
 
             <RightButtonsContainer>
 
-                <RoundCloseButton customButtonStyle={{ color: theme.$primaryColor }} onPress={closeChat} />
+                <RoundCloseButton
+                    onPress={closeChat}
+                    customButtonStyle={{
+                        height: 40,
+                        width: 40,
+                        marginRight: 5,
+                        color: theme.$primaryColor
+                    }}
+                />
 
                 <RoundIconButton
                     customButtonStyle={{
-                        height: theme.$heightOfGenericComponent - 1,
-                        width: theme.$heightOfGenericComponent - 1,
+                        height: 40,
+                        width: 40,
+                        margin: -1,
                         backgroundColor: 'white',
-                        elevation: 0
+                        elevation: 0,
                     }}
                     customIconStyle={{ color: theme.$primaryColor }}
                     iconName={'user-alt-slash'}
                     underlayColor={theme.$lightGray}
-                    onPress={unmatch} />
+                    onPress={unmatch}
+                />
 
             </RightButtonsContainer>
 

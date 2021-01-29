@@ -251,6 +251,10 @@ export function getRealtimeMessagesFromFirebase() {
                                 hourMinute: convertDateFormatToHHMM(item.createdAt.toDate())
                             }));
 
+                            realTimeFirebaseChatFinal = realTimeFirebaseChatFinal.map((item, index) =>
+                                ({ ...item, id: (item.createdAt.nanoseconds + item.createdAt.seconds + index).toString() })
+                            );
+
                             dispatch({
                                 type: Types.UPDATE_REAL_TIME_FIREBASE_CHAT,
                                 realTimeFirebaseChat: realTimeFirebaseChatFinal

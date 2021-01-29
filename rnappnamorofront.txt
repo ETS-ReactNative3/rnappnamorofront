@@ -5,6 +5,8 @@ on notification.js I reaplaced dangerNotification and successNotification by Ale
 
 tratar erros do servidor de maneira mais amigável, usando imagens legais como os macaquinhos do youtube
 
+check if token hasexpired before send message to firebase
+
 if is open in one device, cannot be opened in another window. Otherwise it's goind to behavior not as expected
 *******************************
 Importants
