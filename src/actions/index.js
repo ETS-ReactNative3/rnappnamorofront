@@ -266,14 +266,15 @@ export function getRealtimeMessagesFromFirebase() {
     }
 }
 
-export function sendMessageToFirebase(message, profileId) {
+export function sendMessageToFirebase(message, matchedProfileId) {
     return async (dispatch, getState) => {
 
         const db = firebase.firestore();
+
         await db.collection('chat')
             .add({
                 userId_1: getState().dashboard.userData.id,
-                userId_2: profileId,
+                userId_2: matchedProfileId,
                 createdAt: new Date(),
                 isView: false,
                 message

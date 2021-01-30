@@ -19,7 +19,6 @@ export default function PhoneEditor({ navigation }) {
     }), [phoneLocal]);
 
     const customButtonStyle = {
-        backgroundColor: !isUpdateButtonEnable && theme.$lightGray,
         alignSelf: 'center',
         marginTop: 20
     }
@@ -39,7 +38,7 @@ export default function PhoneEditor({ navigation }) {
         />
 
         <GenericAppButton
-            underlayColor={!isUpdateButtonEnable && theme.$lightGray}
+            enable={isUpdateButtonEnable}
             customButtonStyle={customButtonStyle}
             textButton='Atualizar telefone'
             onPress={updateUserPhone}

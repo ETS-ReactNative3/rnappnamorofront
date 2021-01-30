@@ -43,7 +43,7 @@ export default function MatchItem({ matchedProfile }) {
             <RoundImage customImageStyle={{ height: '100%', width: '100%' }} source={profileImage} />
         </MatchItemButton>
 
-        <P>{setLimitCharactereSizeToString(firstName, 10)}</P>
+        <P>{setLimitCharactereSizeToString(firstName, 11)}</P>
 
     </MatchItemContainer>
 }

@@ -78,13 +78,13 @@ export default function SocialButtons() {
     }
 
     return <SocialButtonsContainer>
-        <SocialButton onPress={() => facebookLogin()}
+        <SocialButton onPress={facebookLogin}
             customButtonStyle={{ backgroundColor: '#337ab7' }}
             underlayColor={'#0863b3'}
             text={'Facebook'}
             iconName={'facebook'} />
 
-        <SocialButton onPress={() => googleLogin()}
+        <SocialButton onPress={googleLogin}
             customButtonStyle={{ backgroundColor: '#d9534f' }}
             underlayColor={'#ca2c27'}
             text={'Google'}

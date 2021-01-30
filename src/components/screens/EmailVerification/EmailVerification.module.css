@@ -1,8 +1,0 @@
-.form {
-    min-width: var(--defaultMinModalWidth);
-    max-width: 600px;
-    width: 80%;
-    min-height: 275px;
-    max-height: 275px;
-    height: 350px;
-}

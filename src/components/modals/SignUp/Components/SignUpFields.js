@@ -21,6 +21,8 @@ export default function SignUpFields() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
+    const { $lightGray, $gray } = theme;
+
     const [firstName, setFirstName] = useState('a');
     const [lastName, setLastName] = useState('s');
     const [email, setEmail] = useState('diego6d@gmail.com');
@@ -158,10 +160,10 @@ export default function SignUpFields() {
             returnKeyType={'next'}
             value={password}
             onChangeText={(value) => setPassword(value)}
-            customIconStyle={{ color: theme.$gray }}
+            customIconStyle={{ color: $gray }}
             iconName={passwordSecureTextEntry ? 'eye' : 'eye-slash'}
             secureTextEntry={passwordSecureTextEntry}
-            underlayColor={theme.$gray}
+            underlayColor={$lightGray}
             onButtonPress={() => setPasswordSecureTextEntry(!passwordSecureTextEntry)}
             onSubmitEditing={() => tiPasswordConfirmation.current.focus()}
         />
@@ -173,10 +175,10 @@ export default function SignUpFields() {
             solidIcon
             value={passwordConfirmation}
             onChangeText={(value) => setPasswordConfirmation(value)}
-            customIconStyle={{ color: theme.$gray }}
+            customIconStyle={{ color: $gray }}
             iconName={passwordConfirmationSecureTextEntry ? 'eye' : 'eye-slash'}
             secureTextEntry={passwordConfirmationSecureTextEntry}
-            underlayColor={theme.$gray}
+            underlayColor={$lightGray}
             onButtonPress={() => setPasswordConfirmationSecureTextEntry(!passwordConfirmationSecureTextEntry)}
         />
 

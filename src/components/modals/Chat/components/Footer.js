@@ -1,74 +1,90 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { Keyboard } from 'react-native';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import * as Actions from '../../../../actions';
-import { RoundCloseButton } from '../../../commonComponents';
-import { convertDateFormatToDDMMYYYY } from '../../../utils/Functions';
+import { TextInput, GenericAppButton, RoundIconButton } from '../../../commonComponents';
 import { GenericRowView } from '../../../../GlobalStyle';
+import { theme } from '../../../../constants/StyledComponentsTheme';
+import { successNotification } from '../../../utils/Notifications';
 
-const HeaderContainer = styled(GenericRowView)`
-    height: 200px;
-    border-bottom-width: 1px;
-    border-color: red;
+const MainContainer = styled(GenericRowView)`
+    height: 60px;
+    background-color: white;
+    border-top-width: 0.4px;
+    border-color: ${props => props.theme.$lightGray};
+    justify-content: center;
+    align-items: center;
 `;
 
-const Image = styled.Image`
-    height: 65px;
-    width: 65px;
-    margin-left: 5px;
-    border-radius: 80px;
-`;
+export default function Footer({ matchedProfile }) {
 
-export default function Header(props) {
-
+    const tiMessage = useRef();
     const dispatch = useDispatch();
-    const { matchedProfile, profileImage } = props.route.params;
 
-    const handleCloseChatPanel = () => {
-        
+    const { $lightGray, $primaryColor } = theme;
+
+    const [message, setMessage] = useState('');
+    const [isSendingMessage, setIsSendingMessage] = useState(false);
+    const [sendMessageButtonEnable, setSendMessageButtonEnable] = useState(false);
+
+    useEffect(() => {
+        setSendMessageButtonEnable(message != '');
+    }, [message]);
+
+    const sendMessage = async () => {
+
+        Keyboard.dismiss();
+
+        if (message != '' && !isSendingMessage) {
+            setIsSendingMessage(true);
+
+            dispatch(Actions.sendMessageToFirebase(message, matchedProfile.id))
+                .then(() => {
+                    setIsSendingMessage(false);
+                    setMessage('');
+                });
+        }
     }
 
-    const unmatch = () => {
-        dispatch(Actions.showGenericYesNoModal(
-            true,
-            'Desfazer match?',
-            'Deseja mesmo desfazer essa match? Você pode não encontrar essa pessoa novamente na busca!',
-            'CONTINUAR',
-            'CANCELAR',
-            'genericYesNoModalUnmatch'
-        ));
-    }
+    const handleEmoticonClick = () => successNotification(
+        'Emoticons não estão disponíveis no momento, estamos trabalhando para disponibilizá-los assim que possível! =)'
+    );
 
-    return (
-        <HeaderContainer>
-            <Image source={profileImage} />
+    const customInputStyle = {
+        borderWidth: 0,
+    };
 
-            {/* <label>
-                {
-                    matchedProfile && `Você deu match com 
-                            ${matchedProfile.firstName} em 
-                            ${convertDateFormatToDDMMYYYY(new Date(matchedProfile.matchInfo[0].updatedAt))}`
-                }
-            </label> */}
+    const customEmoticonButtonStyle = {
+        backgroundColor: 'white',
+        elevation: 0
+    };
 
-            {/* <div>
-                <div>
-                    <RoundButtonWithIcon
-                        onClick={() => handleCloseChatPanel()}
-                        iconClass={'far fa-times-circle'}
-                        iconStyle={{ color: 'var(--separatorColor)' }}
-                    />
-                </div>
+    return <MainContainer>
+        <TextInput
+            reference={tiMessage}
+            customInputStyle={customInputStyle}
+            placeholder={'Digite uma mensagem'}
+            solidIcon
+            returnKeyType={'done'}
+            value={message}
+            onChangeText={value => setMessage(value)}
+        />
 
-                <div className={Styles.unmatchButtonDiv}>
-                    <RoundButtonWithIcon
-                        onClick={() => unmatch()}
-                        iconClass={'fas fa-user-slash'}
-                        iconStyle={{ color: 'var(--separatorColor)' }}
-                    />
-                </div>
-            </div> */}
-        </HeaderContainer>
-    )
+        <RoundIconButton
+            customButtonStyle={customEmoticonButtonStyle}
+            customIconStyle={{ fontSize: 30, color: $primaryColor }}
+            iconName={'smile-wink'}
+            underlayColor={$lightGray}
+            onPress={handleEmoticonClick}
+        />
+
+        <GenericAppButton
+            enable={sendMessageButtonEnable}
+            customButtonStyle={{ width: 80, marginRight: 5 }}
+            textButton={'Enviar'}
+            onPress={sendMessage}
+        />
+    </MainContainer>
 }

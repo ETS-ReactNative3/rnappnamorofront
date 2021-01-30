@@ -19,6 +19,7 @@ const UserInfoEditorContainer = styled(GenericContainer)`
     height: auto;
     padding-right: 10px;
     padding-left: 10px;
+    align-items: center;
 `;
 
 export default function UserInfoEditor() {

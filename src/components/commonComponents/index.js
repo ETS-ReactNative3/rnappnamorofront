@@ -20,3 +20,4 @@ export { default as ConfigItem } from './ConfigItem';
 export { default as RoundCloseButton } from './RoundCloseButton';
 export { default as RoundImage } from './RoundImage';
 export { default as GenericDataList } from './GenericDataList';
+export { default as TextInput } from './TextInput';

@@ -5,9 +5,10 @@ const MessagesList = styled.FlatList`
     flex: 1;
 `;
 
-export default GenericDataList = ({ data, renderItem, inverted, horizontal }) => {
+export default GenericDataList = ({ data, renderItem, inverted, horizontal, customContentContainerStyle }) => {
     //this component uses a performatically configured flatList
     return <MessagesList
+        contentContainerStyle={customContentContainerStyle}
         data={data}
         inverted={inverted}
         horizontal={horizontal}

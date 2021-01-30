@@ -51,7 +51,6 @@ export default function EmailEditor() {
     }
 
     const customButtonStyle = {
-        backgroundColor: verifiedEmailLocal && theme.$lightGray,
         alignSelf: 'center',
         marginTop: 20
     }
@@ -73,7 +72,7 @@ export default function EmailEditor() {
         <EmailStatusText />
 
         <GenericAppButton
-            underlayColor={verifiedEmailLocal && theme.$lightGray}
+            enable={!verifiedEmailLocal}
             customButtonStyle={customButtonStyle}
             textButton='Me envie um email de verificação'
             onPress={sendEmailVerification}

@@ -10,6 +10,7 @@ import { pickFile } from './uploadMedia';
 
 const PicturesEditorContainer = styled(GenericContainer)`
     height: auto;
+    align-items: center;
 `;
 
 const PicturesContainer = styled(GenericColumnView)`

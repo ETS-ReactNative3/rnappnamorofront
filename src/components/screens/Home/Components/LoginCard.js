@@ -92,7 +92,7 @@ export default function LoginCard(props) {
             customIconStyle={{ color: theme.$gray }}
             iconName={passwordSecureTextEntry ? 'eye-slash' : 'eye'}
             secureTextEntry={passwordSecureTextEntry}
-            underlayColor={theme.$gray}
+            underlayColor={theme.$lightGray}
             onButtonPress={() => setPasswordSecureTextEntry(!passwordSecureTextEntry)}
         />
 

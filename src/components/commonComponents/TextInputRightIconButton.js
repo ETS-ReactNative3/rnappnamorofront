@@ -53,12 +53,15 @@ export default TextInputRightIconButton = (props) => {
         underlayColor,
         multiline,
         customContainerStyle,
+        customInputStyle,
         textAlignVertical,
         onButtonPress
     } = props;
 
     return <MainContainer style={customContainerStyle}>
         <Input
+            ref={reference}
+            style={customInputStyle}
             placeholder={placeholder}
             value={value}
             onChangeText={onChangeText}
@@ -68,7 +71,6 @@ export default TextInputRightIconButton = (props) => {
             keyboardType={keyboardType}
             multiline={multiline}
             textAlignVertical={textAlignVertical}
-            ref={reference}
         />
 
         {

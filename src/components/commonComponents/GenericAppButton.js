@@ -26,18 +26,26 @@ const Gradient = styled(LinearGradient)`
     border-radius: ${props => props.theme.$bigBorderRadius}px;
 `;
 
-export default GenericAppButton = (props) => {
+export default GenericAppButton = ({ customButtonStyle, underlayColor, onPress, textButton, enable }) => {
 
-    const { customButtonStyle, underlayColor, onPress, textButton } = props;
+    const { $lightGray, $degradeColor_1, $degradeColor_2 } = theme;
 
-    return <Button style={customButtonStyle} underlayColor={underlayColor} onPress={onPress}>
+    const customButtonStyleLocal = {
+        backgroundColor: !enable && $lightGray
+    };
+
+    return <Button
+        style={[customButtonStyleLocal, customButtonStyle]}
+        underlayColor={!enable ? $lightGray : underlayColor}
+        onPress={onPress}
+    >
         {
-            !customButtonStyle.backgroundColor ?
-                <Gradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={[theme.$degradeColor_1, theme.$degradeColor_2]}>
-                    <ButtonText>{textButton}</ButtonText>
-                </Gradient>
-                :
+            !enable ?
                 <ButtonText>{textButton}</ButtonText>
+                :
+                <Gradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={[$degradeColor_1, $degradeColor_2]}>
+                    <ButtonText>{textButton}</ButtonText>
+                </Gradient >
         }
-    </Button>
+    </Button >
 }
