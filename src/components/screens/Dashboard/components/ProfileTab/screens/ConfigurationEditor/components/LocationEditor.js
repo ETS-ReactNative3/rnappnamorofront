@@ -37,16 +37,11 @@ export default function LocationEditor() {
                 <PTitle>Minha Localização atual</PTitle>
                 <PCustom>{address ? address : 'Não definida'}</PCustom>
             </GenericColumnView>
-            
+
         </AddressInfo>
     }
 
-    const customScrollViewStyle = {
-        marginTop: 10,
-        width: Dimensions.get('window').width
-    }
-
-    return <GenericScrollView customStyle={customScrollViewStyle}>
+    return <GenericScrollView customStyle={{ marginTop: 10 }}>
 
         <AddressComponent />
 

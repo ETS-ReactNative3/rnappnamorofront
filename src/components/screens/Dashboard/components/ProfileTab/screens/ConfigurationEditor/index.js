@@ -14,11 +14,6 @@ const MainContainer = styled(GenericContainer)`
     background-color: ${props => props.theme.$darkerBackgroundColor};
 `;
 
-const BodyContainer = styled(GenericContainer)`
-    padding-left: 10px;
-    padding-right: 10px;
-`;
-
 export default function ConfigurationEditor(props) {
 
     const { selectedConfigMenu, selectedConfigMenuTitle } = useSelector(state => state.dashboard);
@@ -28,7 +23,7 @@ export default function ConfigurationEditor(props) {
             case 'emailEditor':
                 return <EmailEditor />
             case 'phoneEditor':
-                return <PhoneEditor navigation={props.navigation}/>
+                return <PhoneEditor navigation={props.navigation} />
             case 'locationEditor':
                 return <LocationEditor />
             case 'searchingByEditor':
@@ -44,9 +39,7 @@ export default function ConfigurationEditor(props) {
 
         <SectionTitle titleText={selectedConfigMenuTitle} />
 
-        <BodyContainer>
-            <RenderBody />
-        </BodyContainer>
+        <RenderBody />
 
     </MainContainer>
 }

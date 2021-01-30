@@ -52,10 +52,10 @@ export default function EmailEditor() {
 
     const customButtonStyle = {
         alignSelf: 'center',
-        marginTop: 20
+        marginTop: 20,
     }
 
-    return <GenericScrollView>
+    return <GenericScrollView customStyle={{ paddingLeft: 10, paddingRight: 10 }}>
 
         <TextInputRightIconButton
             placeholder={'Digite seu email aqui'}

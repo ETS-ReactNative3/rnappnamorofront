@@ -28,7 +28,7 @@ export default function PhoneEditor({ navigation }) {
             .then(() => navigation.goBack());
     }
 
-    return <GenericScrollView>
+    return <GenericScrollView customStyle={{ paddingLeft: 10, paddingRight: 10 }}>
 
         <TextInputRightIconButton
             placeholder={'Digite seu telefone aqui'}

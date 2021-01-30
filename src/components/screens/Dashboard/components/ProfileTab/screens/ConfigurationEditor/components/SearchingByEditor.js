@@ -31,12 +31,7 @@ export default function SearchingByEditor() {
         }
     }
 
-    const customScrollViewStyle = {
-        marginTop: 10,
-        width: Dimensions.get('window').width
-    }
-
-    return <GenericScrollView customStyle={customScrollViewStyle}>
+    return <GenericScrollView customStyle={{ marginTop: 10 }}>
 
         <ConfigItem
             leftText={'HOMENS'}
