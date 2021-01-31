@@ -1,6 +1,7 @@
 import ImagePicker from 'react-native-image-crop-picker';
 
 import { dangerNotification } from '../../../../../../../../utils/Notifications';
+import { handleError } from '../../../../../../../../utils/Functions';
 import * as Actions from '../../../../../../../../../actions';
 
 export function pickFile(userImagesLength, dispatch) {
@@ -22,7 +23,7 @@ export function pickFile(userImagesLength, dispatch) {
             uploadMedia(pickedImages, userImagesLength, dispatch);
         });
     } catch (err) {
-        console.log(err);
+        handleError(err);
     }
 }
 

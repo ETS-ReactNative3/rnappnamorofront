@@ -2,7 +2,7 @@ import * as Types from '../constants/Types';
 
 const defaultUserData = {
     ageRange: [25, 35],
-    maxDistance: [80],
+    maxDistance: 80,
     searchingBy: { key: 2, label: 'TODOS' },
     firstName: '',
     lastName: '',
@@ -16,7 +16,7 @@ const INITIAL_STATE = {
     isChatPanelOpen: false,
     isMobileConfigOpen: false,
     isMobileEditInfoOpen: false,
-    isSearchingProfiles: true,
+    isGettingProfileForTheMatchSearcher: null,
     userData: defaultUserData,
     matchSearcherProfiles: [],
     matchedProfiles: [],
@@ -55,16 +55,16 @@ export default (state = INITIAL_STATE, action) => {
             }
         case Types.PROFILE_CARD_EDIT_MODE:
             return { ...state, isProfileCardEditModeOpen: action.isProfileCardEditModeOpen }
-        case Types.ADD_USER_TO_THE_MATCH_SEARCHER_ARRAY:
-            return { ...state, matchSearcherProfiles: [...state.matchSearcherProfiles, action.user] }
+        case Types.ADD_PROFILE_TO_THE_MATCH_SEARCHER_ARRAY:
+            return { ...state, matchSearcherProfiles: [...state.matchSearcherProfiles, action.profile] }
         case Types.REMOVE_USER_FROM_THE_MATCH_SEARCHER_ARRAY:
             return {
                 ...state, matchSearcherProfiles:
                     action.removeAll ? [] :
                         state.matchSearcherProfiles.filter(item => item.id !== action.userId)
             }
-        case Types.IS_SEARCHING_PROFILES:
-            return { ...state, isSearchingProfiles: action.isSearchingProfiles }
+        case Types.IS_GETTING_PROFILE_FOR_THE_MATCH_SEARCHER:
+            return { ...state, isGettingProfileForTheMatchSearcher: action.isGettingProfileForTheMatchSearcher }
         case Types.UPDATE_MATCHED_PROFILES_ARRAY:
             return { ...state, matchedProfiles: action.matchedProfiles }
         case Types.UPDATE_FIREBASE_USER:

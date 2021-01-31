@@ -1,9 +1,9 @@
-import { SHOW_LOADER, MOUSE_BUTTON_DOWN, IS_GEOLOCATION_ENABLE, NAVIGATION_PUSH } from '../constants/Types';
+import { SHOW_LOADER, IS_GEOLOCATION_ENABLE, IS_GETTING_LOCATION } from '../constants/Types';
 
 const INITIAL_STATE = {
     showLoader: false,
-    isMouseButtonDown: false,
-    isGeolocationEnabled: true,
+    isGeolocationEnabled: null,
+    isGettingLocation: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -11,10 +11,10 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case SHOW_LOADER:
             return { ...state, showLoader: action.showLoader }
-        case MOUSE_BUTTON_DOWN:
-            return { ...state, isMouseButtonDown: action.isMouseButtonDown }
         case IS_GEOLOCATION_ENABLE:
             return { ...state, isGeolocationEnabled: action.isGeolocationEnabled }
+        case IS_GETTING_LOCATION:
+            return { ...state, isGettingLocation: action.isGettingLocation }
         default:
             return state;
     }

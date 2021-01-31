@@ -40,12 +40,12 @@ export default GenericAppButton = ({ customButtonStyle, underlayColor, onPress, 
         onPress={onPress}
     >
         {
-            !enable ?
+            !enable && enable != undefined ?
                 <ButtonText>{textButton}</ButtonText>
                 :
                 <Gradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={[$degradeColor_1, $degradeColor_2]}>
                     <ButtonText>{textButton}</ButtonText>
-                </Gradient >
+                </Gradient>
         }
     </Button >
 }

@@ -56,7 +56,7 @@ export default function SignUpFields() {
                     gender: gender.key,
                     searchingBy: searchingBy.key,
                     ageRange: ageRange[0] + ',' + ageRange[1],
-                    maxDistance,
+                    maxDistance: maxDistance[0],
                     password,
 
                     //some default values:

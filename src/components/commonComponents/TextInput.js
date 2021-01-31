@@ -5,7 +5,7 @@ const Input = styled.TextInput`
     flex: 1;
     margin-left: 3px;
     margin-right: 3px;
-    height: ${props => props.theme.$heightOfGenericComponent}px;
+    height: 100%;
     background-color: white;
     border-width: 1px;
     border-color: ${props => props.theme.$lightGray};

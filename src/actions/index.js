@@ -1,4 +1,3 @@
-//import Geocode from "react-geocode";
 import Geolocation from 'react-native-geolocation-service';
 import { Keyboard } from 'react-native';
 import firebase from 'firebase';
@@ -80,17 +79,24 @@ export function isCheckingIfTokenHasExpiredStatus(isCheckingIfTokenHasExpired) {
     }
 }
 
-export function getAddress(shouldGetProfilesForMatchSearcher, shouldGetMatchedProfiles) {
+export function getAddress() {
     return async dispatch => {
 
-        const geolocationError = () => {
+        const handleGeolocationError = (error) => {
+
+            dispatch(updateIsGettingLocation(false));
+
             dispatch({
                 type: Types.IS_GEOLOCATION_ENABLE,
                 isGeolocationEnabled: false
             })
 
             RootNavigationRef.push('TurnOnLocationModal');
+
+            dispatch(handleActionError(error));
         }
+
+        dispatch(updateIsGettingLocation(true));
 
         await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -106,8 +112,8 @@ export function getAddress(shouldGetProfilesForMatchSearcher, shouldGetMatchedPr
         Geolocation.getCurrentPosition(
             (position) => {
 
-                let lat = position.coords.latitude;
-                let lng = position.coords.longitude;
+                let lat = position?.coords?.latitude;
+                let lng = position?.coords?.longitude;
 
                 Geocoder.from({ lat, lng }).then(json => {
 
@@ -118,26 +124,35 @@ export function getAddress(shouldGetProfilesForMatchSearcher, shouldGetMatchedPr
                         isGeolocationEnabled: true
                     })
 
-                    dispatch(updateUserDataOnRedux({ address }));
+                    dispatch(updateUserDataOnRedux({
+                        address,
+                        currentLongitude: lng,
+                        currentLatitude: lat
+                    }));
 
                     dispatch(updateUser({
                         lastLongitude: lng,
                         lastLatitude: lat
                     }));
 
-                    //this 2 methods are here cause I need call it after get geolocation
-                    shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
+                    dispatch(updateIsGettingLocation(false));
 
-                    shouldGetMatchedProfiles && dispatch(getMatchedProfiles());
+                    dispatch(getNextProfileForTheMatchSearcher());
 
-                }).catch(error => console.warn(error));
+                }).catch(error => handleGeolocationError(error));
             },
             (error) => {
-                geolocationError();
-                dispatch(handleActionError(error));
+                handleGeolocationError(error);
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         )
+    }
+}
+
+export function updateIsGettingLocation(isGettingLocation) {
+    return {
+        type: Types.IS_GETTING_LOCATION,
+        isGettingLocation
     }
 }
 
@@ -353,60 +368,10 @@ export function updateMatchedProfilesArray(matchedProfiles) {
     }
 }
 
-export function isSearchingProfileStatus(isSearchingProfiles) {
+export function updateIsGettingProfileForTheMatchSearcher(isGettingProfileForTheMatchSearcher) {
     return {
-        type: Types.IS_SEARCHING_PROFILES,
-        isSearchingProfiles
-    }
-}
-
-export function getNextProfileForTheMatchSearcher() {
-    return async (dispatch, getState) => {
-
-        const dashboardState = getState().dashboard;
-        const authState = getState().auth;
-
-        try {
-            dispatch(isSearchingProfileStatus(true));
-
-            const res = await Api({ accessToken: authState.accessToken }).post(`users/get_profile_to_the_match_searcher`, {
-                currentLongitude: dashboardState.userData.currentLongitude,
-                currentLatitude: dashboardState.userData.currentLatitude,
-                maxDistance: dashboardState.userData.maxDistance[0],
-                userId: dashboardState.userData.id,
-                searchingBy: dashboardState.userData.searchingBy.key,
-                profileIdsAlreadyDownloaded: dashboardState.profileIdsAlreadyDownloaded,
-                ageRange: dashboardState.userData.ageRange
-            });
-
-            if (res.data.user) {
-                res.data.user.distance = parseInt(calculateDistanceFromLatLonInKm(
-                    dashboardState.userData.currentLongitude,
-                    dashboardState.userData.currentLatitude,
-                    res.data.user.lastLongitude,
-                    res.data.user.lastLatitude
-                ));
-
-                res.data.user.age = calculateAge(new Date(res.data.user.birthday));
-
-                dispatch(addUserIntoMatchSearcherArray(res.data.user));
-
-                dispatch(updateProfileIdsAlreadyDownloaded(res.data.user.id));
-
-                /*matchSearcherProfiles must have at least 2 profiles, so when user likes/ignores the first one,
-                the second will appear*/
-                dashboardState.profileIdsAlreadyDownloaded.length === 1 ?
-                    dispatch(getNextProfileForTheMatchSearcher())
-                    :
-                    dispatch(isSearchingProfileStatus(false));
-            }
-            else
-                dispatch(isSearchingProfileStatus(false));
-
-        } catch (err) {
-            dispatch(isSearchingProfileStatus(false));
-            dispatch(handleActionError(err));
-        }
+        type: Types.IS_GETTING_PROFILE_FOR_THE_MATCH_SEARCHER,
+        isGettingProfileForTheMatchSearcher
     }
 }
 
@@ -417,14 +382,14 @@ export function updateProfileIdsAlreadyDownloaded(userId) {
     };
 }
 
-export function addUserIntoMatchSearcherArray(user) {
+export function addProfileIntoMatchSearcherArray(profile) {
     return {
-        type: Types.ADD_USER_TO_THE_MATCH_SEARCHER_ARRAY,
-        user
+        type: Types.ADD_PROFILE_TO_THE_MATCH_SEARCHER_ARRAY,
+        profile
     };
 }
 
-export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArray) {
+export function updateUser(user, shouldShowLoader, CleanMatchSearcherArrayAndGetNextProfile) {
     return async (dispatch, getState) => {
 
         const dashboardState = getState().dashboard;
@@ -432,18 +397,17 @@ export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArray
 
         try {
 
-            if (shouldShowLoader)
-                dispatch(showLoader(true));
+            shouldShowLoader && dispatch(showLoader(true));
 
             user = { ...user, id: dashboardState.userData.id };
 
             await Api({ accessToken: authState.accessToken }).post(`users/update_user`, { user });
 
-            dispatch(getUserData());
+            CleanMatchSearcherArrayAndGetNextProfile ?
+                dispatch(cleanMatchSearcherArrayAndGetNextProfile(true))
+                : dispatch(getUserData());
 
             dispatch(showLoader(false));
-
-            shouldCleanMatchSearcherArray && dispatch(cleanMatchSearcherArrayAndGetNextProfile(true));
 
         } catch (err) {
             dispatch(handleActionError(err));
@@ -451,13 +415,72 @@ export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArray
     }
 }
 
-export function cleanMatchSearcherArrayAndGetNextProfile(shouldGetNextProfileForTheMatchSearcher) {
+export function cleanMatchSearcherArrayAndGetNextProfile(shouldGetUserData) {
     return dispatch => {
         dispatch(removeAllIdsFromProfileIdsAlreadyDownloaded());
         dispatch(removeUserFromMatchSearcher(null, true));
 
-        shouldGetNextProfileForTheMatchSearcher &&
-            dispatch(getNextProfileForTheMatchSearcher());
+        shouldGetUserData && dispatch(getUserData(true, true));
+    }
+}
+
+export function getNextProfileForTheMatchSearcher() {
+    return async (dispatch, getState) => {
+
+        const {
+            userData,
+            profileIdsAlreadyDownloaded,
+            matchSearcherProfiles,
+            isGettingProfileForTheMatchSearcher
+        } = getState().dashboard;
+        const { accessToken } = getState().auth;
+        const { isGeolocationEnabled } = getState().utils;
+
+        try {
+            if (!isGettingProfileForTheMatchSearcher && matchSearcherProfiles.length < 2 && isGeolocationEnabled) {
+
+                dispatch(updateIsGettingProfileForTheMatchSearcher(true));
+
+                const res = await Api({ accessToken }).post('users/get_profile_to_the_match_searcher', {
+                    currentLongitude: userData.currentLongitude,
+                    currentLatitude: userData.currentLatitude,
+                    maxDistance: userData.maxDistance,
+                    userId: userData.id,
+                    searchingBy: userData.searchingBy.key,
+                    profileIdsAlreadyDownloaded: profileIdsAlreadyDownloaded,
+                    ageRange: userData.ageRange
+                });
+
+                if (res.data.user) {
+                    res.data.user.distance = parseInt(calculateDistanceFromLatLonInKm(
+                        userData.currentLongitude,
+                        userData.currentLatitude,
+                        res.data.user.lastLongitude,
+                        res.data.user.lastLatitude
+                    ));
+
+                    res.data.user.age = calculateAge(new Date(res.data.user.birthday));
+
+                    dispatch(addProfileIntoMatchSearcherArray(res.data.user));
+
+                    dispatch(updateProfileIdsAlreadyDownloaded(res.data.user.id));
+
+                    dispatch(updateIsGettingProfileForTheMatchSearcher(false));
+
+                    /*matchSearcherProfiles must have at least 2 profiles, so when user likes/ignores the first one,
+                    the second will appear*/
+                    matchSearcherProfiles.length < 2 && dispatch(getNextProfileForTheMatchSearcher());
+                }
+                else
+                    dispatch(updateIsGettingProfileForTheMatchSearcher(false));
+            }
+            else
+                dispatch(updateIsGettingProfileForTheMatchSearcher(false));
+
+        } catch (err) {
+            dispatch(updateIsGettingProfileForTheMatchSearcher(false));
+            dispatch(handleActionError(err));
+        }
     }
 }
 
@@ -526,7 +549,7 @@ export function getUserData(
     shouldGetAddress,
     shouldGetProfilesForMatchSearcher,
     shouldSignInOnFirebase,
-    shouldGetMatchedProfiless
+    shouldGetMatchedProfiles
 ) {
 
     const populateSearchingByDesc = (userData) => {
@@ -584,7 +607,6 @@ export function getUserData(
             //handling userData fields to be correctly "read" by the app
             const ageRange = userData.ageRange.split(',');
             userData.ageRange = ageRange.map(item => parseInt(item));
-            userData.maxDistance = [userData.maxDistance];
             userData.schooling = { key: userData.schooling, label: userData.schoolingDesc };
             userData.gender = { key: userData.gender, label: userData.genderDesc };
             userData.searchingBy = { key: userData.searchingBy, label: userData.searchingByDesc };
@@ -602,17 +624,15 @@ export function getUserData(
 
             dispatch(updateUserDataOnRedux(userData));
 
-            shouldSignInOnFirebase && dispatch(signInOrSignUpToFirebase());
-
             !userData.profileComplete && RootNavigationRef.push('CompleteYourProfileModal');
 
-            //doing the following verification because getAddress() gets match profile too... so it won't get it twice
-            if (shouldGetAddress)
-                dispatch(getAddress(shouldGetProfilesForMatchSearcher, shouldGetMatchedProfiless));
-            else {
-                shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
-                shouldGetMatchedProfiless && dispatch(getMatchedProfilessProfile());
-            }
+            shouldGetAddress && dispatch(getAddress());
+
+            shouldSignInOnFirebase && dispatch(signInOrSignUpToFirebase());
+
+            shouldGetMatchedProfiles && dispatch(getMatchedProfiles());
+
+            shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
 
         } catch (err) {
             dispatch(handleActionError(err));
@@ -624,13 +644,6 @@ export function showProfileCardEditMode(isProfileCardEditModeOpen) {
     return {
         type: Types.PROFILE_CARD_EDIT_MODE,
         isProfileCardEditModeOpen
-    };
-}
-
-export function isMouseButtonDown(isMouseButtonDown) {
-    return {
-        type: Types.MOUSE_BUTTON_DOWN,
-        isMouseButtonDown
     };
 }
 
@@ -1005,10 +1018,10 @@ export function handleActionError(err) {
 
         dispatch(showLoader(false));
 
-        //status 401 is Unauthorized, which means that the token expired
-        if (err.response && err.response.status == 401 && err.response.data == 'Unauthorized')
+        //status 401 is Unauthorized, which means that user losed the access to the API
+        if (err?.response?.status == 401 && err?.response?.data == 'Unauthorized')
             dispatch(signOut());
-        else
+        else if (err?.message != 'Location permission not granted.')
             handleError(err);
     }
 }

@@ -38,8 +38,8 @@ export function handleError(err) {
 
         const somethingIsWrong = 'Ops, parece que algo saiu mal. Tente novamente.';
 
-        if (typeof err.response.data === "string" && err.response.data !== "Unauthorized") {
-            let helper = err.response.data.split(' ');
+        if (typeof err?.response?.data === "string") {
+            let helper = err?.response?.data.split(' ');
 
             if (helper[0] !== '<!DOCTYPE')
                 dangerNotification(err.response.data);

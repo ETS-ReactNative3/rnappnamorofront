@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { GenericRowView } from '../../GlobalStyle';
 import AwesomeIcon from '../commonComponents/AwesomeIcon';
+import TextInput from '../commonComponents/TextInput';
 
 const MainContainer = styled(GenericRowView)`
     height: ${props => props.theme.$heightOfGenericComponent}px;
@@ -13,19 +14,6 @@ const MainContainer = styled(GenericRowView)`
     padding: 0.5px;
     align-items: center;
     align-self: center;
-`;
-
-const Input = styled.TextInput`
-    flex: 1;
-    margin-left: 3px;
-    margin-right: 3px;
-    height: 100%;
-    background-color: white;
-    border-width: 1px;
-    border-color: ${props => props.theme.$lightGray};
-    border-radius: ${props => props.theme.$smallBorderRadius}px;
-    padding-left: 10px;
-    color: ${props => props.theme.$textColor};
 `;
 
 const Button = styled.TouchableHighlight`
@@ -59,8 +47,8 @@ export default TextInputRightIconButton = (props) => {
     } = props;
 
     return <MainContainer style={customContainerStyle}>
-        <Input
-            ref={reference}
+        <TextInput
+            reference={reference}
             style={customInputStyle}
             placeholder={placeholder}
             value={value}

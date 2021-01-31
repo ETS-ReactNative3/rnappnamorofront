@@ -33,14 +33,14 @@ export default function ConfigurationContent() {
 
     const { userData } = useSelector(state => state.dashboard);
 
-    const [maxDistanceLocal, setMaxDistanceLocal] = useState(maxDistance);
+    const [maxDistanceLocal, setMaxDistanceLocal] = useState([maxDistance]);
     const [ageRangeLocal, setAgeRangeLocal] = useState([ageRange[0], ageRange[1]]);
     const [showMeOnAppLocal, setShowMeOnAppLocal] = useState(showMeOnApp);
     const [emailNotificationLocal, setEmailNotificationLocal] = useState(emailNotification);
     const [pushNotificationLocal, setPushNotificationLocal] = useState(pushNotification);
 
     useEffect(() => {
-        setMaxDistanceLocal(maxDistance);
+        setMaxDistanceLocal([maxDistance]);
         setAgeRangeLocal([ageRange[0], ageRange[1]]);
         setShowMeOnAppLocal(showMeOnApp);
         setEmailNotificationLocal(emailNotification);
@@ -73,7 +73,9 @@ export default function ConfigurationContent() {
 
     const changeScreen = (screenName) => navigation.push(screenName);
 
-    const updateUserData = (newUserData) => dispatch(Actions.updateUser(newUserData));
+    const updateUserData = (newUserData, shouldCleanMatchSearcherArray) => dispatch(
+        Actions.updateUser(newUserData, false, shouldCleanMatchSearcherArray)
+    );
 
     const handleTermsPress = () => Linking.openURL('https://www.appnamoro.com/terms');
 
@@ -106,7 +108,7 @@ export default function ConfigurationContent() {
             customContainerStyle={multiSliderCustomStyle}
             values={ageRangeLocal}
             onValuesChange={(value) => setAgeRangeLocal([value[0], value[1]])}
-            onValuesChangeFinish={() => updateUserData({ ageRange: `${ageRangeLocal[0]},${ageRangeLocal[1]}` })}
+            onValuesChangeFinish={() => updateUserData({ ageRange: `${ageRangeLocal[0]},${ageRangeLocal[1]}` }, true)}
             min={18}
             max={55}
         />
@@ -117,7 +119,7 @@ export default function ConfigurationContent() {
             customContainerStyle={multiSliderCustomStyle}
             rightText={'km'}
             onValuesChange={(value) => setMaxDistanceLocal(value)}
-            onValuesChangeFinish={(value) => updateUserData({ maxDistance: value[0] })}
+            onValuesChangeFinish={(value) => updateUserData({ maxDistance: value[0] }, true)}
             min={2}
             max={500}
         />
@@ -129,9 +131,7 @@ export default function ConfigurationContent() {
         />
 
         <ConfigItem
-            handleSwitchChange={(value) => {
-                setShowMeOnAppLocal(value), updateUserData({ showMeOnApp: value })
-            }}
+            handleSwitchChange={(value) => { setShowMeOnAppLocal(value), updateUserData({ showMeOnApp: value }) }}
             leftText='Mostrar-me no App'
             isThisSwitch
             isSwitchOn={showMeOnAppLocal}
