@@ -14,7 +14,10 @@ import {
     calculateDistanceFromLatLonInKm,
     calculateAge,
     convertDateFormatToHHMM,
-    decodeJwtToken
+    decodeJwtToken,
+    getSearchingByDesc,
+    getSchoolingDesc,
+    getGenderDesc
 } from '../components/utils/Functions';
 import { successNotification } from '../components/utils/Notifications';
 import { Api } from '../components/utils/Api';
@@ -552,42 +555,6 @@ export function getUserData(
     shouldGetMatchedProfiles
 ) {
 
-    const populateSearchingByDesc = (userData) => {
-        const searchingByOptions = Options.searchingByOptions();
-
-        let index = 0;
-        for (let i = 0; i <= searchingByOptions.length - 1; i++) {
-            if (userData.searchingBy === searchingByOptions[i].key)
-                index = i;
-        }
-
-        return userData.searchingByDesc = searchingByOptions[index].label;
-    }
-
-    const populateSchoolingDesc = (userData) => {
-        const schoolingOptions = Options.schoolingOptions();
-
-        let index = 0;
-        for (let i = 0; i <= schoolingOptions.length - 1; i++) {
-            if (userData.schooling === schoolingOptions[i].key)
-                index = i;
-        }
-
-        return userData.schoolingDesc = schoolingOptions[index].label;
-    }
-
-    const populateGenderDesc = (userData) => {
-        const genderOptions = Options.genderOptions();
-
-        let index = 0;
-        for (let i = 0; i <= genderOptions.length - 1; i++) {
-            if (userData.gender === genderOptions[i].key)
-                index = i;
-        }
-
-        return userData.genderDesc = genderOptions[index].label;
-    }
-
     return async (dispatch, getState) => {
 
         const dashboardState = getState().dashboard;
@@ -600,16 +567,12 @@ export function getUserData(
 
             const userData = res.data;
 
-            populateSearchingByDesc(userData);
-            populateSchoolingDesc(userData);
-            populateGenderDesc(userData);
-
             //handling userData fields to be correctly "read" by the app
             const ageRange = userData.ageRange.split(',');
             userData.ageRange = ageRange.map(item => parseInt(item));
-            userData.schooling = { key: userData.schooling, label: userData.schoolingDesc };
-            userData.gender = { key: userData.gender, label: userData.genderDesc };
-            userData.searchingBy = { key: userData.searchingBy, label: userData.searchingByDesc };
+            userData.schooling = { key: userData.schooling, label: getSchoolingDesc(userData.schooling) };
+            userData.gender = { key: userData.gender, label: getGenderDesc(userData.gender) };
+            userData.searchingBy = { key: userData.searchingBy, label: getSearchingByDesc(userData.searchingBy) };
             userData.birthday = new Date(userData.birthday);//needed to work properly on datePicker
             userData.age = calculateAge(userData.birthday);
             userData.showMeOnApp = userData.showMeOnApp == 1;

@@ -37,7 +37,7 @@ export default function Header({ matchedProfile, profileImage }) {
             matchedProfile,
             title: 'Desfazer match?',
             subtitle: 'Deseja mesmo desfazer essa match? Você pode não encontrar essa pessoa novamente na busca!',
-            acceptText: 'CONTINUAR',
+            acceptText: 'DESFAZER',
             denyText: 'CANCELAR',
             selectedMethod: 'genericYesNoModalUnmatch'
         });

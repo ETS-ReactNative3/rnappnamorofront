@@ -23,7 +23,7 @@ export default function ConfigurationContent() {
         email,
         phone,
         address,
-        searchingByDesc,
+        searchingBy,
         maxDistance,
         ageRange,
         showMeOnApp,
@@ -126,7 +126,7 @@ export default function ConfigurationContent() {
 
         <ConfigItem
             leftText='Procurando por'
-            rightText={searchingByDesc}
+            rightText={searchingBy.label}
             onPress={() => setSelectedConfigMenuAndChangeScreen('searchingByEditor', 'PROCURO POR')}
         />
 

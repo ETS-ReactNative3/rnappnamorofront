@@ -20,23 +20,18 @@ export default function EmailEditor() {
     const { verifiedEmail, email } = useSelector(state => state.dashboard.userData);
 
     const [emailLocal, setEmailLocal] = useState(email);
-    const [verifiedEmailLocal, setVerifiedEmailLocal] = useState(verifiedEmail);
+    const [verifiedEmailLocal, setVerifiedEmailLocal] = useState(verifiedEmail == 1);
 
     useEffect(() => {
-        setVerifiedEmailLocal(!(emailLocal !== email));
+        setVerifiedEmailLocal((emailLocal == email) && verifiedEmail == 1);
     }, [verifiedEmailLocal]);
 
     const sendEmailVerification = async () => {
 
         if (!verifiedEmailLocal)
 
-            if (emailValidator(emailLocal)) {
-
-                if (emailLocal !== email)
-                    dispatch(Actions.sendEmailVerification(emailLocal));
-                else dangerNotification('Preencha o campo antes de continuar!')
-
-            }
+            if (emailValidator(emailLocal))
+                dispatch(Actions.sendEmailVerification(emailLocal));
             else dangerNotification('Digite um email válido!');
     }
 

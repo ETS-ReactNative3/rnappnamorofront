@@ -1,5 +1,6 @@
 import jwt from 'jwt-decode';
 import { dangerNotification } from './Notifications';
+import * as Options from './Options';
 
 export function calculateAge(birthday) { // birthday is a date
     var ageDifMs = Date.now() - birthday.getTime();
@@ -123,4 +124,40 @@ export function setLimitCharactereSizeToString(str, limitSize) {
     finalStr = finalStr.length >= limitSize ? finalStr + '...' : finalStr;
 
     return finalStr;
+}
+
+export function getSearchingByDesc(searchingById) {
+    const searchingByOptions = Options.searchingByOptions();
+
+    let index = 0;
+    for (let i = 0; i <= searchingByOptions.length - 1; i++) {
+        if (searchingById === searchingByOptions[i].key)
+            index = i;
+    }
+
+    return searchingByOptions[index].label;
+}
+
+export function getSchoolingDesc(schoolingId) {
+    const schoolingOptions = Options.schoolingOptions();
+
+    let index = 0;
+    for (let i = 0; i <= schoolingOptions.length - 1; i++) {
+        if (schoolingId === schoolingOptions[i].key)
+            index = i;
+    }
+
+    return schoolingOptions[index].label;
+}
+
+export function getGenderDesc(genderId) {
+    const genderOptions = Options.genderOptions();
+
+    let index = 0;
+    for (let i = 0; i <= genderOptions.length - 1; i++) {
+        if (genderId === genderOptions[i].key)
+            index = i;
+    }
+
+    return genderOptions[index].label;
 }

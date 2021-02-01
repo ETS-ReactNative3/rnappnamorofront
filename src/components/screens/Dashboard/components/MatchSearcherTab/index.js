@@ -13,17 +13,19 @@ export default function MatchSearcherTab() {
 
     const { isGeolocationEnabled, isGettingLocation } = useSelector(state => state.utils);
 
-    return <GenericContainer>
-        {
-            isGettingProfileForTheMatchSearcher || isGettingProfileForTheMatchSearcher == null || isGettingLocation ? <MatchSearcherInformation bodyText={'Buscando perfis...'} />
+    const MatchSeacherBody = () => {
+        return isGettingProfileForTheMatchSearcher || isGettingProfileForTheMatchSearcher == null || isGettingLocation ? <MatchSearcherInformation bodyText={'Buscando perfis...'} />
+            :
+            !showMeOnApp ? <MatchSearcherInformation title={InfoText.weFoundAProblem} bodyText={InfoText.turnOnShowMeOnApp} />
                 :
-                !showMeOnApp ? <MatchSearcherInformation title={InfoText.weFoundAProblem} bodyText={InfoText.turnOnShowMeOnApp} />
+                !isGeolocationEnabled ? <MatchSearcherInformation title={InfoText.weFoundAProblem} bodyText={InfoText.turnOnLocation} />
                     :
-                    !isGeolocationEnabled ? <MatchSearcherInformation title={InfoText.weFoundAProblem} bodyText={InfoText.turnOnLocation} />
+                    matchSearcherProfiles.length > 0 ? <ProfileCard profile={matchSearcherProfiles[0]} />
                         :
-                        matchSearcherProfiles.length > 0 ? <ProfileCard profile={matchSearcherProfiles[0]} />
-                            :
-                            <MatchSearcherInformation bodyText={'Oops, não encontramos ninguém próximo a você. Tente aumentar sua "Distância máxima" ou a\n"Faixa etária" no menu "Configurações".\nBoa sorte!'} />
-        }
+                        <MatchSearcherInformation bodyText={'Oops, não encontramos ninguém próximo a você. Tente aumentar sua "Distância máxima" ou a\n"Faixa etária" no menu "Configurações".\nBoa sorte!'} />
+    }
+
+    return <GenericContainer>
+        <MatchSeacherBody />
     </GenericContainer>
 }
