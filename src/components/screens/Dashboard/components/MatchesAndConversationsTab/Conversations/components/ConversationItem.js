@@ -51,9 +51,9 @@ export default function ConversationItem({ conversationItem, matchedProfile }) {
     const navigation = useNavigation();
 
     const { hourMinute, message } = conversationItem;
-    const { firstName, lastName, userImages } = matchedProfile;
+    const { firstName, lastName, userImages } = matchedProfile || { firstName: '', lastName: '' };
 
-    const profileImage = userImages?.length > 0 ? { uri: userImages[0].imageUrl } : noProfile;
+    const profileImage = userImages?.length > 0 ? { uri: userImages[0]?.imageUrl } : noProfile;
 
     const openChatScreen = () => navigation.push('ChatModal', { profileImage, matchedProfile });
 

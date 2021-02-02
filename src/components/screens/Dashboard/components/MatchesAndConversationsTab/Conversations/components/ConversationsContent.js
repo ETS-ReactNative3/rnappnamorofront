@@ -29,7 +29,7 @@ export default function ConversationsContent() {
             }
         });
 
-        //add matchedProfile info into each messageItem:
+        //add matchedProfile info into each conversationItem:
         const conversationsFinal = conversationsHelper.map(message => {
             const matchedProfileId = message.userId_1 == id ? message.userId_2 : message.userId_1;
 

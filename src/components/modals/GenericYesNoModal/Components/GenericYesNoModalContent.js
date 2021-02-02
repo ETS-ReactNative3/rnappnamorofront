@@ -1,10 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import * as Actions from '../../../../actions';
 import { GenericRowView, GenericColumnView, P } from '../../../../GlobalStyle';
 import { GenericAppButton } from '../../../commonComponents';
+import { handleError } from '../../../utils/Functions';
 
 export const PCustom = styled(P)`
     margin-top: 10px;
@@ -34,7 +35,7 @@ export default function GenericYesNoModalContent(props) {
                     dispatch(Actions.deleteAccount());
                     break;
                 case 'genericYesNoModalUnmatch':
-                    dispatch(Actions.unmatch(matchedProfile.id));
+                    dispatch(Actions.unmatch(matchedProfile?.id));
                     break;
                 case 'genericYesNoModalDeleteUserImage':
                     dispatch(Actions.deleteUserImage(selectedUserImageId));

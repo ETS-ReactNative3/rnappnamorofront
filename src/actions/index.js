@@ -8,7 +8,6 @@ import * as RootNavigationRef from '../routes/RootNavigationRef';
 
 import { REACT_APP_GEOCODE_API_KEY } from 'react-native-expand-dotenv';
 import * as Types from '../constants/Types';
-import * as Options from '../components/utils/Options';
 import {
     handleError,
     calculateDistanceFromLatLonInKm,
@@ -493,22 +492,23 @@ export function removeAllIdsFromProfileIdsAlreadyDownloaded() {
     }
 }
 
-export function ignoreCurrentProfile(profile) {
+export function ignoreCurrentProfile(profileId) {
     return dispatch => {
-        dispatch(removeUserFromMatchSearcher(profile.id));
+        dispatch(removeUserFromMatchSearcher(profileId));
         dispatch(getNextProfileForTheMatchSearcher());
     }
 }
 
 export function likeCurrentProfile(profile, superLike) {
     return dispatch => {
-        dispatch(createOrUpdateMatchedProfile(profile, superLike));
+        dispatch(updateUserDataOnRedux({ lastTimeSuperLikeWasUsed: new Date() }));
+        dispatch(createOrUpdateUserMatch(profile, superLike));
         dispatch(removeUserFromMatchSearcher(profile.id));
         dispatch(getNextProfileForTheMatchSearcher());
     }
 }
 
-export function createOrUpdateMatchedProfile(profile, superLike) {
+export function createOrUpdateUserMatch(profile, superLike) {
     return async (dispatch, getState) => {
 
         const dashboardState = getState().dashboard;

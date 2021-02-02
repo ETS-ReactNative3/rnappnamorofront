@@ -14,7 +14,7 @@ export default function Body({ matchedProfile, profileImage }) {
 
     useEffect(() => {
         setChatMessages(realTimeFirebaseChat.filter(item =>
-            item.userId_1 == matchedProfile.id || item.userId_2 == matchedProfile.id && item
+            item.userId_1 == matchedProfile?.id || item.userId_2 == matchedProfile?.id && item
         ));
     }, [realTimeFirebaseChat]);
 

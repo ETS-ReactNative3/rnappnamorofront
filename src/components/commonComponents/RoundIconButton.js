@@ -10,7 +10,7 @@ const Button = styled.TouchableHighlight`
     align-items: center;
     border-radius: 100px;
     background-color: white;
-    elevation: 2;
+    elevation: 3;
 `;
 
 const IconContainer = styled.View`

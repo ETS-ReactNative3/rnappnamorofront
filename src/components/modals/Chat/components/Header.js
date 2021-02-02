@@ -50,8 +50,8 @@ export default function Header({ matchedProfile, profileImage }) {
 
             <PCustom>
                 {matchedProfile && `Você deu match com `}
-                <PCustom style={{ fontWeight: 'bold' }}>{matchedProfile.firstName.toUpperCase()}</PCustom>
-                {`\nem ${convertDateFormatToDDMMYYYY(new Date(matchedProfile.matchInfo[0].updatedAt))}`}
+                <PCustom style={{ fontWeight: 'bold' }}>{matchedProfile?.firstName.toUpperCase()}</PCustom>
+                {`\nem ${convertDateFormatToDDMMYYYY(new Date(matchedProfile?.matchInfo[0].updatedAt))}`}
             </PCustom>
 
             <RightButtonsContainer>

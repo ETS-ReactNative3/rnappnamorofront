@@ -43,10 +43,10 @@ export function handleError(err) {
             let helper = err?.response?.data.split(' ');
 
             if (helper[0] !== '<!DOCTYPE')
-                dangerNotification(err.response.data);
-            else dangerNotification(somethingIsWrong);
+                console.log(err?.response?.data);
+            else console.log(somethingIsWrong);
 
-        } else dangerNotification(somethingIsWrong);
+        } else console.log(somethingIsWrong, err);
 
     } catch (error) {
 
@@ -160,4 +160,15 @@ export function getGenderDesc(genderId) {
     }
 
     return genderOptions[index].label;
+}
+
+export function checkIfSuperLikeIsAvailable(lastTimeSuperLikeWasUsed) {
+    var timeStart = new Date(lastTimeSuperLikeWasUsed).getTime();
+    var timeEnd = new Date().getTime();
+    var hourDiff = timeEnd - timeStart; //in ms
+    var hDiff = hourDiff / 3600 / 1000; //in hours
+    var humanReadable = {};
+    humanReadable.hours = Math.floor(hDiff);
+
+    return humanReadable.hours > 24
 }
