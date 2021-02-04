@@ -21,9 +21,9 @@ This will install the application into emulator and you should be able to test i
 
 You can check the backend part here: https://github.com/DiegoDevBittencourt/appnamoroback
 
-![](https://i.imgur.com/7XS131U.png)
-![](https://i.imgur.com/xkeAkuM.png)
-![](https://i.imgur.com/1w6Tjvn.png)
-![](https://i.imgur.com/j0W9wLD.png)
-![](https://i.imgur.com/STjgddz.png)
-![](https://i.imgur.com/oJyhbkw.png)
+![](https://i.imgur.com/tKxYxzy.png)
+![](https://i.imgur.com/nkry9iB.png)
+![](https://i.imgur.com/Vb2EBFi.png)
+![](https://i.imgur.com/2yLy5kB.png)
+![](https://i.imgur.com/0gxIENW.png)
+![](https://i.imgur.com/55ImOV6.png)
