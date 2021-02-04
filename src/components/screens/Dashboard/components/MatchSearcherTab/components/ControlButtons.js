@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -7,12 +7,14 @@ import { theme } from '../../../../../../constants/StyledComponentsTheme';
 import { GenericRowView } from '../../../../../../GlobalStyle';
 import { RoundIconButton } from '../../../../../commonComponents';
 import { checkIfSuperLikeIsAvailable } from '../../../../../utils/Functions';
+import { ignoreCurrentProfile, likeCurrentProfile } from './MatchSearcherFunctions';
 
 const MainContainer = styled(GenericRowView)`
     height: 90px;
     justify-content: space-evenly;
     align-items: center;
-    padding: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
 `;
 
 export default function ControlButtons({ currentProfile }) {
@@ -23,19 +25,14 @@ export default function ControlButtons({ currentProfile }) {
         const { lastTimeSuperLikeWasUsed } = state.dashboard.userData;
         return lastTimeSuperLikeWasUsed;
     });
+    const { isSuperLikeAvailable } = useSelector(state => state.dashboard);
+
     const { $lightGray, $gray, $red, $lightGreen, $lightBlue } = theme;
 
-    const [isSuperLikeAvailable, setIsSuperLikeAvailable] = useState(false);
-
-    const ignoreCurrentProfile = () => dispatch(Actions.ignoreCurrentProfile(currentProfile?.id));
-
-    const likeCurrentProfile = (superLike) => {
-        superLike && setIsSuperLikeAvailable(false);
-        dispatch(Actions.likeCurrentProfile(currentProfile, superLike));
-    }
+    const handleLikeCurrentProfile = (superLike) => likeCurrentProfile(dispatch, superLike, currentProfile);
 
     useEffect(() => {
-        setIsSuperLikeAvailable(checkIfSuperLikeIsAvailable(lastTimeSuperLikeWasUsed));
+        dispatch(Actions.updateIsSuperLikeAvailable(checkIfSuperLikeIsAvailable(lastTimeSuperLikeWasUsed)));
     }, [lastTimeSuperLikeWasUsed]);
 
     const customButtonStyle = {
@@ -54,7 +51,7 @@ export default function ControlButtons({ currentProfile }) {
             iconName={'times'}
             customIconStyle={{ ...customIconStyle, color: $red }}
             underlayColor={$lightGray}
-            onPress={ignoreCurrentProfile}
+            onPress={() => ignoreCurrentProfile(dispatch, currentProfile?.id)}
         />
 
         <RoundIconButton
@@ -62,7 +59,7 @@ export default function ControlButtons({ currentProfile }) {
             solidIcon
             customIconStyle={{ ...customIconStyle, color: isSuperLikeAvailable ? $lightBlue : $gray }}
             underlayColor={$lightGray}
-            onPress={() => isSuperLikeAvailable && likeCurrentProfile(true)}
+            onPress={() => isSuperLikeAvailable && handleLikeCurrentProfile(true)}
         />
 
         <RoundIconButton
@@ -71,7 +68,7 @@ export default function ControlButtons({ currentProfile }) {
             solidIcon
             customIconStyle={{ ...customIconStyle, color: $lightGreen }}
             underlayColor={$lightGray}
-            onPress={() => likeCurrentProfile(false)}
+            onPress={() => handleLikeCurrentProfile(false)}
         />
 
     </MainContainer>

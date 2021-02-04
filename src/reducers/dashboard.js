@@ -27,6 +27,7 @@ const INITIAL_STATE = {
     profileIdsAlreadyDownloaded: [],
     selectedConfigMenu: '',
     selectedConfigMenuTitle: '',
+    isSuperLikeAvailable: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -89,5 +90,7 @@ export default (state = INITIAL_STATE, action) => {
             }
         default:
             return state;
+        case Types.IS_SUPERLIKE_AVAILABLE:
+            return { ...state, isSuperLikeAvailable: action.isSuperLikeAvailable }
     }
 }

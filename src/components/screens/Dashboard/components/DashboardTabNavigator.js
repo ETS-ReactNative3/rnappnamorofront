@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import { theme } from '../../../../constants/StyledComponentsTheme';
@@ -27,9 +27,9 @@ const screenOptions = (iconName) => {
     return { tabBarIcon: ({ color }) => <Icon iconColor={color} iconName={iconName} /> }
 }
 
-const TabNavigator = () => {
+const TabNavigator = ({ swipeEnabled, setSwipeEnabled }) => {
     return <Tab.Navigator
-        style={{ height: '100%', width: '100%' }}
+        swipeEnabled={swipeEnabled}
         tabBarPosition='bottom'
         tabBarOptions={{
             activeTintColor: theme.$primaryColor,
@@ -37,15 +37,24 @@ const TabNavigator = () => {
             indicatorStyle: { backgroundColor: 'transparent' },
             showIcon: true,
             showLabel: false,
+        }}
+        screenOptions={({ navigation, route }) => {
+            if (route.name === 'MatchSearcher' && navigation.isFocused()) {
+                setSwipeEnabled(false);
+            } else if (route.name !== 'MatchSearcher' && navigation.isFocused()) {
+                setSwipeEnabled(true);
+            }
         }}>
 
         <Tab.Screen name="MatchSearcher" options={screenOptions('heart')} component={MatchSearcherTab} />
         <Tab.Screen name="MatchesAndConversations" options={screenOptions('comments')} component={MatchesAndConversationsTab} />
         <Tab.Screen name="MobileUserProfile" options={screenOptions('user-alt')} component={ProfileStackNavigator} />
-
     </Tab.Navigator>
 }
 
 export default function DashboardTabNavigator() {
-    return <TabNavigator />
+
+    const [swipeEnabled, setSwipeEnabled] = useState(false);
+
+    return <TabNavigator swipeEnabled={swipeEnabled} setSwipeEnabled={setSwipeEnabled} />
 }

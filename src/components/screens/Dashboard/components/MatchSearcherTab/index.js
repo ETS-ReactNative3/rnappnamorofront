@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import { InfoText } from '../../../../../constants/InfoText';
 import { GenericContainer } from '../../../../../GlobalStyle';
-import MatchSearcherInformation from './components/MatchSearcherInformation';
-import ProfileCard from './components/ProfileCard';
+import MatchSearcherPlaceholder from './components/MatchSearcherPlaceholder';
+import ProfileSelector from './components/ProfileSelector';
 import ControlButtons from './components/ControlButtons';
 
 const MainContainer = styled(GenericContainer)`
@@ -18,27 +18,26 @@ export default function MatchSearcherTab() {
     const { showMeOnApp } = useSelector(state => state.dashboard.userData);
     const { isGeolocationEnabled, isGettingLocation } = useSelector(state => state.utils);
     const { weFoundAProblem, turnOnShowMeOnApp, turnOnLocation } = InfoText;
-    const matchSearcherProfilesLength = matchSearcherProfiles.length;
 
-    const MatchSeacherBody = () => {
-        return (isGettingProfileForTheMatchSearcher || isGettingProfileForTheMatchSearcher == null || isGettingLocation) && matchSearcherProfilesLength == 0 ? <MatchSearcherInformation bodyText={'Buscando perfis...'} />
+    const shouldRenderLoadingScreen = (isGettingProfileForTheMatchSearcher || isGettingProfileForTheMatchSearcher == null || isGettingLocation) && matchSearcherProfiles.length == 0;
+
+    const MatchSeacherBody = shouldRenderLoadingScreen ? <MatchSearcherPlaceholder bodyText={'Buscando perfis...'} />
+        :
+        !showMeOnApp ? <MatchSearcherPlaceholder title={weFoundAProblem} bodyText={turnOnShowMeOnApp} />
             :
-            !showMeOnApp ? <MatchSearcherInformation title={weFoundAProblem} bodyText={turnOnShowMeOnApp} />
+            !isGeolocationEnabled ? <MatchSearcherPlaceholder title={weFoundAProblem} bodyText={turnOnLocation} />
                 :
-                !isGeolocationEnabled ? <MatchSearcherInformation title={weFoundAProblem} bodyText={turnOnLocation} />
+                matchSearcherProfiles.length > 0 ? <ProfileSelector />
                     :
-                    matchSearcherProfilesLength > 0 ? <ProfileCard currentProfile={matchSearcherProfiles[0]} />
-                        :
-                        <MatchSearcherInformation bodyText={'Oops, não encontramos ninguém próximo a você. Tente aumentar sua "Distância máxima" ou a\n"Faixa etária" no menu "Configurações".\nBoa sorte!'} />
-    }
+                    <MatchSearcherPlaceholder bodyText={'Oops, não encontramos ninguém próximo a você. Tente aumentar sua "Distância máxima" ou a\n"Faixa etária" no menu "Configurações".\nBoa sorte!'} />
 
-    const ControlButtonSection = () => matchSearcherProfilesLength > 0 && <ControlButtons currentProfile={matchSearcherProfiles[0]} />
+    const ControlButtonSection = matchSearcherProfiles.length > 0 && <ControlButtons currentProfile={matchSearcherProfiles[0]} />
 
     return <MainContainer>
 
-        <MatchSeacherBody />
+        {MatchSeacherBody}
 
-        <ControlButtonSection />
+        {ControlButtonSection}
 
     </MainContainer>
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Dimensions } from 'react-native';
 
 import { theme } from '../../../../../../../../constants/StyledComponentsTheme';
 import { P, GenericRowView, GenericColumnView } from '../../../../../../../../GlobalStyle';

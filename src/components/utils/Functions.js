@@ -172,3 +172,7 @@ export function checkIfSuperLikeIsAvailable(lastTimeSuperLikeWasUsed) {
 
     return humanReadable.hours > 24
 }
+
+export function generateRandomKey() {   
+    return parseInt(Math.random(1, 999999) * 999)
+}

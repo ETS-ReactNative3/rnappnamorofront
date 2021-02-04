@@ -21,7 +21,7 @@ const H2Custom = styled(H2)`
     margin-bottom: 10px;
 `;
 
-export default function MatchSearcherInformation({ title, bodyText }) {
+export default function MatchSearcherPlaceholder({ title, bodyText }) {
     return <MainContainer>
         <H2Custom>{title}</H2Custom>
         <PCustom>{bodyText}</PCustom>

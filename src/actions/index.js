@@ -501,10 +501,17 @@ export function ignoreCurrentProfile(profileId) {
 
 export function likeCurrentProfile(profile, superLike) {
     return dispatch => {
-        dispatch(updateUserDataOnRedux({ lastTimeSuperLikeWasUsed: new Date() }));
+        superLike && dispatch(updateUserDataOnRedux({ lastTimeSuperLikeWasUsed: new Date() }));
         dispatch(createOrUpdateUserMatch(profile, superLike));
         dispatch(removeUserFromMatchSearcher(profile.id));
         dispatch(getNextProfileForTheMatchSearcher());
+    }
+}
+
+export function updateIsSuperLikeAvailable(isSuperLikeAvailable) {
+    return {
+        type: Types.IS_SUPERLIKE_AVAILABLE,
+        isSuperLikeAvailable
     }
 }
 

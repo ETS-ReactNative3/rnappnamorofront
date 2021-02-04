@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Dimensions } from 'react-native';
 
 import * as Actions from '../../../../../../../../actions';
 import { P } from '../../../../../../../../GlobalStyle';

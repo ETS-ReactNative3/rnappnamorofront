@@ -1,7 +1,7 @@
 import ImagePicker from 'react-native-image-crop-picker';
 
 import { dangerNotification } from '../../../../../../../../utils/Notifications';
-import { handleError } from '../../../../../../../../utils/Functions';
+import { handleError, generateRandomKey } from '../../../../../../../../utils/Functions';
 import * as Actions from '../../../../../../../../../actions';
 
 export function pickFile(userImagesLength, dispatch) {
@@ -34,7 +34,7 @@ export const uploadMedia = (files, userImagesLength, dispatch) => {
         if (!files.some(item => item.size > 5 * 1024 * 1024)) {
             const selectedFiles = files.map((file) => ({
                 file,
-                id: parseInt(Math.random(1, 999999) * 999),//(used to when finished upload the image, remove the preview from uploadingImagesPreview array)
+                id: generateRandomKey(),//(used to when finished upload the image, removes the preview from uploadingImagesPreview array)
                 progress: 0,
                 uploaded: false,
                 error: false,
