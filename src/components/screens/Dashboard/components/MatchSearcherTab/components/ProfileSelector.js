@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import SwipeCards from 'react-native-swipe-cards';
 import { useDispatch, useSelector } from 'react-redux';
 
+import * as Actions from '../../../../../../actions';
 import { GenericContainer } from '../../../../../../GlobalStyle';
 import ProfileCard from './ProfileCard';
 import { theme } from '../../../../../../constants/StyledComponentsTheme';
 import { ignoreCurrentProfile, likeCurrentProfile } from './MatchSearcherFunctions';
+import MatchSearcherPlaceholder from './MatchSearcherPlaceholder';
 
 const MainContainer = styled(GenericContainer)`
     flex: 1;
@@ -18,6 +20,7 @@ const MainContainer = styled(GenericContainer)`
 export default function ProfileSelector() {
 
     const dispatch = useDispatch();
+    var swipeCardRef = useRef();
 
     const { matchSearcherProfiles } = useSelector(state => state.dashboard);
     const { isSuperLikeAvailable } = useSelector(state => state.dashboard);
@@ -25,21 +28,17 @@ export default function ProfileSelector() {
 
     const handleLikeCurrentProfile = (superLike, currentProfile) => likeCurrentProfile(dispatch, superLike, currentProfile);
 
-    const cards = [
-        { id: 1, text: 'Tomato', backgroundColor: 'orange' },
-        { id: 2, text: 'Aubergine', backgroundColor: 'purple' },
-        { id: 3, text: 'Courgette', backgroundColor: 'green' },
-        { id: 4, text: 'Blueberry', backgroundColor: 'blue' },
-        { id: 5, text: 'Umm...', backgroundColor: 'red' },
-        { id: 6, text: 'orange', backgroundColor: 'cyan' },
-    ]
+    useEffect(() => {
+        dispatch(Actions.updateSwipeCardRef(swipeCardRef));
+    }, []);
 
     return <MainContainer>
         <SwipeCards
+            ref={ref => { swipeCardRef = ref }}
             keyExtractor={item => item.id.toString()}
             cards={matchSearcherProfiles}
+            renderNoMoreCards={() => <MatchSearcherPlaceholder bodyText={'Buscando perfis...'} />}
             renderCard={(cardData) => <ProfileCard {...cardData} />}
-            // renderCard={(cardData) => <View style={{ height: 200, width: 200 }} {...cardData} />}
             smoothTransition={false}
             yupText={'Gostei'}
             yupStyle={{ borderColor: $green }}

@@ -158,6 +158,13 @@ export function updateIsGettingLocation(isGettingLocation) {
     }
 }
 
+export function updateSwipeCardRef(swipeCardRef) {
+    return {
+        type: Types.UPDATE_SWIPE_CARD_REF,
+        swipeCardRef
+    }
+}
+
 export function updateFirebaseUidOnRedux(firebaseUid) {
     return {
         type: Types.UPDATE_FIREBASE_UID,

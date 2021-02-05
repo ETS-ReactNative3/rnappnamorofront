@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Carousel from 'react-native-looped-carousel';
 import { Dimensions } from 'react-native';
 
 import { generateRandomKey } from '../../../../../utils/Functions';
-import { H2, GenericColumnView } from '../../../../../../GlobalStyle';
+import { H2, H3, GenericColumnView } from '../../../../../../GlobalStyle';
+import { AwesomeIcon } from '../../../../../commonComponents';
 import noProfile from '../../../../../../assets/noProfile.png';
+import { textShadow } from '../../../../../../constants/InlineStyling';
 
 const ProfileCardInfo = styled(GenericColumnView)`
     flex: 1;
@@ -17,9 +19,18 @@ const ProfileCardInfo = styled(GenericColumnView)`
     border-radius: ${props => props.theme.$bigBorderRadius}px;
 `;
 
-const H2Custom = styled(H2)`
-    text-align: center;
-    margin-bottom: 10px;
+const NameAge = styled(H2)`
+    position: absolute;
+    bottom: 30px;
+    left: 10px;
+    color: white;
+`;
+
+const Distance = styled(H3)`
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    color: white;
 `;
 
 const UserImage = styled.Image`
@@ -29,24 +40,34 @@ const UserImage = styled.Image`
     resize-mode: cover;
 `;
 
-export default function ProfileCard({ userImages }) {
+export default function ProfileCard({ firstName, lastName, age, userImages, distance }) {
 
     const arrowStyle = {
         color: 'white',
         fontSize: 22,
-        margin: 20,
-        textShadowColor: 'rgba(0, 0, 0, 0.75)',
-        textShadowOffset: { width: -1, height: 1 },
-        textShadowRadius: 10
+        margin: 20
     };
 
+    const customIconStyle = {
+        position: 'absolute',
+        color: 'white',
+        width: 20,
+        height: 25,
+        textAlign: 'center'
+    };
+
+    const customIconContainer = {
+        height: 15
+    };
+
+    const [randomVar, setRandomVar] = useState(true);
     return <ProfileCardInfo>
         <Carousel
             style={{ width: '100%', height: '100%' }}
             leftArrowText={'＜'}
-            leftArrowStyle={arrowStyle}
+            leftArrowStyle={[arrowStyle, textShadow]}
             rightArrowText={'＞'}
-            rightArrowStyle={arrowStyle}
+            rightArrowStyle={[arrowStyle, textShadow]}
             pageInfoBottomContainerStyle={{ height: 20, position: 'absolute', top: 10, }}
             pageInfo
             arrows
@@ -66,5 +87,13 @@ export default function ProfileCard({ userImages }) {
                     <UserImage source={noProfile} />
             }
         </Carousel>
+
+        <NameAge style={textShadow}>{`${firstName} ${lastName}, ${age}`}</NameAge>
+
+        <Distance style={textShadow}>
+            <AwesomeIcon customIconContainer={customIconContainer} iconName='map-marker-alt' customIconStyle={{ ...textShadow, ...customIconStyle }} />
+            {`a ${distance} km daqui`}
+        </Distance>
+
     </ProfileCardInfo>
 }

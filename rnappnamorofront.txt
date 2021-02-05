@@ -1,7 +1,11 @@
 *******************************
 To Do
-*******************************
-on notification.js I reaplaced dangerNotification and successNotification by Alerts
+****************************************************************************************************************************
+
+
+work on push notifications
+
+on notification.js I reaplaced dangerNotification and successNotification by Alerts, create a friendly way to show messages
 
 tratar erros do servidor de maneira mais amigável, usando imagens legais como os macaquinhos do youtube
 
@@ -9,20 +13,24 @@ check if token hasexpired before send message to firebase
 
 if is open in one device, cannot be opened in another window. Otherwise it's goind to behavior not as expected
 
+remove react-native-swipe-cards-deck from the project after test the owner tips
 
 
-*******************************
+****************************************************************************************************************************
 Importants
-*******************************
+****************************************************************************************************************************
+
+
 react-native-progress sometimes stuck on zero the percentage. To fix that, enter on this lib folder on node_modules and change the Circle.js file from this: {formatText(progressValue)} to this: {progress ? formatText(progress._value) : 0}
 
 react-native-swipe-cards sometimes show a random alert, to fix that go to it's folder on node_modules and change onClickHandler: () => { alert('tap') }, to console.log('tap')
 
 
-
-*******************************
+****************************************************************************************************************************
 Troubleshooting
-*******************************
+****************************************************************************************************************************
+
+
 ERROR: ".dex file cannot exceed 64K."
 SOLUTION: Set 'multiDexEnabled true' into 'module/build.gradle'
 EX: 'android {
@@ -35,6 +43,6 @@ EX: 'android {
     }
     ...
 }'
--------------------------------
-ERROR: "path not found on node_modules"
-SOLUTION: "react-native start --reset-cache"
+
+
+****************************************************************************************************************************

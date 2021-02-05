@@ -27,7 +27,8 @@ const INITIAL_STATE = {
     profileIdsAlreadyDownloaded: [],
     selectedConfigMenu: '',
     selectedConfigMenuTitle: '',
-    isSuperLikeAvailable: false
+    isSuperLikeAvailable: false,
+    swipeCardRef: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -92,5 +93,7 @@ export default (state = INITIAL_STATE, action) => {
             return state;
         case Types.IS_SUPERLIKE_AVAILABLE:
             return { ...state, isSuperLikeAvailable: action.isSuperLikeAvailable }
+        case Types.UPDATE_SWIPE_CARD_REF:
+            return { ...state, swipeCardRef: action.swipeCardRef }
     }
 }

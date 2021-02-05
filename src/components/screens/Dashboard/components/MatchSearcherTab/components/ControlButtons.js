@@ -25,15 +25,29 @@ export default function ControlButtons({ currentProfile }) {
         const { lastTimeSuperLikeWasUsed } = state.dashboard.userData;
         return lastTimeSuperLikeWasUsed;
     });
-    const { isSuperLikeAvailable } = useSelector(state => state.dashboard);
+    const { isSuperLikeAvailable, swipeCardRef } = useSelector(state => state.dashboard);
 
     const { $lightGray, $gray, $red, $lightGreen, $lightBlue } = theme;
-
-    const handleLikeCurrentProfile = (superLike) => likeCurrentProfile(dispatch, superLike, currentProfile);
 
     useEffect(() => {
         dispatch(Actions.updateIsSuperLikeAvailable(checkIfSuperLikeIsAvailable(lastTimeSuperLikeWasUsed)));
     }, [lastTimeSuperLikeWasUsed]);
+
+    const handleLikeCurrentProfile = (superLike) => {
+        superLike ? swipeCardRef._forceUpSwipe() : swipeCardRef._forceRightSwipe();
+        
+        setTimeout(() => {
+            likeCurrentProfile(dispatch, superLike, currentProfile);
+        }, 1000);
+    };
+
+    const handleIgnoreCurrentProfile = async () => {
+        swipeCardRef._forceLeftSwipe();
+
+        setTimeout(() => {
+            ignoreCurrentProfile(dispatch, currentProfile?.id);
+        }, 1000);
+    };
 
     const customButtonStyle = {
         height: 70,
@@ -51,7 +65,7 @@ export default function ControlButtons({ currentProfile }) {
             iconName={'times'}
             customIconStyle={{ ...customIconStyle, color: $red }}
             underlayColor={$lightGray}
-            onPress={() => ignoreCurrentProfile(dispatch, currentProfile?.id)}
+            onPress={() => handleIgnoreCurrentProfile()}
         />
 
         <RoundIconButton

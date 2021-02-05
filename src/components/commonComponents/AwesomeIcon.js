@@ -15,6 +15,7 @@ const IconContainer = styled.View`
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    text-align: center;
     width: ${props => props.theme.$heightOfGenericComponent}px;
     height: ${props => props.theme.$heightOfGenericComponent}px;
 `;

@@ -21,6 +21,11 @@ export const H2 = styled.Text`
     font-size: 25px;
 `;
 
+export const H3 = styled.Text`
+    font-weight: 100;
+    font-size: 21px;
+`;
+
 export const P = styled.Text`
     font-weight: 100;
     font-size: 15px;
