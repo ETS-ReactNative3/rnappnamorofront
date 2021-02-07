@@ -13,9 +13,6 @@ check if token hasexpired before send message to firebase
 
 if is open in one device, cannot be opened in another window. Otherwise it's goind to behavior not as expected
 
-remove react-native-swipe-cards-deck from the project after test the owner tips
-
-
 ****************************************************************************************************************************
 Importants
 ****************************************************************************************************************************

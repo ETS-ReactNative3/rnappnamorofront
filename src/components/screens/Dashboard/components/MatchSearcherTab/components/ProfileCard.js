@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Carousel from 'react-native-looped-carousel';
 import { Dimensions } from 'react-native';
@@ -49,34 +49,29 @@ export default function ProfileCard({ firstName, lastName, age, userImages, dist
     };
 
     const customIconStyle = {
-        position: 'absolute',
         color: 'white',
         width: 20,
-        height: 25,
         textAlign: 'center'
     };
 
     const customIconContainer = {
-        height: 15
+        width: 30,
+        alignItems: 'flex-end',
     };
 
-    const [randomVar, setRandomVar] = useState(true);
     return <ProfileCardInfo>
         <Carousel
             style={{ width: '100%', height: '100%' }}
+            arrowStyle={{ height: '100%', justifyContent: 'center' }}
+            pageInfoTextStyle={{ color: 'white' }}
+            pageInfoBottomContainerStyle={{ height: 20, position: 'absolute', top: 10 }}
             leftArrowText={'＜'}
             leftArrowStyle={[arrowStyle, textShadow]}
             rightArrowText={'＞'}
             rightArrowStyle={[arrowStyle, textShadow]}
-            pageInfoBottomContainerStyle={{ height: 20, position: 'absolute', top: 10, }}
             pageInfo
             arrows
             swipe={false}
-
-            arrowStyle={{ height: '100%', justifyContent: 'center' }}
-
-            pageInfoTextStyle={{ color: 'white' }}
-
             isLooped={false}
             autoplay={false}
         >
@@ -92,7 +87,7 @@ export default function ProfileCard({ firstName, lastName, age, userImages, dist
 
         <Distance style={textShadow}>
             <AwesomeIcon customIconContainer={customIconContainer} iconName='map-marker-alt' customIconStyle={{ ...textShadow, ...customIconStyle }} />
-            {`a ${distance} km daqui`}
+            {`a ${distance === 0 ? 'menos de 1' : distance}km daqui`}
         </Distance>
 
     </ProfileCardInfo>

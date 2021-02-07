@@ -1454,7 +1454,7 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-community/datetimepicker@^3.0.5":
+"@react-native-community/datetimepicker@^3.0.9":
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.0.9.tgz#14e96c0a9049d76165f77ded95251e50c596b910"
   integrity sha512-8Hel5K2xQNJsGQleUT5fheO60aO0/KhP9nkbDzfGgv3Cdckrf2xWQs0JK3xUhuDoUztpMZS45jqE2WPS7fBdgA==
@@ -6597,14 +6597,6 @@ react-native-screens@^2.14.0:
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.17.1.tgz#c3c0ac750af48741c5b1635511e6af2a27b74309"
   integrity sha512-B4gD5e4csvlVwlhf+RNqjQZ9mHTwe/iL3rXondgZxnKz4oW0QAmtLnLRKOrYVxoaJaF9Fy7jhjo//24/472APQ==
-
-react-native-swipe-cards-deck@^0.2.16:
-  version "0.2.16"
-  resolved "https://registry.yarnpkg.com/react-native-swipe-cards-deck/-/react-native-swipe-cards-deck-0.2.16.tgz#ad6bba345a30688e7ccca77367cc339966753dba"
-  integrity sha512-Y2Zgjcpj3TWrsI6loeM6vf9OQb+jO0EMELDqU+QLCEmpCoeSko84YRZ81OUeckucflmsvKMKyw76bXVl5Sa5SA==
-  dependencies:
-    clamp "^1.0.1"
-    prop-types "^15.7.2"
 
 react-native-swipe-cards@^0.1.1:
   version "0.1.1"

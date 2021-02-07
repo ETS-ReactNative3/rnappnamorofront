@@ -42,9 +42,9 @@ export function handleError(err) {
         if (typeof err?.response?.data === "string") {
             let helper = err?.response?.data.split(' ');
 
-            if (helper[0] !== '<!DOCTYPE')
-                console.log(err?.response?.data);
-            else console.log(somethingIsWrong);
+            if (helper[0] !== '<!DOCTYPE' && err?.response?.status == 400)
+                dangerNotification(err?.response?.data);
+            else console.log(somethingIsWrong, err?.response?.data);
 
         } else console.log(somethingIsWrong, err);
 

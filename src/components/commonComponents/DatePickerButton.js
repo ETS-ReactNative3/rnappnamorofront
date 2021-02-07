@@ -5,6 +5,7 @@ import DateTimePicker from "react-native-modal-datetime-picker"
 import { theme } from '../../constants/StyledComponentsTheme';
 import { convertDateFormatToDDMMYYYY } from '../utils/Functions';
 import { GenericRowView, P } from '../../GlobalStyle';
+import { maxBirthdayDate } from '../../constants/GenericConstants';
 
 const MainContainer = styled(GenericRowView)`
     height: ${props => props.theme.$heightOfGenericComponent}px;
@@ -38,14 +39,12 @@ export default DatePickerButton = (props) => {
     }
 
     const { selectedDate } = props;
-
-    const maxDate = new Date((new Date().getFullYear() - 18 + '-' + new Date().getMonth() + 1 + '-' + new Date().getDate()).toString());
-
+    
     return <MainContainer>
 
         <DateTimePicker
-            minimumDate={new Date('01-01-1900')}
-            maximumDate={maxDate}
+            minimumDate={new Date('1900-01-01')}
+            maximumDate={maxBirthdayDate}
             isVisible={isDateTimePickerVisible}
             onConfirm={(date) => handleDatePicked(date)}
             onCancel={() => setIsDateTimePickerVisible(false)}

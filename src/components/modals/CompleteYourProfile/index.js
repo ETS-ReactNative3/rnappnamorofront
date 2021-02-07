@@ -1,28 +1,26 @@
 import React, { useEffect } from "react";
 import { BackHandler } from 'react-native';
+import { useDispatch } from "react-redux";
 
+import * as Actions from '../../../actions';
 import CompleteYourProfileContent from './components/CompleteYourProfileContent';
 import { GenericModalContainer } from '../../commonComponents';
 
-export default function CompleteYourProfile(props) {
+export default function CompleteYourProfile() {
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        BackHandler.addEventListener('hardwareBackPress', resetNavHistoryAndGoHome)
+        BackHandler.addEventListener('hardwareBackPress', handleCloseButtonPress)
 
         return () => {
-            BackHandler.removeEventListener('hardwareBackPress', resetNavHistoryAndGoHome)
+            BackHandler.removeEventListener('hardwareBackPress', handleCloseButtonPress)
         }
     }, [])
 
     const handleCloseButtonPress = () => {
-        props.navigation.goBack();
-        resetNavHistoryAndGoHome();
+        dispatch(Actions.signOut());
     }
-
-    const resetNavHistoryAndGoHome = () => props.navigation.reset({
-        index: 0,
-        routes: [{ name: 'Home' }]
-    });
 
     return <GenericModalContainer closeButtonPress={() => handleCloseButtonPress()} title={'Vamos completar seu perfil!'}>
         <CompleteYourProfileContent />

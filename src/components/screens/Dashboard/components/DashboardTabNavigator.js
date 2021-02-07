@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { theme } from '../../../../constants/StyledComponentsTheme';
 import { AwesomeIcon } from '../../../commonComponents';
 import { GenericColumnView } from '../../../../GlobalStyle';
-
+import * as Actions from '../../../../actions';
 import MatchSearcherTab from './MatchSearcherTab';
 import ProfileStackNavigator from './ProfileTab/ProfileStackNavigator';
 import MatchesAndConversationsTab from './MatchesAndConversationsTab';
@@ -28,6 +29,8 @@ const screenOptions = (iconName) => {
 }
 
 const TabNavigator = ({ swipeEnabled, setSwipeEnabled }) => {
+
+
     return <Tab.Navigator
         swipeEnabled={swipeEnabled}
         tabBarPosition='bottom'
@@ -40,8 +43,10 @@ const TabNavigator = ({ swipeEnabled, setSwipeEnabled }) => {
         }}
         screenOptions={({ navigation, route }) => {
             if (route.name === 'MatchSearcher' && navigation.isFocused()) {
+                // dispatch(Actions.isDashboardTabNavSwipeEnabled(false));
                 setSwipeEnabled(false);
             } else if (route.name !== 'MatchSearcher' && navigation.isFocused()) {
+                // dispatch(Actions.isDashboardTabNavSwipeEnabled(true));
                 setSwipeEnabled(true);
             }
         }}>
@@ -54,7 +59,10 @@ const TabNavigator = ({ swipeEnabled, setSwipeEnabled }) => {
 
 export default function DashboardTabNavigator() {
 
+    const dispatch = useDispatch();
+    
     const [swipeEnabled, setSwipeEnabled] = useState(false);
+    //const { isDashboardTabNavSwipeEnabled } = useSelector(state => state.dashboard);
 
     return <TabNavigator swipeEnabled={swipeEnabled} setSwipeEnabled={setSwipeEnabled} />
 }

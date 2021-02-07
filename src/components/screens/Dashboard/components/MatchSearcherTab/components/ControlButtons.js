@@ -73,7 +73,7 @@ export default function ControlButtons({ currentProfile }) {
             solidIcon
             customIconStyle={{ ...customIconStyle, color: isSuperLikeAvailable ? $lightBlue : $gray }}
             underlayColor={$lightGray}
-            onPress={() => isSuperLikeAvailable && handleLikeCurrentProfile(true)}
+            onPress={() =>  handleLikeCurrentProfile(true)}
         />
 
         <RoundIconButton

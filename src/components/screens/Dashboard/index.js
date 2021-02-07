@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import * as Actions from '../../../actions';
@@ -7,11 +7,9 @@ import { decodeJwtToken } from '../../utils/Functions';
 import DashboardTabNavigator from './components/DashboardTabNavigator';
 import { GenericContainer } from '../../../GlobalStyle';
 
-export default function Dashboard(props) {
+export default function Dashboard() {
 
     const dispatch = useDispatch();
-
-    const { isAuthenticated, isCheckingIfTokenHasExpired } = useSelector(state => state.auth);
 
     useEffect(() => {
         dashboardInitialization();

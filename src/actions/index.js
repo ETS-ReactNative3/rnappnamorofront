@@ -522,6 +522,13 @@ export function updateIsSuperLikeAvailable(isSuperLikeAvailable) {
     }
 }
 
+export function isDashboardTabNavSwipeEnabled(isDashboardTabNavSwipeEnabled) {
+    return {
+        type: Types.DASHBOARD_TAB_NAV_SWIPE_ENABLED,
+        isDashboardTabNavSwipeEnabled
+    }
+}
+
 export function createOrUpdateUserMatch(profile, superLike) {
     return async (dispatch, getState) => {
 
@@ -814,6 +821,8 @@ export function signUpAction(userData, navigation) {
             });
 
             dispatch(showLoader(false));
+
+            RootNavigationRef.reset('Dashboard');
 
         } catch (err) {
             dispatch(handleActionError(err));

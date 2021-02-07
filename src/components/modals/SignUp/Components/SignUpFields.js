@@ -23,17 +23,17 @@ export default function SignUpFields() {
 
     const { $lightGray, $gray } = theme;
 
-    const [firstName, setFirstName] = useState('a');
-    const [lastName, setLastName] = useState('s');
-    const [email, setEmail] = useState('diego6d@gmail.com');
-    const [phone, setPhone] = useState('1');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [birthday, setBirthday] = useState(null);
-    const [gender, setGender] = useState({ key: 0, label: 'asd' });
-    const [searchingBy, setSearchingBy] = useState({ key: 0, label: 'asd' });
+    const [gender, setGender] = useState();
+    const [searchingBy, setSearchingBy] = useState();
     const [ageRange, setAgeRange] = useState([22, 35]);
     const [maxDistance, setMaxDistance] = useState([80]);
-    const [password, setPassword] = useState('123456789a');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('123456789a');
+    const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [passwordSecureTextEntry, setPasswordSecureTextEntry] = useState(true);
     const [passwordConfirmationSecureTextEntry, setPasswordConfirmationSecureTextEntry] = useState(true);
 
