@@ -522,13 +522,6 @@ export function updateIsSuperLikeAvailable(isSuperLikeAvailable) {
     }
 }
 
-export function isDashboardTabNavSwipeEnabled(isDashboardTabNavSwipeEnabled) {
-    return {
-        type: Types.DASHBOARD_TAB_NAV_SWIPE_ENABLED,
-        isDashboardTabNavSwipeEnabled
-    }
-}
-
 export function createOrUpdateUserMatch(profile, superLike) {
     return async (dispatch, getState) => {
 
@@ -591,9 +584,9 @@ export function getUserData(
             //handling userData fields to be correctly "read" by the app
             const ageRange = userData.ageRange.split(',');
             userData.ageRange = ageRange.map(item => parseInt(item));
-            userData.schooling = { key: userData.schooling, label: getSchoolingDesc(userData.schooling) };
-            userData.gender = { key: userData.gender, label: getGenderDesc(userData.gender) };
-            userData.searchingBy = { key: userData.searchingBy, label: getSearchingByDesc(userData.searchingBy) };
+            userData.schooling = { key: userData.schooling || 0, label: getSchoolingDesc(userData.schooling || 0) };
+            userData.gender = { key: userData.gender || 0, label: getGenderDesc(userData.gender || 0) };
+            userData.searchingBy = { key: userData.searchingBy || 1, label: getSearchingByDesc(userData.searchingBy || 1) };
             userData.birthday = new Date(userData.birthday);//needed to work properly on datePicker
             userData.age = calculateAge(userData.birthday);
             userData.showMeOnApp = userData.showMeOnApp == 1;

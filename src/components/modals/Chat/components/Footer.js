@@ -35,8 +35,6 @@ export default function Footer({ matchedProfile }) {
 
     const sendMessage = async () => {
 
-        Keyboard.dismiss();
-
         if (message != '' && !isSendingMessage) {
             setIsSendingMessage(true);
 

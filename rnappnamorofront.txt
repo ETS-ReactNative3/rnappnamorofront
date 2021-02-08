@@ -2,6 +2,13 @@
 To Do
 ****************************************************************************************************************************
 
+create button "ir para configurações"
+multislider it's not working as desirable
+create match screen
+uses lodash to prevent double button press
+create pull to refresh on matches
+if someone sends me a message and I don't have that profile in my matchedProfiles, teh app will crash, so downlaod matchedProfiles again
+improve profileTab layout, center user image and cthe buttons
 
 work on push notifications
 
@@ -9,9 +16,9 @@ on notification.js I reaplaced dangerNotification and successNotification by Ale
 
 tratar erros do servidor de maneira mais amigável, usando imagens legais como os macaquinhos do youtube
 
-check if token hasexpired before send message to firebase
+check if token has expired before send message to firebase
 
-if is open in one device, cannot be opened in another window. Otherwise it's goind to behavior not as expected
+if is open in one device, cannot be opened in another. Otherwise it's goind to behave not as expected
 
 ****************************************************************************************************************************
 Importants

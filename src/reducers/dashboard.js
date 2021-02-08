@@ -3,7 +3,6 @@ import * as Types from '../constants/Types';
 const defaultUserData = {
     ageRange: [25, 35],
     maxDistance: 80,
-    searchingBy: { key: 1, label: 'Procuro por Mulheres' },
     firstName: '',
     lastName: '',
     showMeOnApp: true
@@ -29,7 +28,6 @@ const INITIAL_STATE = {
     selectedConfigMenuTitle: '',
     isSuperLikeAvailable: false,
     swipeCardRef: null,
-    isDashboardTabNavSwipeEnabled: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -96,7 +94,5 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, isSuperLikeAvailable: action.isSuperLikeAvailable }
         case Types.UPDATE_SWIPE_CARD_REF:
             return { ...state, swipeCardRef: action.swipeCardRef }
-        case Types.DASHBOARD_TAB_NAV_SWIPE_ENABLED:
-            return { ...state, isDashboardTabNavSwipeEnabled: action.isDashboardTabNavSwipeEnabled }
     }
 }

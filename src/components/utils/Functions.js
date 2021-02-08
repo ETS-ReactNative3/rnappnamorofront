@@ -1,4 +1,6 @@
 import jwt from 'jwt-decode';
+import crashlytics from '@react-native-firebase/crashlytics';
+
 import { dangerNotification } from './Notifications';
 import * as Options from './Options';
 
@@ -39,19 +41,23 @@ export function handleError(err) {
 
         const somethingIsWrong = 'Ops, parece que algo saiu mal. Tente novamente.';
 
+        crashlytics().recordError(err);
+
         if (typeof err?.response?.data === "string") {
             let helper = err?.response?.data.split(' ');
 
             if (helper[0] !== '<!DOCTYPE' && err?.response?.status == 400)
-                dangerNotification(err?.response?.data);
-            else console.log(somethingIsWrong, err?.response?.data);
+                console.log(err?.response?.data);
+            else console.log(somethingIsWrong + ' - ' + err?.response?.data);
 
-        } else console.log(somethingIsWrong, err);
+        } else dangerNotification(somethingIsWrong + ' - Ref: ' + err);
 
     } catch (error) {
-
-        console.log(err)
-        console.log(error)
+        
+        crashlytics().recordError(err);
+        crashlytics().recordError(error);
+        console.log(err);
+        console.log(error);
     }
 }
 
@@ -173,6 +179,6 @@ export function checkIfSuperLikeIsAvailable(lastTimeSuperLikeWasUsed) {
     return humanReadable.hours > 24
 }
 
-export function generateRandomKey() {   
+export function generateRandomKey() {
     return parseInt(Math.random(1, 999999) * 999)
 }

@@ -44,7 +44,7 @@ export default function CompleteYourProfileContent() {
     }, [userData]);
 
     const updateUserInfo = async () => {
-        if (birthdayLocal && genderLocal && searchingByLocal && schoolingLocal) {
+        if (birthdayLocal && genderLocal && searchingByLocal && schoolingLocal && position) {
 
             const userData = ({
                 birthday: convertDateStringFromDDMMYYYYtoMMDDYYYY(birthdayLocal),
@@ -60,7 +60,7 @@ export default function CompleteYourProfileContent() {
 
             dispatch(Actions.updateUser(userData, true)).then(() => navigation.goBack());
         }
-        else dangerNotification('"Dt. de nascimento", "Gênero", "Procuro por" e "Escolaridade" são campos obrigatórios.');
+        else dangerNotification('"Dt. de nascimento", "Gênero", "Procuro por", "Escolaridade" e "Cargo" são campos obrigatórios.');
     }
 
     return <GenericColumnView>
