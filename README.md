@@ -29,6 +29,8 @@ This will install the application into emulator and you should be able to test i
 
 You can check the backend part here: https://github.com/DiegoDevBittencourt/appnamoroback
 
+You'll find a betta version .apk of this app on the following link: https://www.mediafire.com/file/2hm0s2feabfybro/rnappnamorofront.apk/file
+
 ![](https://i.imgur.com/tKxYxzy.png)
 ![](https://i.imgur.com/nkry9iB.png)
 ![](https://i.imgur.com/Vb2EBFi.png)
