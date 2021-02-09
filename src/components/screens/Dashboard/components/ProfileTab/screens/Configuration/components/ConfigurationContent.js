@@ -73,8 +73,8 @@ export default function ConfigurationContent() {
 
     const changeScreen = (screenName) => navigation.push(screenName);
 
-    const updateUserData = (newUserData, shouldCleanMatchSearcherArray) => dispatch(
-        Actions.updateUser(newUserData, false, shouldCleanMatchSearcherArray)
+    const updateUserData = (newUserData, CleanMatchSearcherArrayAndGetNextProfile) => dispatch(
+        Actions.updateUser(newUserData, false, CleanMatchSearcherArrayAndGetNextProfile)
     );
 
     const handleTermsPress = () => Linking.openURL('https://www.appnamoro.com/terms');

@@ -326,7 +326,10 @@ export function signOut() {
 
             dispatch(showLoader(false));
 
-            RootNavigationRef.reset('Home');
+            //if the user logout while something didn't finished yet, handleActionError and then signOut() will be called
+            //this will make RootNavigationRef.reset('Home') be read more than once, wich will create a non desirable effect
+            //on Home screen "recreating" it many times
+            RootNavigationRef.getCurrentRoutName() != 'Home' && RootNavigationRef.reset('Home');
 
         } catch (err) {
 
@@ -412,9 +415,16 @@ export function updateUser(user, shouldShowLoader, CleanMatchSearcherArrayAndGet
 
             await Api({ accessToken: authState.accessToken }).post(`users/update_user`, { user });
 
-            CleanMatchSearcherArrayAndGetNextProfile ?
-                dispatch(cleanMatchSearcherArrayAndGetNextProfile(true))
-                : dispatch(getUserData());
+            const userData = user.ageRange ? {
+                ageRange: [
+                    parseInt(user.ageRange.split(',')[0]),
+                    parseInt(user.ageRange.split(',')[1])
+                ]
+            } : user;
+
+            dispatch(updateUserDataOnRedux(userData));
+
+            CleanMatchSearcherArrayAndGetNextProfile && dispatch(cleanMatchSearcherArrayAndGetNextProfile(true));
 
             dispatch(showLoader(false));
 
@@ -424,12 +434,12 @@ export function updateUser(user, shouldShowLoader, CleanMatchSearcherArrayAndGet
     }
 }
 
-export function cleanMatchSearcherArrayAndGetNextProfile(shouldGetUserData) {
+export function cleanMatchSearcherArrayAndGetNextProfile(shouldGetProfilesForMatchSearcher) {
     return dispatch => {
         dispatch(removeAllIdsFromProfileIdsAlreadyDownloaded());
         dispatch(removeUserFromMatchSearcher(null, true));
 
-        shouldGetUserData && dispatch(getUserData(true, true));
+        shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
     }
 }
 

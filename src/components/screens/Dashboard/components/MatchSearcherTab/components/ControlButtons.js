@@ -35,7 +35,7 @@ export default function ControlButtons({ currentProfile }) {
 
     const handleLikeCurrentProfile = (superLike) => {
         superLike ? swipeCardRef._forceUpSwipe() : swipeCardRef._forceRightSwipe();
-        
+
         setTimeout(() => {
             likeCurrentProfile(dispatch, superLike, currentProfile);
         }, 1000);
@@ -73,7 +73,7 @@ export default function ControlButtons({ currentProfile }) {
             solidIcon
             customIconStyle={{ ...customIconStyle, color: isSuperLikeAvailable ? $lightBlue : $gray }}
             underlayColor={$lightGray}
-            onPress={() =>  handleLikeCurrentProfile(true)}
+            onPress={() => isSuperLikeAvailable && handleLikeCurrentProfile(true)}
         />
 
         <RoundIconButton

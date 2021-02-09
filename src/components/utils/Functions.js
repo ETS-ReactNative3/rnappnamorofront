@@ -4,6 +4,37 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import { dangerNotification } from './Notifications';
 import * as Options from './Options';
 
+export function handleError(err) {
+    try {
+
+        const somethingIsWrong = 'Ops, parece que algo saiu mal. Tente novamente.';
+
+        crashlytics().recordError(err);
+
+        if (typeof err?.response?.data === "string") {
+            let helper = err?.response?.data.split(' ');
+
+            if (helper[0] !== '<!DOCTYPE' && err?.response?.status == 400)
+                dangerNotification(err?.response?.data);
+            else {
+                crashlytics().recordError(err?.response);
+                console.log(somethingIsWrong + ' - ' + err?.response?.data);
+            }
+
+        } else {
+            crashlytics().recordError(err?.response);
+            console.log(somethingIsWrong + ' - Ref: ' + err);
+        }
+
+    } catch (error) {
+
+        crashlytics().recordError(err);
+        crashlytics().recordError(error);
+        console.log(err);
+        console.log(error);
+    }
+}
+
 export function calculateAge(birthday) { // birthday is a date
     var ageDifMs = Date.now() - birthday.getTime();
     var ageDate = new Date(ageDifMs); // miliseconds from epoch
@@ -34,31 +65,6 @@ function deg2rad(deg) {
 
 export function decodeJwtToken(JWT_TOKEN) {
     return JWT_TOKEN ? jwt(JWT_TOKEN).payload : '';
-}
-
-export function handleError(err) {
-    try {
-
-        const somethingIsWrong = 'Ops, parece que algo saiu mal. Tente novamente.';
-
-        crashlytics().recordError(err);
-
-        if (typeof err?.response?.data === "string") {
-            let helper = err?.response?.data.split(' ');
-
-            if (helper[0] !== '<!DOCTYPE' && err?.response?.status == 400)
-                console.log(err?.response?.data);
-            else console.log(somethingIsWrong + ' - ' + err?.response?.data);
-
-        } else dangerNotification(somethingIsWrong + ' - Ref: ' + err);
-
-    } catch (error) {
-        
-        crashlytics().recordError(err);
-        crashlytics().recordError(error);
-        console.log(err);
-        console.log(error);
-    }
 }
 
 export function convertDateFormatToDDMMYYYY(date) {
