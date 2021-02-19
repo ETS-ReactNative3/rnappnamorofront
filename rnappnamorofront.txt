@@ -10,6 +10,8 @@ create pull to refresh on matches
 if someone sends me a message and I don't have that profile in my matchedProfiles, teh app will crash, so downlaod matchedProfiles again
 improve profileTab layout, center user image and cthe buttons
 
+eliminate everything that has a connection with leftProfile
+
 work on push notifications
 
 on notification.js I reaplaced dangerNotification and successNotification by Alerts, create a friendly way to show messages

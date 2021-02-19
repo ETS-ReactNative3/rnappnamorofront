@@ -46,7 +46,5 @@ const TabNavigator = () => {
 }
 
 export default function DashboardTabNavigator() {
-
-
     return <TabNavigator />
 }

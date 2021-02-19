@@ -84,7 +84,7 @@ export default function SocialButtons() {
             text={'Facebook'}
             iconName={'facebook'} />
 
-        <SocialButton onPress={googleLogin}
+        <SocialButton onPress={() => null}//googleLogin}
             customButtonStyle={{ backgroundColor: '#d9534f' }}
             underlayColor={'#ca2c27'}
             text={'Google'}
