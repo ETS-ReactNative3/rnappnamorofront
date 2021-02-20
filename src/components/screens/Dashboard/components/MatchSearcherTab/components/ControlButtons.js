@@ -25,7 +25,7 @@ export default function ControlButtons({ currentProfile }) {
         const { lastTimeSuperLikeWasUsed } = state.dashboard.userData;
         return lastTimeSuperLikeWasUsed;
     });
-    const { isSuperLikeAvailable, swipeCardRef } = useSelector(state => state.dashboard);
+    const { isSuperLikeAvailable, swipeCardRef } = useSelector(state => state.match);
 
     const { $lightGray, $gray, $red, $lightGreen, $lightBlue } = theme;
 

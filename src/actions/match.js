@@ -1,6 +1,8 @@
 import * as Types from '../constants/Types';
 import { calculateDistanceFromLatLonInKm, calculateAge } from '../components/utils/Functions';
 import { Api } from '../components/utils/Api';
+import { handleActionError } from '../actions/handleError';
+import { updateUserDataOnRedux } from '../actions/user';
 
 export function getMatchedProfiles() {
     return async (dispatch, getState) => {
@@ -70,7 +72,7 @@ export function addProfileIntoMatchSearcherArray(profile) {
 export function cleanMatchSearcherArrayAndGetNextProfile(shouldGetProfilesForMatchSearcher) {
     return dispatch => {
         dispatch(removeAllIdsFromProfileIdsAlreadyDownloaded());
-        dispatch(removeUserFromMatchSearcher(null, true));
+        dispatch(removeProfileFromMatchSearcher(null, true));
 
         shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
     }
@@ -144,7 +146,7 @@ export function removeAllIdsFromProfileIdsAlreadyDownloaded() {
 
 export function ignoreCurrentProfile(profileId) {
     return dispatch => {
-        dispatch(removeUserFromMatchSearcher(profileId));
+        dispatch(removeProfileFromMatchSearcher(profileId));
         dispatch(getNextProfileForTheMatchSearcher());
     }
 }
@@ -152,8 +154,7 @@ export function ignoreCurrentProfile(profileId) {
 export function likeCurrentProfile(profile, superLike) {
     return dispatch => {
         superLike && dispatch(updateUserDataOnRedux({ lastTimeSuperLikeWasUsed: new Date() }));
-        dispatch(createOrUpdateUserMatch(profile, superLike));
-        dispatch(removeUserFromMatchSearcher(profile.id));
+        dispatch(removeProfileFromMatchSearcher(profile.id));
         dispatch(getNextProfileForTheMatchSearcher());
     }
 }
@@ -165,10 +166,10 @@ export function updateIsSuperLikeAvailable(isSuperLikeAvailable) {
     }
 }
 
-export function removeUserFromMatchSearcher(userId, removeAll) {
+export function removeProfileFromMatchSearcher(profileId, removeAll) {
     return ({
-        type: Types.REMOVE_USER_FROM_THE_MATCH_SEARCHER_ARRAY,
-        userId,
+        type: Types.REMOVE_PROFILE_FROM_THE_MATCH_SEARCHER_ARRAY,
+        profileId,
         removeAll
     });
 }

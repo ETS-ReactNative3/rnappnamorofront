@@ -6,7 +6,7 @@ import { GenericDataList } from '../../../../../../commonComponents';
 
 export default function MatchesContent() {
 
-    const { matchedProfiles } = useSelector(state => state.dashboard);
+    const { matchedProfiles } = useSelector(state => state.match);
 
     const MatchItemFL = ({ item }) => <MatchItem matchedProfile={item} />
 

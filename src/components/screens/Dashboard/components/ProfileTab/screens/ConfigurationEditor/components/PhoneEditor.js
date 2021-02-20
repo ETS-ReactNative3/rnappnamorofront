@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { theme } from '../../../../../../../../constants/StyledComponentsTheme';
 import * as Actions from '../../../../../../../../actions';
-import { GenericAppButton, TextInputRightIconButton, GenericScrollView } from '../../../../../../../commonComponents';
+import { GenericAppButton, TextInputRightIconButton, GenericContainer } from '../../../../../../../commonComponents';
 
 export default function PhoneEditor({ navigation }) {
 
@@ -28,7 +27,7 @@ export default function PhoneEditor({ navigation }) {
             .then(() => navigation.goBack());
     }
 
-    return <GenericScrollView customStyle={{ paddingLeft: 10, paddingRight: 10 }}>
+    return <GenericContainer customStyle={{ paddingLeft: 10, paddingRight: 10 }}>
 
         <TextInputRightIconButton
             placeholder={'Digite seu telefone aqui'}
@@ -44,5 +43,5 @@ export default function PhoneEditor({ navigation }) {
             onPress={updateUserPhone}
         />
 
-    </GenericScrollView>
+    </GenericContainer>
 }

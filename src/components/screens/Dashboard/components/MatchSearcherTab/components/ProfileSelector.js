@@ -22,8 +22,7 @@ export default function ProfileSelector() {
     const dispatch = useDispatch();
     var swipeCardRef = useRef();
 
-    const { matchSearcherProfiles } = useSelector(state => state.dashboard);
-    const { isSuperLikeAvailable } = useSelector(state => state.dashboard);
+    const { matchSearcherProfiles, isSuperLikeAvailable } = useSelector(state => state.match);
     const { $lightBlue, $green, $red } = theme;
 
     const handleLikeCurrentProfile = (superLike, currentProfile) => likeCurrentProfile(dispatch, superLike, currentProfile);

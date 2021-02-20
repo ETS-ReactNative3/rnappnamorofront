@@ -8,6 +8,14 @@ import {
     getGenderDesc
 } from '../components/utils/Functions';
 import { Api } from '../components/utils/Api';
+import { handleActionError } from '../actions/handleError';
+import { getAddress, showLoader } from '../actions/utils';
+import {
+    cleanMatchSearcherArrayAndGetNextProfile,
+    getMatchedProfiles,
+    getNextProfileForTheMatchSearcher
+} from '../actions/match';
+import { signInOrSignUpToFirebase } from '../actions/firebase';
 
 export function updateUser(user, shouldShowLoader, CleanMatchSearcherArrayAndGetNextProfile) {
     return async (dispatch, getState) => {

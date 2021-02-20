@@ -6,7 +6,10 @@ import * as RootNavigationRef from '../routes/RootNavigationRef';
 import * as Types from '../constants/Types';
 import { decodeJwtToken } from '../components/utils/Functions';
 import { Api } from '../components/utils/Api';
-import * as Actions from '../actions';
+import { showLoader } from '../actions/utils';
+import { cleanMatchSearcherArrayAndGetNextProfile, updateMatchedProfilesArray } from '../actions/match';
+import { handleActionError } from '../actions/handleError';
+import { getUserData, updateUserDataOnRedux } from '../actions/user';
 
 const unsubscribeFirebaseListeners = [];
 
@@ -136,15 +139,15 @@ export function signInLocalAction(userData) {
             const res = await Api({ accessToken: null }).post('account/signin', userData);
 
             dispatch(setAccessTokenOnStorageAndRedux(res.data.token));
-            dispatch(Actions.updateUserDataOnRedux({ id: decodeJwtToken(res.data.token).id }));
+            dispatch(updateUserDataOnRedux({ id: decodeJwtToken(res.data.token).id }));
 
-            dispatch(Actions.showLoader(false));
+            dispatch(showLoader(false));
 
             Keyboard.dismiss();
 
             dispatch({ type: Types.AUTH_SIGN_IN });
 
-            dispatch(Actions.getUserData(true, true, true, true));
+            dispatch(getUserData(true, true, true, true));
 
             RootNavigationRef.reset('Dashboard');
 
@@ -176,7 +179,7 @@ export function signInOauthAction(oauthAccessToken, type) {
 
             dispatch(setAccessTokenOnStorageAndRedux(res.data.token));
 
-            dispatch(Actions.updateUserDataOnRedux({ id: decodeJwtToken(res.data.token).id }));
+            dispatch(updateUserDataOnRedux({ id: decodeJwtToken(res.data.token).id }));
 
             dispatch(showLoader(false));
 

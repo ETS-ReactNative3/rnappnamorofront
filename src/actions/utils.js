@@ -5,6 +5,8 @@ import * as RootNavigationRef from '../routes/RootNavigationRef';
 
 import { REACT_APP_GEOCODE_API_KEY } from 'react-native-expand-dotenv';
 import * as Types from '../constants/Types';
+import { handleActionError } from '../actions/handleError';
+import { getNextProfileForTheMatchSearcher } from '../actions/match';
 
 Geocoder.init(REACT_APP_GEOCODE_API_KEY, { language: 'pt-br' });
 

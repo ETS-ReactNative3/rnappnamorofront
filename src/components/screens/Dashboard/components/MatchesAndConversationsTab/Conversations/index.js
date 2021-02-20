@@ -15,7 +15,8 @@ const YouHaveNoConversationsContainer = styled.View`
 export default function Conversations() {
 
     const doWeHaveConversations = useSelector(state => {
-        const { matchedProfiles, realTimeFirebaseChat } = state.dashboard;
+        const { matchedProfiles } = state.match;
+        const { realTimeFirebaseChat } = state.dashboard;
         return matchedProfiles.length > 0 && realTimeFirebaseChat.length > 0;
     });
 

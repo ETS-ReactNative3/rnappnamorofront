@@ -4,6 +4,11 @@ import * as Types from '../constants/Types';
 import { decodeJwtToken } from '../components/utils/Functions';
 import { successNotification } from '../components/utils/Notifications';
 import { Api } from '../components/utils/Api';
+import { showLoader } from '../actions/utils';
+import { removeAllConversationsFromThisMatch } from '../actions/firebase';
+import { signOut } from '../actions/auth';
+import { handleActionError } from '../actions/handleError';
+import { getUserData } from '../actions/user';
 
 export function uploadImageToServer(imageData, selectedFile) {
     return async (dispatch, getState) => {
@@ -72,7 +77,7 @@ export function sendRecoverPasswordEmail(email) {
 
         } catch (err) {
 
-            dispatch(Actions.showLoader(false));
+            dispatch(showLoader(false));
             dispatch(handleActionError(err));
         }
     }

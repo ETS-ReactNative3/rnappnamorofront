@@ -15,7 +15,7 @@ const YouHaveNoMatchesContainer = styled.View`
 export default function Matches() {
 
     const matchedProfilesLength = useSelector(state => {
-        const { matchedProfiles } = state.dashboard;
+        const { matchedProfiles } = state.match;
         return matchedProfiles.length;
     });
 
