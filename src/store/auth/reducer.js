@@ -1,28 +1,23 @@
-import * as Types from '../constants/Types';
+import * as authTypes from './types';
 
 const INITIAL_STATE = {
-    isAuthenticated: false,
+    isAuthenticated: true,
     isCheckingIfTokenHasExpired: false,
     accessToken: '',
-    firebaseUid: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
 
     switch (action.type) {
-        case Types.AUTH_SIGN_UP:
+        case authTypes.AUTH_SIGN_UP:
             return { ...state, isAuthenticated: true }
-        case Types.AUTH_SIGN_IN:
+        case authTypes.AUTH_SIGN_IN:
             return { ...state, isAuthenticated: true }
-        case Types.CHECK_IF_TOKEN_HAS_EXPIRED:
-            return { ...state, isAuthenticated: action.isAuthenticated }
-        case Types.AUTH_SIGN_OUT:
+        case authTypes.AUTH_SIGN_OUT:
             return { ...state, isAuthenticated: false }
-        case Types.UPDATE_ACCESS_TOKEN:
+        case authTypes.UPDATE_ACCESS_TOKEN:
             return { ...state, accessToken: action.accessToken }
-        case Types.UPDATE_FIREBASE_UID:
-            return { ...state, firebaseUid: action.firebaseUid }
-        case Types.CHECKING_IF_TOKEN_HAS_EXPIRED:
+        case authTypes.CHECKING_IF_TOKEN_HAS_EXPIRED:
             return { ...state, isCheckingIfTokenHasExpired: action.isCheckingIfTokenHasExpired }
         default:
             return state;

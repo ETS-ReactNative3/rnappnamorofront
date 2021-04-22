@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import * as Actions from '../../../actions';
+import * as userActions from '../../../store/user/actions';
+import * as authActions from '../../../store/auth/actions';
+import * as authThunk from '../../../store/auth/thunk';
 import { decodeJwtToken } from '../../utils/Functions';
 import DashboardTabNavigator from './components/DashboardTabNavigator';
 import { GenericContainer } from '../../../GlobalStyle';
@@ -20,9 +22,9 @@ export default function Dashboard() {
         const accessToken = await AsyncStorage.getItem('accessToken');
 
         //needs the id to be used when download data from resource server:
-        dispatch(Actions.updateUserDataOnRedux({ id: decodeJwtToken(accessToken).id }));
-        dispatch(Actions.updateAccessTokenOnRedux(accessToken));
-        dispatch(Actions.checkIfTokenHasExpired());
+        dispatch(userActions.updateUserDataOnRedux({ id: decodeJwtToken(accessToken).id }));
+        dispatch(authActions.updateAccessTokenOnRedux(accessToken));
+        dispatch(authThunk.checkIfTokenHasExpired());
     }
 
     return (

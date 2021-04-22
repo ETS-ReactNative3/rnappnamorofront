@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SwipeCards from 'react-native-swipe-cards';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as Actions from '../../../../../../actions';
+import * as matchActions from '../../../../../../store/match/actions';
 import { GenericContainer } from '../../../../../../GlobalStyle';
 import ProfileCard from './ProfileCard';
 import { theme } from '../../../../../../constants/StyledComponentsTheme';
@@ -28,7 +28,7 @@ export default function ProfileSelector() {
     const handleLikeCurrentProfile = (superLike, currentProfile) => likeCurrentProfile(dispatch, superLike, currentProfile);
 
     useEffect(() => {
-        dispatch(Actions.updateSwipeCardRef(swipeCardRef));
+        dispatch(matchActions.updateSwipeCardRef(swipeCardRef));
     }, []);
 
     return <MainContainer>

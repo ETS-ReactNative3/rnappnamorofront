@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { P } from '../../../GlobalStyle';
 
-import * as Actions from '../../../actions';
+import * as dashboardThunk from '../../../store/dashboard/thunk';
 import { dangerNotification } from '../../utils/Notifications';
 import { emailValidator } from '../../utils/Functions';
 import { GenericModalContainer, TextInputRightIconButton, GenericAppButton } from '../../commonComponents';
@@ -25,7 +25,7 @@ export default function ForgotPassword(props) {
 
             Keyboard.dismiss();
 
-            dispatch(Actions.sendRecoverPasswordEmail(email)).then(() => props.navigation.goBack());
+            dispatch(dashboardThunk.sendRecoverPasswordEmail(email)).then(() => props.navigation.goBack());
 
         }
         else dangerNotification('Digite um email válido!');

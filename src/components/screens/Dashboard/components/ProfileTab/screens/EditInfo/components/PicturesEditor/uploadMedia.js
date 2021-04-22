@@ -2,7 +2,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 import { dangerNotification } from '../../../../../../../../utils/Notifications';
 import { handleError, generateRandomKey } from '../../../../../../../../utils/Functions';
-import * as Actions from '../../../../../../../../../actions';
+import * as dashboardThunk from '../../../../../../../../../store/dashboard/thunk';
 
 export function pickFile(userImagesLength, dispatch) {
     try {
@@ -57,6 +57,6 @@ const uploadImages = (selectedFiles, dispatch) => {
 
         imageFormData.append('file', selectedFile.file);
 
-        dispatch(Actions.uploadImageToServer(imageFormData, selectedFile));
+        dispatch(dashboardThunk.uploadImageToServer(imageFormData, selectedFile));
     });
 }

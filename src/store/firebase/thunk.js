@@ -1,17 +1,10 @@
 import firebase from 'firebase';
 
-import * as Types from '../constants/Types';
-import { convertDateFormatToHHMM } from '../components/utils/Functions';
-import { handleActionError } from '../actions/handleError';
+import { convertDateFormatToHHMM } from '../../components/utils/Functions';
+import * as firebaseActions from './actions';
+import * as errorThunk from '../error/thunk';
 
 const unsubscribeFirebaseListeners = [];
-
-export function updateFirebaseUidOnRedux(firebaseUid) {
-    return {
-        type: Types.UPDATE_FIREBASE_UID,
-        firebaseUid
-    }
-}
 
 export function signInOrSignUpToFirebase() {//if there's no record try sign in, otherwise: sign up
     return async (dispatch, getState) => {
@@ -31,21 +24,18 @@ export function signInOrSignUpToFirebase() {//if there's no record try sign in, 
                         createdAt: new Date()
                     });
 
-                dispatch(updateFirebaseUidOnRedux(user.uid));
+                dispatch(firebaseActions.updateFirebaseUidOnRedux(user.uid));
             } catch (err) {
-                dispatch(handleActionError(err));
+                dispatch(errorThunk.handleThunkError(err));
             };
         }
 
         firebase.auth().signInWithEmailAndPassword(userEmail, userEmail).then(user => {
 
-            dispatch(updateFirebaseUidOnRedux(user.user.uid));
+            dispatch(firebaseActions.updateFirebaseUidOnRedux(user.user.uid));
             dispatch(getRealtimeMessagesFromFirebase());
 
-            dispatch({
-                type: Types.UPDATE_FIREBASE_USER,
-                firebaseUser: { uid: user.user.uid }
-            });
+            dispatch(firebaseActions.updateFirebaseUserOnRedux({ uid: user.user.uid }));
 
         }).catch(err => {
 
@@ -55,17 +45,14 @@ export function signInOrSignUpToFirebase() {//if there's no record try sign in, 
 
                     addUserOnFirestore({ uid: user.user.uid });
 
-                    dispatch({
-                        type: Types.UPDATE_FIREBASE_USER,
-                        firebaseUser: { uid: user.user.uid }
-                    });
+                    dispatch(firebaseActions.updateFirebaseUserOnRedux({ uid: user.user.uid }));
 
                 }).catch(err => {
-                    dispatch(handleActionError(err));
+                    dispatch(errorThunk.handleThunkError(err));
                 })
             }
             else {
-                dispatch(handleActionError(err));
+                dispatch(errorThunk.handleThunkError(err));
             }
         })
     }
@@ -120,10 +107,7 @@ export function getRealtimeMessagesFromFirebase() {
                                 ({ ...item, id: (item.createdAt.nanoseconds + item.createdAt.seconds + index).toString() })
                             );
 
-                            dispatch({
-                                type: Types.UPDATE_REAL_TIME_FIREBASE_CHAT,
-                                realTimeFirebaseChat: realTimeFirebaseChatFinal
-                            });
+                            dispatch(firebaseActions.updateRealTimeFirebaseChat(realTimeFirebaseChatFinal));
                         })
                     );
                 })
@@ -145,7 +129,7 @@ export function sendMessageToFirebase(message, matchedProfileId) {
                 message
             })
             .catch(err => {
-                dispatch(handleActionError(err));
+                dispatch(errorThunk.handleThunkError(err));
             });
     }
 }
@@ -179,7 +163,7 @@ export function removeAllConversationsFromThisMatch(matchedProfileId) {
             });
 
         } catch (err) {
-            dispatch(handleActionError(err));
+            dispatch(errorThunk.handleThunkError(err));
         }
     }
 }

@@ -2,7 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import * as Actions from '../../../../actions';
+import * as dashboardThunk from '../../../../store/dashboard/thunk';
+import * as matchThunk from '../../../../store/match/thunk';
+import * as userThunk from '../../../../store/user/thunk';
 import { GenericRowView, GenericColumnView, P } from '../../../../GlobalStyle';
 import { GenericAppButton } from '../../../commonComponents';
 import { handleError } from '../../../utils/Functions';
@@ -32,13 +34,13 @@ export default function GenericYesNoModalContent(props) {
             switch (selectedMethod) {
                 case 'genericYesNoModalDeleteAccount':
                     handleClose();
-                    dispatch(Actions.deleteAccount());
+                    dispatch(dashboardThunk.deleteAccount());
                     break;
                 case 'genericYesNoModalUnmatch':
-                    dispatch(Actions.unmatch(matchedProfile?.id));
+                    dispatch(matchThunk.unmatch(matchedProfile?.id));
                     break;
                 case 'genericYesNoModalDeleteUserImage':
-                    dispatch(Actions.deleteUserImage(selectedUserImageId));
+                    dispatch(userThunk.deleteUserImage(selectedUserImageId));
                     break;
                 default:
                     break;

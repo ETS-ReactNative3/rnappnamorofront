@@ -1,23 +1,20 @@
-import * as RootNavigationRef from '../routes/RootNavigationRef';
+import * as RootNavigationRef from '../../routes/RootNavigationRef';
 
-import * as Types from '../constants/Types';
 import {
     calculateAge,
     getSearchingByDesc,
     getSchoolingDesc,
     getGenderDesc
-} from '../components/utils/Functions';
-import { Api } from '../components/utils/Api';
-import { handleActionError } from '../actions/handleError';
-import { getAddress, showLoader } from '../actions/utils';
-import {
-    cleanMatchSearcherArrayAndGetNextProfile,
-    getMatchedProfiles,
-    getNextProfileForTheMatchSearcher
-} from '../actions/match';
-import { signInOrSignUpToFirebase } from '../actions/firebase';
+} from '../../components/utils/Functions';
+import { Api } from '../../components/utils/Api';
+import * as userActions from './actions';
+import * as utilsActions from '../utils/actions';
+import * as errorThunk from '../error/thunk';
+import * as utilsThunk from '../utils/thunk';
+import * as matchThunk from '../match/thunk';
+import * as firebaseThunk from '../firebase/thunk';
 
-export function updateUser(user, shouldShowLoader, CleanMatchSearcherArrayAndGetNextProfile) {
+export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArrayAndGetNextProfile) {
     return async (dispatch, getState) => {
 
         const dashboardState = getState().dashboard;
@@ -25,7 +22,7 @@ export function updateUser(user, shouldShowLoader, CleanMatchSearcherArrayAndGet
 
         try {
 
-            shouldShowLoader && dispatch(showLoader(true));
+            shouldShowLoader && dispatch(utilsActions.showLoader(true));
 
             user = { ...user, id: dashboardState.userData.id };
 
@@ -38,14 +35,14 @@ export function updateUser(user, shouldShowLoader, CleanMatchSearcherArrayAndGet
                 ]
             } : user;
 
-            dispatch(updateUserDataOnRedux(userData));
+            dispatch(userActions.updateUserDataOnRedux(userData));
 
-            CleanMatchSearcherArrayAndGetNextProfile && dispatch(cleanMatchSearcherArrayAndGetNextProfile(true));
+            shouldCleanMatchSearcherArrayAndGetNextProfile && dispatch(matchThunk.cleanMatchSearcherArrayAndGetNextProfile(true));
 
-            dispatch(showLoader(false));
+            dispatch(utilsActions.showLoader(false));
 
         } catch (err) {
-            dispatch(handleActionError(err));
+            dispatch(errorThunk.handleThunkError(err));
         }
     }
 }
@@ -87,28 +84,21 @@ export function getUserData(
                 item.error = false;
             });
 
-            dispatch(updateUserDataOnRedux(userData));
+            dispatch(userActions.updateUserDataOnRedux(userData));
 
             !userData.profileComplete && RootNavigationRef.push('CompleteYourProfileModal');
 
-            shouldGetAddress && dispatch(getAddress());
+            shouldGetAddress && dispatch(utilsThunk.getAddress());
 
-            shouldSignInOnFirebase && dispatch(signInOrSignUpToFirebase());
+            shouldSignInOnFirebase && dispatch(firebaseThunk.signInOrSignUpToFirebase());
 
-            shouldGetMatchedProfiles && dispatch(getMatchedProfiles());
+            shouldGetMatchedProfiles && dispatch(matchThunk.getMatchedProfiles());
 
-            shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
+            shouldGetProfilesForMatchSearcher && dispatch(matchThunk.getNextProfileForTheMatchSearcher());
 
         } catch (err) {
-            dispatch(handleActionError(err));
+            dispatch(errorThunk.handleThunkError(err));
         }
-    }
-}
-
-export function updateUserDataOnRedux(userData) {
-    return {
-        type: Types.UPDATE_USER_DATA,
-        userData
     }
 }
 
@@ -116,17 +106,17 @@ export function deleteUserImage(imageId) {
     return async (dispatch, getState) => {
         try {
 
-            dispatch(showLoader(true));
+            dispatch(utilsActions.showLoader(true));
 
             await Api({ accessToken: getState().auth.accessToken }).delete(`users/user_images/${imageId}`);
 
-            dispatch(showLoader(false));
+            dispatch(utilsActions.showLoader(false));
             dispatch(getUserData(true));
 
             RootNavigationRef.goBack();
 
         } catch (err) {
-            dispatch(handleActionError(err));
+            dispatch(errorThunk.handleThunkError(err));
         }
     }
 }

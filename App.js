@@ -18,7 +18,7 @@ import {
 } from 'react-native-expand-dotenv';
 import { Loader } from './src/components/commonComponents';
 import { theme } from './src/constants/StyledComponentsTheme';
-import reducers from './src/reducers';
+import reducers from './src/store/reducers';
 import Application from './src';
 
 const firebaseConfig = {

@@ -1,10 +1,11 @@
-import * as Actions from '../../../../../../actions';
+import * as matchThunk from '../../../../../../store/match/thunk';
+import * as matchActions from '../../../../../../store/match/actions';
 
 export function ignoreCurrentProfile(dispatch, profileId) {
-    dispatch(Actions.ignoreCurrentProfile(profileId));
+    dispatch(matchThunk.ignoreCurrentProfile(profileId));
 }
 
 export function likeCurrentProfile(dispatch, superLike, currentProfile) {
-    superLike && dispatch(Actions.updateIsSuperLikeAvailable(false));
-    dispatch(Actions.likeCurrentProfile(currentProfile, superLike));
+    superLike && dispatch(matchActions.updateIsSuperLikeAvailable(false));
+    dispatch(matchThunk.likeCurrentProfile(currentProfile, superLike));
 }

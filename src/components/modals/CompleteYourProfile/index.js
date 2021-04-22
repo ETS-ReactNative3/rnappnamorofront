@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { BackHandler } from 'react-native';
 import { useDispatch } from "react-redux";
 
-import * as Actions from '../../../actions';
-import CompleteYourProfileContent from './components/CompleteYourProfileContent';
+import * as authThunk from '../../../store/auth/thunk';
+import CompleteYourProfileContent from './CompleteYourProfileContent';
 import { GenericModalContainer } from '../../commonComponents';
 
 export default function CompleteYourProfile() {
@@ -19,7 +19,7 @@ export default function CompleteYourProfile() {
     }, [])
 
     const handleCloseButtonPress = () => {
-        dispatch(Actions.signOut());
+        dispatch(authThunk.signOut());
     }
 
     return <GenericModalContainer closeButtonPress={() => handleCloseButtonPress()} title={'Vamos completar seu perfil!'}>

@@ -4,8 +4,8 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { theme } from '../../../../constants/StyledComponentsTheme';
 import styled from 'styled-components';
 
+import * as authThunk from '../../../../store/auth/thunk';
 import { dangerNotification } from '../../../utils/Notifications'
-import * as Actions from '../../../../actions';
 import SocialButtons from './SocialButtons';
 import ForgotPassword from './ForgotPassword';
 import SignUpNow from './SignUpNow';
@@ -60,7 +60,7 @@ export default function LoginCard(props) {
 
         if (email && password) {
             const userData = { email, password };
-            dispatch(Actions.signInLocalAction(userData));
+            dispatch(authThunk.signInLocal(userData));
         }
         else
             dangerNotification("Preencha os campos Email e Senha");

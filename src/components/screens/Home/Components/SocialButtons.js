@@ -5,7 +5,7 @@ import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { REACT_APP_GOOGLE_CLIENT_ID } from 'react-native-expand-dotenv';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 
-import * as Actions from '../../../../actions';
+import * as authThunk from '../../../../store/auth/thunk';
 import { SocialButton } from '../../../commonComponents';
 
 GoogleSignin.configure({
@@ -38,7 +38,7 @@ export default function SocialButtons() {
 
             const tokens = await GoogleSignin.getTokens();
 
-            dispatch(Actions.signInOauthAction(tokens.accessToken, 'google'));
+            dispatch(authThunk.signInOauth(tokens.accessToken, 'google'));
 
         } catch (error) {
 
@@ -66,7 +66,7 @@ export default function SocialButtons() {
 
                     AccessToken.getCurrentAccessToken().then(
                         (data) => {
-                            dispatch(Actions.signInOauthAction(data.accessToken.toString(), 'facebook'));
+                            dispatch(authThunk.signInOauth(data.accessToken.toString(), 'facebook'));
                         }
                     )
                 }

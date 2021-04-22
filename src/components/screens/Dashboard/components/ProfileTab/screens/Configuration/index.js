@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import * as Actions from '../../../../../../../actions';
+import * as userThunk from '../../../../../../../store/user/thunk';
 import { GenericContainer } from '../../../../../../../GlobalStyle';
 import ConfigurationContent from './components/ConfigurationContent';
 import ConfigToolbar from './components/ConfigToolbar';
@@ -11,7 +11,7 @@ export default function Configuration(props) {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(Actions.getUserData());
+        dispatch(userThunk.getUserData());
     }, []);
 
     return <GenericContainer>

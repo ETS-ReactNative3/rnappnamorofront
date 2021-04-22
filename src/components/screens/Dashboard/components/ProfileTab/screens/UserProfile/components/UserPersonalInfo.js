@@ -43,7 +43,7 @@ export default UserPersonalInfo = () => {
         age,
         position,
         schooling
-    } = useSelector(state => state.dashboard.userData);
+    } = useSelector(state => state.user?.userData);
 
     const imageSource = userImages && userImages.length > 0 ? { uri: userImages[0].imageUrl } : noProfile
 

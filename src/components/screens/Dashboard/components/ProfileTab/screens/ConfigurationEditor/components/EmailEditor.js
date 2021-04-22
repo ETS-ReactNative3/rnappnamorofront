@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
+import * as dashboardThunk from '../../../../../../../../store/dashboard/thunk';
 import { P } from '../../../../../../../../GlobalStyle';
 import { theme } from '../../../../../../../../constants/StyledComponentsTheme';
-import * as Actions from '../../../../../../../../actions';
 import { GenericAppButton, TextInputRightIconButton, GenericScrollView } from '../../../../../../../commonComponents';
 import { dangerNotification } from '../../../../../../../utils/Notifications';
 import { emailValidator } from '../../../../../../../utils/Functions';
@@ -31,7 +31,7 @@ export default function EmailEditor() {
         if (!verifiedEmailLocal)
 
             if (emailValidator(emailLocal))
-                dispatch(Actions.sendEmailVerification(emailLocal));
+                dispatch(dashboardThunk.sendEmailVerification(emailLocal));
             else dangerNotification('Digite um email válido!');
     }
 

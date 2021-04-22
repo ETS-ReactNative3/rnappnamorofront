@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import * as Actions from '../../../../../../../../actions';
+import * as authThunk from '../../../../../../../../store/auth/thunk';
 import { GenericColumnView } from '../../../../../../../../GlobalStyle';
 import ControlButton from './ControlButton';
 import { theme } from '../../../../../../../../constants/StyledComponentsTheme';
@@ -15,7 +15,7 @@ export default function ControlButtonsContainer() {
     const navigation = useNavigation();
 
     const handleSignOut = () => {
-        dispatch(Actions.signOut());
+        dispatch(authThunk.signOut());
     }
 
     const handleConfigButtonClick = () => {

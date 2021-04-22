@@ -15,7 +15,7 @@ const MainContainer = styled(GenericContainer)`
 export default function MatchSearcherTab() {
 
     const { matchSearcherProfiles, isGettingProfileForTheMatchSearcher } = useSelector(state => state.match);
-    const { showMeOnApp } = useSelector(state => state.dashboard.userData);
+    const { showMeOnApp } = useSelector(state => state.user?.userData);
     const { isGeolocationEnabled, isGettingLocation } = useSelector(state => state.utils);
     const { weFoundAProblem, turnOnShowMeOnApp, turnOnLocation } = InfoText;
 

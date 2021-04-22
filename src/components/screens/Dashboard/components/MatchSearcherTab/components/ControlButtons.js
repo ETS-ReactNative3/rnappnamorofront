@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import * as Actions from '../../../../../../actions';
+import * as matchActions from '../../../../../../store/match/actions';
 import { theme } from '../../../../../../constants/StyledComponentsTheme';
 import { GenericRowView } from '../../../../../../GlobalStyle';
 import { RoundIconButton } from '../../../../../commonComponents';
@@ -30,7 +30,7 @@ export default function ControlButtons({ currentProfile }) {
     const { $lightGray, $gray, $red, $lightGreen, $lightBlue } = theme;
 
     useEffect(() => {
-        dispatch(Actions.updateIsSuperLikeAvailable(checkIfSuperLikeIsAvailable(lastTimeSuperLikeWasUsed)));
+        dispatch(matchActions.updateIsSuperLikeAvailable(checkIfSuperLikeIsAvailable(lastTimeSuperLikeWasUsed)));
     }, [lastTimeSuperLikeWasUsed]);
 
     const handleLikeCurrentProfile = (superLike) => {

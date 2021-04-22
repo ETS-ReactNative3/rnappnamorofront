@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-import * as Actions from '../../../../actions';
+import * as authThunk from '../../../../store/auth/thunk';
 import { theme } from '../../../../constants/StyledComponentsTheme';
 import { convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../../utils/Functions';
 import { dangerNotification } from '../../../utils/Notifications';
@@ -67,7 +67,7 @@ export default function SignUpFields() {
                     pushNotification: 1
                 });
 
-                dispatch(Actions.signUpAction(userData, navigation));
+                dispatch(authThunk.signUp(userData, navigation));
             }
             else {
                 dangerNotification('Preencha todos os campos antes de continuar.');

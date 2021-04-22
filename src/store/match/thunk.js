@@ -1,8 +1,12 @@
-import * as Types from '../constants/Types';
-import { calculateDistanceFromLatLonInKm, calculateAge } from '../components/utils/Functions';
-import { Api } from '../components/utils/Api';
-import { handleActionError } from '../actions/handleError';
-import { updateUserDataOnRedux } from '../actions/user';
+import * as RootNavigationRef from '../../routes/RootNavigationRef';
+import * as matchActions from './actions';
+import * as userActions from '../user/actions';
+import * as utilsActions from '../utils/actions';
+import * as errorThunk from '../error/thunk';
+import * as firebaseThunk from '../firebase/thunk';
+import * as userThunk from '../user/thunk';
+import { calculateDistanceFromLatLonInKm, calculateAge } from '../../components/utils/Functions';
+import { Api } from '../../components/utils/Api';
 
 export function getMatchedProfiles() {
     return async (dispatch, getState) => {
@@ -26,53 +30,18 @@ export function getMatchedProfiles() {
                 ))
             });
 
-            dispatch(updateMatchedProfilesArray(res.data));
+            dispatch(matchActions.updateMatchedProfilesArray(res.data));
 
         } catch (err) {
-            dispatch(handleActionError(err));
+            dispatch(errorThunk.handleThunkError(err));
         }
     }
 }
 
-export function updateSwipeCardRef(swipeCardRef) {
-    return {
-        type: Types.UPDATE_SWIPE_CARD_REF,
-        swipeCardRef
-    }
-}
-
-export function updateMatchedProfilesArray(matchedProfiles) {
-    return {
-        type: Types.UPDATE_MATCHED_PROFILES_ARRAY,
-        matchedProfiles
-    }
-}
-
-export function updateIsGettingProfileForTheMatchSearcher(isGettingProfileForTheMatchSearcher) {
-    return {
-        type: Types.IS_GETTING_PROFILE_FOR_THE_MATCH_SEARCHER,
-        isGettingProfileForTheMatchSearcher
-    }
-}
-
-export function updateProfileIdsAlreadyDownloaded(userId) {
-    return {
-        type: Types.UPDATE_PROFILE_IDS_ALREADY_DOWNLOADED,
-        userId
-    };
-}
-
-export function addProfileIntoMatchSearcherArray(profile) {
-    return {
-        type: Types.ADD_PROFILE_TO_THE_MATCH_SEARCHER_ARRAY,
-        profile
-    };
-}
-
 export function cleanMatchSearcherArrayAndGetNextProfile(shouldGetProfilesForMatchSearcher) {
     return dispatch => {
-        dispatch(removeAllIdsFromProfileIdsAlreadyDownloaded());
-        dispatch(removeProfileFromMatchSearcher(null, true));
+        dispatch(matchActions.removeAllIdsFromProfileIdsAlreadyDownloaded());
+        dispatch(matchActions.removeProfileFromMatchSearcher(null, true));
 
         shouldGetProfilesForMatchSearcher && dispatch(getNextProfileForTheMatchSearcher());
     }
@@ -93,7 +62,7 @@ export function getNextProfileForTheMatchSearcher() {
         try {
             if (!isGettingProfileForTheMatchSearcher && matchSearcherProfiles.length < 2 && isGeolocationEnabled) {
 
-                dispatch(updateIsGettingProfileForTheMatchSearcher(true));
+                dispatch(matchActions.updateIsGettingProfileForTheMatchSearcher(true));
 
                 const res = await Api({ accessToken }).post('users/get_profile_to_the_match_searcher', {
                     currentLongitude: userData.currentLongitude,
@@ -115,61 +84,69 @@ export function getNextProfileForTheMatchSearcher() {
 
                     res.data.user.age = calculateAge(new Date(res.data.user.birthday));
 
-                    dispatch(addProfileIntoMatchSearcherArray(res.data.user));
+                    dispatch(matchActions.addProfileIntoMatchSearcherArray(res.data.user));
 
-                    dispatch(updateProfileIdsAlreadyDownloaded(res.data.user.id));
+                    dispatch(matchActions.updateProfileIdsAlreadyDownloaded(res.data.user.id));
 
-                    dispatch(updateIsGettingProfileForTheMatchSearcher(false));
+                    dispatch(matchActions.updateIsGettingProfileForTheMatchSearcher(false));
 
                     /*matchSearcherProfiles must have at least 2 profiles, so when user likes/ignores the first one,
                     the second will appear*/
                     matchSearcherProfiles.length < 2 && dispatch(getNextProfileForTheMatchSearcher());
                 }
                 else
-                    dispatch(updateIsGettingProfileForTheMatchSearcher(false));
+                    dispatch(matchActions.updateIsGettingProfileForTheMatchSearcher(false));
             }
             else
-                dispatch(updateIsGettingProfileForTheMatchSearcher(false));
+                dispatch(matchActions.updateIsGettingProfileForTheMatchSearcher(false));
 
         } catch (err) {
-            dispatch(updateIsGettingProfileForTheMatchSearcher(false));
-            dispatch(handleActionError(err));
+            dispatch(matchActions.updateIsGettingProfileForTheMatchSearcher(false));
+            dispatch(errorThunk.handleThunkError(err));
         }
-    }
-}
-
-export function removeAllIdsFromProfileIdsAlreadyDownloaded() {
-    return {
-        type: Types.REMOVE_ALL_IDS_FROM_PROFILE_IDS_ALREADY_DOWNLOADED
     }
 }
 
 export function ignoreCurrentProfile(profileId) {
     return dispatch => {
-        dispatch(removeProfileFromMatchSearcher(profileId));
+        dispatch(matchActions.removeProfileFromMatchSearcher(profileId));
         dispatch(getNextProfileForTheMatchSearcher());
     }
 }
 
 export function likeCurrentProfile(profile, superLike) {
     return dispatch => {
-        superLike && dispatch(updateUserDataOnRedux({ lastTimeSuperLikeWasUsed: new Date() }));
-        dispatch(removeProfileFromMatchSearcher(profile.id));
+        superLike && dispatch(userActions.updateUserDataOnRedux({ lastTimeSuperLikeWasUsed: new Date() }));
+        dispatch(matchActions.removeProfileFromMatchSearcher(profile.id));
         dispatch(getNextProfileForTheMatchSearcher());
     }
 }
 
-export function updateIsSuperLikeAvailable(isSuperLikeAvailable) {
-    return {
-        type: Types.IS_SUPERLIKE_AVAILABLE,
-        isSuperLikeAvailable
-    }
-}
+export function unmatch(profileId) {
+    return async (dispatch, getState) => {
 
-export function removeProfileFromMatchSearcher(profileId, removeAll) {
-    return ({
-        type: Types.REMOVE_PROFILE_FROM_THE_MATCH_SEARCHER_ARRAY,
-        profileId,
-        removeAll
-    });
+        const dashboardState = getState().dashboard;
+        const authState = getState().auth;
+
+        try {
+
+            dispatch(utilsActions.showLoader(true));
+
+            await Api({ accessToken: authState.accessToken }).post(`users/unmatch`,
+                { userId: dashboardState.userData.id, profileId }
+            );
+
+            await dispatch(firebaseThunk.removeAllConversationsFromThisMatch(profileId));
+
+            dispatch(utilsActions.showLoader(false));
+
+            dispatch(userThunk.getUserData(true, true, false, true));
+
+            RootNavigationRef.goBack();//hides yesNo modal
+            RootNavigationRef.goBack();//hides chat screen modal
+
+        } catch (err) {
+            dispatch(errorThunk.handleThunkError(err));
+        }
+    }
 }

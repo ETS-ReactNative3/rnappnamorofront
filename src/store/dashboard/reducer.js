@@ -1,18 +1,7 @@
-import * as Types from '../constants/Types';
-
-const defaultUserData = {
-    ageRange: [25, 35],
-    maxDistance: 80,
-    firstName: '',
-    lastName: '',
-    showMeOnApp: true
-};
+import * as dashboardTypes from './types';
 
 const INITIAL_STATE = {
-    userData: defaultUserData,
     uploadingImagesPreview: [],
-    firebaseUser: {},
-    realTimeFirebaseChat: [],
     selectedConfigMenu: '',
     selectedConfigMenuTitle: '',
 }
@@ -20,9 +9,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
 
     switch (action.type) {
-        case Types.UPDATE_USER_DATA:
-            return { ...state, userData: { ...state.userData, ...action.userData } };
-        case Types.UPLOADING_IMAGES:
+        case dashboardTypes.UPLOADING_IMAGES:
             return {
                 ...state, uploadingImagesPreview:
                     action.removeImageByThisId ?
@@ -35,11 +22,7 @@ export default (state = INITIAL_STATE, action) => {
                                     : item)
                             : [...state.uploadingImagesPreview, action.image]//if not add
             }
-        case Types.UPDATE_FIREBASE_USER:
-            return { ...state, firebaseUser: action.firebaseUser }
-        case Types.UPDATE_REAL_TIME_FIREBASE_CHAT:
-            return { ...state, realTimeFirebaseChat: action.realTimeFirebaseChat }
-        case Types.SET_SELECTED_CONFIG_MENU:
+        case dashboardTypes.SET_SELECTED_CONFIG_MENU:
             return {
                 ...state,
                 selectedConfigMenu: action.selectedConfigMenu,

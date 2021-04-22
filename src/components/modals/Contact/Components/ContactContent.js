@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-import * as Actions from '../../../../actions';
+import * as dashboardThunk from '../../../../store/dashboard/thunk';
 import { emailValidator } from '../../../utils/Functions';
 import { dangerNotification } from '../../../utils/Notifications';
 import { GenericColumnView } from '../../../../GlobalStyle';
@@ -27,7 +27,7 @@ export default function SignUpFields() {
         if (emailValidator(email)) {
 
             name && email && subject && message ?
-                dispatch(Actions.sendNewUserContact(name, email, subject, message))
+                dispatch(dashboardThunk.sendNewUserContact(name, email, subject, message))
                 .then(() => navigation.goBack())
                 :
                 dangerNotification('Preencha todos os campos antes de continuar.');

@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 import { theme } from '../../../../../../../../constants/StyledComponentsTheme';
-import * as Actions from '../../../../../../../../actions';
+import * as userThunk from '../../../../../../../../store/user/thunk';
+import * as dashboardActions from '../../../../../../../../store/dashboard/actions';
 import {
     SectionTitle,
     ConfigItem,
@@ -29,7 +30,7 @@ export default function ConfigurationContent() {
         showMeOnApp,
         emailNotification,
         pushNotification
-    } = useSelector(state => state.dashboard.userData);
+    } = useSelector(state => state.user?.userData);
 
     const { userData } = useSelector(state => state.dashboard);
 
@@ -66,7 +67,7 @@ export default function ConfigurationContent() {
     }
 
     const setSelectedConfigMenuAndChangeScreen = (selectedMenu, selectedConfigMenuTitle) => {
-        dispatch(Actions.setSelectedConfigMenu(selectedMenu, selectedConfigMenuTitle));
+        dispatch(dashboardActions.setSelectedConfigMenu(selectedMenu, selectedConfigMenuTitle));
 
         changeScreen('ConfigurationEditor');
     }
@@ -74,7 +75,7 @@ export default function ConfigurationContent() {
     const changeScreen = (screenName) => navigation.push(screenName);
 
     const updateUserData = (newUserData, CleanMatchSearcherArrayAndGetNextProfile) => dispatch(
-        Actions.updateUser(newUserData, false, CleanMatchSearcherArrayAndGetNextProfile)
+        userThunk.updateUser(newUserData, false, CleanMatchSearcherArrayAndGetNextProfile)
     );
 
     const handleTermsPress = () => Linking.openURL('https://www.appnamoro.com/terms');

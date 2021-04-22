@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import * as Actions from '../../../../../../../actions';
+import * as userThunk from '../../../../../../../store/user/thunk';
 import { theme } from '../../../../../../../constants/StyledComponentsTheme';
 import { Toolbar, GenericScrollView } from '../../../../../../commonComponents';
 import { GenericContainer } from '../../../../../../../GlobalStyle';
@@ -13,7 +13,7 @@ export default function EditInfo(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(Actions.getUserData());
+        dispatch(userThunk.getUserData());
     }, []);
 
     return <GenericContainer>

@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Keyboard } from 'react-native';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import * as Actions from '../../../../actions';
+import * as firebaseThunk from '../../../../store/firebase/thunk';
 import { TextInput, GenericAppButton, RoundIconButton } from '../../../commonComponents';
 import { GenericRowView } from '../../../../GlobalStyle';
 import { theme } from '../../../../constants/StyledComponentsTheme';
@@ -38,7 +37,7 @@ export default function Footer({ matchedProfile }) {
         if (message != '' && !isSendingMessage) {
             setIsSendingMessage(true);
 
-            dispatch(Actions.sendMessageToFirebase(message, matchedProfile.id))
+            dispatch(firebaseThunk.sendMessageToFirebase(message, matchedProfile.id))
                 .then(() => {
                     setIsSendingMessage(false);
                     setMessage('');

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as Actions from '../../../../../../../../actions';
+import * as userThunk from '../../../../../../../../store/user/thunk';
 import { GenericAppButton, TextInputRightIconButton, GenericContainer } from '../../../../../../../commonComponents';
 
 export default function PhoneEditor({ navigation }) {
@@ -23,7 +23,7 @@ export default function PhoneEditor({ navigation }) {
     }
 
     const updateUserPhone = () => {
-        isUpdateButtonEnable && dispatch(Actions.updateUser({ phone: phoneLocal }, true))
+        isUpdateButtonEnable && dispatch(userThunk.updateUser({ phone: phoneLocal }, true))
             .then(() => navigation.goBack());
     }
 

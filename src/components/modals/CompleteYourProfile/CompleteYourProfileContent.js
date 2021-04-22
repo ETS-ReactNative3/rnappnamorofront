@@ -2,17 +2,17 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-import * as Actions from '../../../../actions';
-import { dangerNotification } from '../../../utils/Notifications';
-import { GenericColumnView } from '../../../../GlobalStyle';
-import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../../utils/Functions';
-import * as Options from '../../../utils/Options';
+import * as userThunk from '../../../store/user/thunk';
+import { dangerNotification } from '../../utils/Notifications';
+import { GenericColumnView } from '../../../GlobalStyle';
+import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../utils/Functions';
+import * as Options from '../../utils/Options';
 import {
     TextInputRightIconButton,
     DatePickerButton,
     ModalSelector,
     GenericAppButton
-} from '../../../commonComponents';
+} from '../../commonComponents';
 
 export default function CompleteYourProfileContent() {
 
@@ -58,7 +58,7 @@ export default function CompleteYourProfileContent() {
                 showMeOnApp: 1
             });
 
-            dispatch(Actions.updateUser(userData, true)).then(() => navigation.goBack());
+            dispatch(userThunk.updateUser(userData, true)).then(() => navigation.goBack());
         }
         else dangerNotification('"Dt. de nascimento", "Gênero", "Procuro por", "Escolaridade" e "Cargo" são campos obrigatórios.');
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import * as Actions from '../../../../../../../../actions';
+import * as userThunk from '../../../../../../../../store/user/thunk';
 import { P } from '../../../../../../../../GlobalStyle';
 import { ConfigItem, GenericScrollView } from '../../../../../../../commonComponents';
 
@@ -17,7 +17,7 @@ export default function SearchingByEditor() {
 
     const { key: searchingBy } = useSelector(state => state.dashboard.userData.searchingBy)
 
-    const updateSearchingBy = (value) => dispatch(Actions.updateUser({ searchingBy: value }, true, true));
+    const updateSearchingBy = (value) => dispatch(userThunk.updateUser({ searchingBy: value }, true, true));
 
     const InfoText = () => {
         switch (searchingBy) {

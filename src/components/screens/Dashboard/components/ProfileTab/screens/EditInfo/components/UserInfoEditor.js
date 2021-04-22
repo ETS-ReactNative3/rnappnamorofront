@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
+import * as userThunk from '../../../../../../../../store/user/thunk';
+import * as Options from '../../../../../../../utils/Options';
 import {
     TextInputRightIconButton,
     DatePickerButton,
@@ -10,9 +12,7 @@ import {
     GenericAppButton,
     SectionTitle,
 } from '../../../../../../../commonComponents';
-import * as Actions from '../../../../../../../../actions';
 import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../../../../../../utils/Functions';
-import * as Options from '../../../../../../../utils/Options';
 import { GenericContainer } from '../../../../../../../../GlobalStyle';
 
 const UserInfoEditorContainer = styled(GenericContainer)`
@@ -63,7 +63,7 @@ export default function UserInfoEditor() {
             position: positionLocal
         });
 
-        dispatch(Actions.updateUser(user, true)).then(() => navigation.goBack());
+        dispatch(userThunk.updateUser(user, true)).then(() => navigation.goBack());
     }
 
     return <UserInfoEditorContainer>
