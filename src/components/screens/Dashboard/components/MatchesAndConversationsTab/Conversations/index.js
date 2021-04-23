@@ -16,7 +16,7 @@ export default function Conversations() {
 
     const doWeHaveConversations = useSelector(state => {
         const { matchedProfiles } = state.match;
-        const { realTimeFirebaseChat } = state.dashboard;
+        const { realTimeFirebaseChat } = state.firebase;
         return matchedProfiles.length > 0 && realTimeFirebaseChat.length > 0;
     });
 

@@ -22,7 +22,7 @@ export default function PicturesEditor() {
 
     const dispatch = useDispatch();
     
-    const { userImages } = useSelector(state => state.dashboard.userData);
+    const { userImages } = useSelector(state => state.user.userData);
     
     const pickImages = () => pickFile(userImages.length, dispatch);
 

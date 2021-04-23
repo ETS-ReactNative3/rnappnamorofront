@@ -27,8 +27,8 @@ export default function UserInfoEditor() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
-    const { firstName, lastName } = useSelector(state => state.dashboard.userData);
-    const { userData } = useSelector(state => state.dashboard);
+    const { firstName, lastName } = useSelector(state => state.user.userData);
+    const { userData } = useSelector(state => state.user);
 
     const [aboutLocal, setAboutLocal] = useState();
     const [birthdayLocal, setBirthdayLocal] = useState();

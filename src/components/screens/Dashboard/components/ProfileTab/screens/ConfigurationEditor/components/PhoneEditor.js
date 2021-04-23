@@ -8,7 +8,7 @@ export default function PhoneEditor({ navigation }) {
 
     const dispatch = useDispatch();
 
-    const { phone } = useSelector(state => state.dashboard.userData);
+    const { phone } = useSelector(state => state.user.userData);
 
     const [phoneLocal, setPhoneLocal] = useState(phone);
     const [isUpdateButtonEnable, setIsUpdateButtonEnable] = useState(false);

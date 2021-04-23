@@ -6,9 +6,9 @@ import { GenericDataList } from '../../../../../../commonComponents';
 
 export default function ConversationsContent() {
 
-    const { realTimeFirebaseChat } = useSelector(state => state.dashboard);
+    const { realTimeFirebaseChat } = useSelector(state => state.firebase);
     const { matchedProfiles } = useSelector(state => state.match);
-    const { id } = useSelector(state => state.dashboard.userData);
+    const { id } = useSelector(state => state.user.userData);
 
     const [conversations, setConversations] = useState([]);
 

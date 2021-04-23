@@ -32,7 +32,7 @@ export default function ConfigurationContent() {
         pushNotification
     } = useSelector(state => state.user?.userData);
 
-    const { userData } = useSelector(state => state.dashboard);
+    const { userData } = useSelector(state => state.user);
 
     const [maxDistanceLocal, setMaxDistanceLocal] = useState([maxDistance]);
     const [ageRangeLocal, setAgeRangeLocal] = useState([ageRange[0], ageRange[1]]);

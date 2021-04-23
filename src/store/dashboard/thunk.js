@@ -10,7 +10,7 @@ import * as userThunk from '../user/thunk';
 export function uploadImageToServer(imageData, selectedFile) {
     return async (dispatch, getState) => {
 
-        const { id: userId } = getState().dashboard.userData;
+        const { id: userId } = getState().user.userData;
         const { accessToken } = getState().auth;
 
         try {
@@ -128,13 +128,13 @@ export function deleteAccount() {
 
         dispatch(utilsActions.showLoader(true));
 
-        const dashboardState = getState().dashboard;
+        const userState = getState().user;
         const authState = getState().auth;
 
         try {
 
             await Api({ accessToken: authState.accessToken })
-                .delete(`account/delete-account/${dashboardState.userData.id}`)
+                .delete(`account/delete-account/${userState.userData.id}`)
                 .then(() => dispatch(authThunk.signOut()));
 
         } catch (err) {

@@ -19,7 +19,7 @@ export default function CompleteYourProfileContent() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
-    const { userData } = useSelector(state => state.dashboard);
+    const { userData } = useSelector(state => state.user);
 
     const [birthdayLocal, setBirthdayLocal] = useState();
     const [genderLocal, setGenderLocal] = useState(null);

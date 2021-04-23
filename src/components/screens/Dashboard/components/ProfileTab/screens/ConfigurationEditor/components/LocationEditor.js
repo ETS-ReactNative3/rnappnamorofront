@@ -25,7 +25,7 @@ const AddressInfo = styled(GenericRowView)`
 
 export default function LocationEditor() {
 
-    const { address } = useSelector(state => state.dashboard.userData)
+    const { address } = useSelector(state => state.user.userData)
 
     const AddressComponent = () => {
         return <AddressInfo>

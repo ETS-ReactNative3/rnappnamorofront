@@ -17,14 +17,14 @@ import * as firebaseThunk from '../firebase/thunk';
 export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArrayAndGetNextProfile) {
     return async (dispatch, getState) => {
 
-        const dashboardState = getState().dashboard;
+        const userState = getState().user;
         const authState = getState().auth;
 
         try {
 
             shouldShowLoader && dispatch(utilsActions.showLoader(true));
 
-            user = { ...user, id: dashboardState.userData.id };
+            user = { ...user, id: userState.userData.id };
 
             await Api({ accessToken: authState.accessToken }).post(`users/update_user`, { user });
 
@@ -56,13 +56,13 @@ export function getUserData(
 
     return async (dispatch, getState) => {
 
-        const dashboardState = getState().dashboard;
+        const userState = getState().user;
         const authState = getState().auth;
 
         try {
 
             const res = await Api({ accessToken: authState.accessToken })
-                .get(`users/get_user/${dashboardState.userData.id}`, {});
+                .get(`users/get_user/${userState.userData.id}`, {});
 
             const userData = res.data;
 

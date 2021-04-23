@@ -12,19 +12,19 @@ export function getMatchedProfiles() {
     return async (dispatch, getState) => {
         //get only profiles that was already matched with current user
 
-        const dashboardState = getState().dashboard;
+        const userState = getState().user;
         const authState = getState().auth;
 
         try {
             const res = await Api({ accessToken: authState.accessToken }).get(
-                `users/get_match_profiles/${dashboardState.userData.id}`
+                `users/get_match_profiles/${userState.userData.id}`
                 , {});
 
             res.data.map(item => {
                 item.age = calculateAge(new Date(item.birthday))
                 item.distance = parseInt(calculateDistanceFromLatLonInKm(
-                    dashboardState.userData.currentLongitude,
-                    dashboardState.userData.currentLatitude,
+                    userState.userData.currentLongitude,
+                    userState.userData.currentLatitude,
                     item.lastLongitude,
                     item.lastLatitude
                 ))
@@ -50,12 +50,8 @@ export function cleanMatchSearcherArrayAndGetNextProfile(shouldGetProfilesForMat
 export function getNextProfileForTheMatchSearcher() {
     return async (dispatch, getState) => {
 
-        const {
-            userData,
-            profileIdsAlreadyDownloaded,
-            matchSearcherProfiles,
-            isGettingProfileForTheMatchSearcher
-        } = getState().dashboard;
+        const { isGettingProfileForTheMatchSearcher, profileIdsAlreadyDownloaded, matchSearcherProfiles } = getState().match;
+        const { userData } = getState().user;
         const { accessToken } = getState().auth;
         const { isGeolocationEnabled } = getState().utils;
 
@@ -90,8 +86,7 @@ export function getNextProfileForTheMatchSearcher() {
 
                     dispatch(matchActions.updateIsGettingProfileForTheMatchSearcher(false));
 
-                    /*matchSearcherProfiles must have at least 2 profiles, so when user likes/ignores the first one,
-                    the second will appear*/
+                    /*matchSearcherProfiles must have at least 2 profiles, so when user likes/ignores the first one, the second will appear*/
                     matchSearcherProfiles.length < 2 && dispatch(getNextProfileForTheMatchSearcher());
                 }
                 else
@@ -125,7 +120,7 @@ export function likeCurrentProfile(profile, superLike) {
 export function unmatch(profileId) {
     return async (dispatch, getState) => {
 
-        const dashboardState = getState().dashboard;
+        const userState = getState().user;
         const authState = getState().auth;
 
         try {
@@ -133,7 +128,7 @@ export function unmatch(profileId) {
             dispatch(utilsActions.showLoader(true));
 
             await Api({ accessToken: authState.accessToken }).post(`users/unmatch`,
-                { userId: dashboardState.userData.id, profileId }
+                { userId: userState.userData.id, profileId }
             );
 
             await dispatch(firebaseThunk.removeAllConversationsFromThisMatch(profileId));

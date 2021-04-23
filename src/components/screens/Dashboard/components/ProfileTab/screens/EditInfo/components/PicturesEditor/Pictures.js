@@ -6,7 +6,7 @@ import PictureItem from './PictureItem';
 
 export default function Pictures() {
 
-    const { userImages } = useSelector(state => state.dashboard.userData);
+    const { userImages } = useSelector(state => state.user.userData);
     const { uploadingImagesPreview } = useSelector(state => state.dashboard);
 
     const PictureItems = () => {

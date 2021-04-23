@@ -7,8 +7,8 @@ import { GenericDataList } from '../../../commonComponents';
 
 export default function Body({ matchedProfile, profileImage }) {
 
-    const { realTimeFirebaseChat } = useSelector(state => state.dashboard);
-    const { id: userId } = useSelector(state => state.dashboard.userData);
+    const { realTimeFirebaseChat } = useSelector(state => state.firebase);
+    const { id: userId } = useSelector(state => state.user.userData);
 
     const [chatMessages, setChatMessages] = useState([]);
 

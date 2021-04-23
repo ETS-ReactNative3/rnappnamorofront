@@ -17,7 +17,7 @@ export default function EmailEditor() {
 
     const dispatch = useDispatch();
 
-    const { verifiedEmail, email } = useSelector(state => state.dashboard.userData);
+    const { verifiedEmail, email } = useSelector(state => state.user.userData);
 
     const [emailLocal, setEmailLocal] = useState(email);
     const [verifiedEmailLocal, setVerifiedEmailLocal] = useState(verifiedEmail == 1);

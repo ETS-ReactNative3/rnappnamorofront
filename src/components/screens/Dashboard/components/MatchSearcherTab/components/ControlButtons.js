@@ -22,7 +22,7 @@ export default function ControlButtons({ currentProfile }) {
     const dispatch = useDispatch();
 
     const lastTimeSuperLikeWasUsed = useSelector(state => {
-        const { lastTimeSuperLikeWasUsed } = state.dashboard.userData;
+        const { lastTimeSuperLikeWasUsed } = state.user.userData;
         return lastTimeSuperLikeWasUsed;
     });
     const { isSuperLikeAvailable, swipeCardRef } = useSelector(state => state.match);

@@ -50,7 +50,7 @@ export default function PictureItem({ PictureItem }) {
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
-    const { userImages } = useSelector(state => state.dashboard.userData);
+    const { userImages } = useSelector(state => state.user.userData);
 
     const imageSource = PictureItem.imageUrl ? { uri: PictureItem.imageUrl } : noProfile;
 
