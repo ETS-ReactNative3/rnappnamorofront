@@ -5,8 +5,8 @@ import * as utilsActions from '../utils/actions';
 import * as errorThunk from '../error/thunk';
 import * as firebaseThunk from '../firebase/thunk';
 import * as userThunk from '../user/thunk';
-import { calculateDistanceFromLatLonInKm, calculateAge } from '../../components/utils/Functions';
-import { Api } from '../../components/utils/Api';
+import { calculateDistanceFromLatLonInKm, calculateAge } from '../../utils/Functions';
+import { Api } from '../../utils/Api';
 
 export function getMatchedProfiles() {
     return async (dispatch, getState) => {

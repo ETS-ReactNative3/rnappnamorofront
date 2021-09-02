@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-import { convertDateFormatToHHMM } from '../../components/utils/Functions';
+import { convertDateFormatToHHMM } from '../../utils/Functions';
 import * as firebaseActions from './actions';
 import * as errorThunk from '../error/thunk';
 
@@ -9,7 +9,7 @@ const unsubscribeFirebaseListeners = [];
 export function signInOrSignUpToFirebase() {//if there's no record try sign in, otherwise: sign up
     return async (dispatch, getState) => {
 
-        const userEmail = getState().dashboard.userData.email;
+        const userEmail = getState()?.dashboard?.userData?.email;
 
         const addUserOnFirestore = async (user) => {
             try {

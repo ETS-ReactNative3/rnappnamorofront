@@ -2,8 +2,8 @@ import { Keyboard } from 'react-native';
 import firebase from 'firebase';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { decodeJwtToken } from '../../components/utils/Functions';
-import { Api } from '../../components/utils/Api';
+import { decodeJwtToken } from '../../utils/Functions';
+import { Api } from '../../utils/Api';
 import * as RootNavigationRef from '../../routes/RootNavigationRef';
 import * as utilsActions from '../utils/actions';
 import * as matchActions from '../match/actions';
@@ -70,9 +70,9 @@ export function signOut() {
             dispatch(utilsActions.showLoader(false));
 
             //if the user logout while something didn't finished yet, errorThunk.handleThunkError and then signOut() will be called
-            //this will make RootNavigationRef.reset('Home') be read more than once, wich will create a non desirable effect
-            //on Home screen "recreating" it many times
-            RootNavigationRef.getCurrentRoutName() != 'Home' && RootNavigationRef.reset('Home');
+            //this will make RootNavigationRef.reset('Login') be read more than once, wich will create a non desirable effect
+            //on Login screen "recreating" it many times
+            RootNavigationRef.getCurrentRoutName() != 'Login' && RootNavigationRef.reset('Login');
 
         } catch (err) {
 

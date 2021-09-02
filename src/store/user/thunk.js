@@ -5,8 +5,8 @@ import {
     getSearchingByDesc,
     getSchoolingDesc,
     getGenderDesc
-} from '../../components/utils/Functions';
-import { Api } from '../../components/utils/Api';
+} from '../../utils/Functions';
+import { Api } from '../../utils/Api';
 import * as userActions from './actions';
 import * as utilsActions from '../utils/actions';
 import * as errorThunk from '../error/thunk';

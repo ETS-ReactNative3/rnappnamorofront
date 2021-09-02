@@ -16,7 +16,7 @@ import {
   REACT_APP_FIREBASE_APPID,
   REACT_APP_FIREBASE_MEASUREMENTID
 } from 'react-native-expand-dotenv';
-import { Loader } from './src/components/commonComponents';
+import { Loader } from './src/components';
 import { theme } from './src/constants/StyledComponentsTheme';
 import reducers from './src/store/reducers';
 import Application from './src';

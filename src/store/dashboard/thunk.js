@@ -1,6 +1,6 @@
-import { decodeJwtToken } from '../../components/utils/Functions';
-import { successNotification } from '../../components/utils/Notifications';
-import { Api } from '../../components/utils/Api';
+import { decodeJwtToken } from '../../utils/Functions';
+import { successNotification } from '../../utils/Notifications';
+import { Api } from '../../utils/Api';
 import * as dashboardActions from './actions';
 import * as utilsActions from '../utils/actions';
 import * as authThunk from '../auth/thunk';

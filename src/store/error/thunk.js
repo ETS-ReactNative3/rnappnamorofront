@@ -1,4 +1,4 @@
-import { handleError } from '../../components/utils/Functions';
+import { handleError } from '../../utils/Functions';
 import * as utilsActions from '../utils/actions';
 import * as authThunk from '../auth/thunk';
 

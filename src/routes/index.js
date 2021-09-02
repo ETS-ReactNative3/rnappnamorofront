@@ -2,22 +2,22 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { modalOptions } from '../constants/ModalOptions';
-import Home from '../components/screens/Home';
-import Dashboard from '../components/screens/Dashboard';
-import ForgotPasswordModal from '../components/modals/ForgotPassword';
-import SignUpModal from '../components/modals/SignUp';
-import TurnOnLocationModal from '../components/modals/TurnOnLocation';
-import GenericYesNoModal from '../components/modals/GenericYesNoModal';
-import ContactModal from '../components/modals/Contact';
-import CompleteYourProfileModal from '../components/modals/CompleteYourProfile';
-import ChatModal from '../components/modals/Chat';
+import Login from '../screens/Login';
+import Dashboard from '../screens/Dashboard';
+import ForgotPasswordModal from '../modals/ForgotPassword';
+import SignUpModal from '../modals/SignUp';
+import TurnOnLocationModal from '../modals/TurnOnLocation';
+import GenericYesNoModal from '../modals/GenericYesNoModal';
+import ContactModal from '../modals/Contact';
+import CompleteYourProfileModal from '../modals/CompleteYourProfile';
+import ChatModal from '../modals/Chat';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
 
 const MainStackNavigator = () => {
     return <MainStack.Navigator mode={'card'} headerMode={'none'} initialRouteName='Dashboard'>
-        <MainStack.Screen name="Home" component={Home} />
+        <MainStack.Screen name="Login" component={Login} />
         <MainStack.Screen name="Dashboard" component={Dashboard} />
     </MainStack.Navigator>
 }
