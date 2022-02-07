@@ -1,7 +1,7 @@
 import React from "react";
 
 import GenericYesNoModalContent from './GenericYesNoModalContent';
-import { GenericModalContainer } from '../../components';
+import { GenericModalContainer } from '@components/index';
 
 export default function GenericYesNoModal(props) {
 

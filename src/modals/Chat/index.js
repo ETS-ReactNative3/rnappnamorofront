@@ -1,7 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 
-import { GenericContainer } from '../../components';
+import { GenericContainer } from '@components/index';
 import Header from './Header';
 import Body from './Body';
 import Footer from './Footer';

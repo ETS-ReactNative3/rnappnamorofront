@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import { Switch } from 'react-native';
 
-import { theme } from '../constants/StyledComponentsTheme';
+import { theme } from '@constants/StyledComponentsTheme';
 import GenericRowView from './GenericRowView';
 import P from './P';
 

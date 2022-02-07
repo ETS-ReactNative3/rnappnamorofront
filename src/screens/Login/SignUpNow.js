@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { P, GenericRowView } from '../../components';
+import { P, GenericRowView } from '@components/index';
 
 const SignUpNowContainer = styled(GenericRowView)`
     margin-top: 30px;

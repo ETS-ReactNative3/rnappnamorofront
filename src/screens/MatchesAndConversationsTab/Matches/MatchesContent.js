@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import MatchItem from './MatchItem';
-import { GenericDataList } from '../../../components';
+import { GenericDataList } from '@components/index';
 
 export default function MatchesContent() {
 

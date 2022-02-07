@@ -7,8 +7,11 @@ const ScrollViewCustom = styled.ScrollView`
     background-color: ${props => props.theme.$darkerBackgroundColor};
 `;
 
-export default GenericScrollView = ({ children, customStyle }) => {
-    return <ScrollViewCustom keyboardShouldPersistTaps='handled' style={customStyle}>
-        {children}
+export default GenericScrollView = (props) => {
+    return <ScrollViewCustom
+        {...props}
+        contentContainerStyle={{ alignItems: 'center' }}
+        keyboardShouldPersistTaps='handled'>
+        {props?.children}
     </ScrollViewCustom>
 }

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import * as dashboardThunk from '../../../store/dashboard/thunk';
-import { theme } from '../../../constants/StyledComponentsTheme';
-import { P, GenericAppButton, TextInputRightIconButton, GenericScrollView } from '../../../components';
-import { dangerNotification } from '../../../utils/Notifications';
-import { emailValidator } from '../../../utils/Functions';
+import * as dashboardThunk from '@store/dashboard/thunk';
+import { theme } from '@constants/StyledComponentsTheme';
+import { P, GenericAppButton, TextInputRightIconButton, GenericScrollView } from '@components/index';
+import { dangerNotification } from '@utils/Notifications';
+import { emailValidator } from '@utils/Functions';
 
 const PCustom = styled(P)`
     margin-top: 15px;

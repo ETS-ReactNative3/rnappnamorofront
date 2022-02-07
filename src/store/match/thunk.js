@@ -1,12 +1,12 @@
-import * as RootNavigationRef from '../../routes/RootNavigationRef';
+import * as RootNavigationRef from '@routes/RootNavigationRef';
 import * as matchActions from './actions';
-import * as userActions from '../user/actions';
-import * as utilsActions from '../utils/actions';
-import * as errorThunk from '../error/thunk';
-import * as firebaseThunk from '../firebase/thunk';
-import * as userThunk from '../user/thunk';
-import { calculateDistanceFromLatLonInKm, calculateAge } from '../../utils/Functions';
-import { Api } from '../../utils/Api';
+import * as userActions from '@store/user/actions';
+import * as utilsActions from '@store/utils/actions';
+import * as errorThunk from '@store/error/thunk';
+import * as firebaseThunk from '@store/firebase/thunk';
+import * as userThunk from '@store/user/thunk';
+import { calculateDistanceFromLatLonInKm, calculateAge } from '@utils/Functions';
+import { Api } from '@utils/Api';
 
 export function getMatchedProfiles() {
     return async (dispatch, getState) => {

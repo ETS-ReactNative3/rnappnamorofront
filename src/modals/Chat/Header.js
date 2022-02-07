@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
-import { GenericRowView, GenericColumnView, P, RoundCloseButton, RoundImage, RoundIconButton } from '../../components';
-import { convertDateFormatToDDMMYYYY } from '../../utils/Functions';
-import { theme } from '../../constants/StyledComponentsTheme';
+import { GenericRowView, GenericColumnView, P, RoundCloseButton, RoundImage, RoundIconButton } from '@components/index';
+import { convertDateFormatToDDMMYYYY } from '@utils/Functions';
+import { theme } from '@constants/StyledComponentsTheme';
 
 const HeaderContainer = styled(GenericRowView)`
     height: 80px;

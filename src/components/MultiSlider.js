@@ -5,7 +5,7 @@ import RNMultiSlider from '@ptomasroos/react-native-multi-slider';
 import GenericColumnView from './GenericColumnView';
 import GenericRowView from './GenericRowView';
 import P from './P';
-import { theme } from '../constants/StyledComponentsTheme';
+import { theme } from '@constants/StyledComponentsTheme';
 
 const MainContainer = styled(GenericColumnView)`
     height: 70px;

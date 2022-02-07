@@ -1,6 +1,6 @@
-import { handleError } from '../../utils/Functions';
-import * as utilsActions from '../utils/actions';
-import * as authThunk from '../auth/thunk';
+import { handleError } from '@utils/Functions';
+import * as utilsActions from '@store/utils/actions';
+import * as authThunk from '@store/auth/thunk';
 
 export function handleThunkError(err) {
     return dispatch => {

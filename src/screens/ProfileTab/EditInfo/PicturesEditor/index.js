@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GenericContainer, GenericColumnView, SectionTitle, GenericAppButton } from '../../../../components';
+import { GenericContainer, GenericColumnView, SectionTitle, GenericAppButton } from '@components/index';
 import Pictures from './Pictures';
 import { pickFile } from './uploadMedia';
 

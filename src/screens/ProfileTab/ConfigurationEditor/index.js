@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import { GenericContainer, SectionTitle } from '../../../components';
-import ConfigToolbar from '../Configuration/ConfigToolbar';
+import { GenericContainer, SectionTitle } from '@components/index';
 import EmailEditor from './EmailEditor';
 import PhoneEditor from './PhoneEditor';
 import LocationEditor from './LocationEditor';
 import SearchingByEditor from './SearchingByEditor';
+import ConfigToolbar from '@screens/ProfileTab/Configuration/ConfigToolbar';
 
 const MainContainer = styled(GenericContainer)`
     background-color: ${props => props.theme.$darkerBackgroundColor};

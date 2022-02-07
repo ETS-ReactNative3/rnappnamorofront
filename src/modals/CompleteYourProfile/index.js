@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { BackHandler } from 'react-native';
 import { useDispatch } from "react-redux";
 
-import * as authThunk from '../../store/auth/thunk';
+import * as authThunk from '@store/auth/thunk';
 import CompleteYourProfileContent from './CompleteYourProfileContent';
-import { GenericModalContainer } from '../../components';
+import { GenericModalContainer } from '@components/index';
 
 export default function CompleteYourProfile() {
 

@@ -2,11 +2,11 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-import * as authThunk from '../../store/auth/thunk';
-import { theme } from '../../constants/StyledComponentsTheme';
-import { convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../utils/Functions';
-import { dangerNotification } from '../../utils/Notifications';
-import * as Options from '../../utils/Options';
+import * as authThunk from '@store/auth/thunk';
+import * as Options from '@utils/Options';
+import { theme } from '@constants/StyledComponentsTheme';
+import { convertDateStringFromDDMMYYYYtoMMDDYYYY } from '@utils/Functions';
+import { dangerNotification } from '@utils/Notifications';
 import {
     TextInputRightIconButton,
     DatePickerButton,
@@ -14,7 +14,7 @@ import {
     MultiSlider,
     GenericAppButton,
     GenericColumnView
-} from '../../components';
+} from '@components/index';
 
 export default function SignUpFields() {
 
@@ -185,7 +185,7 @@ export default function SignUpFields() {
         <GenericAppButton
             customButtonStyle={{ margin: 30, width: 'auto' }}
             textButton={'ENVIAR'}
-            onPress={() => createNewAccount()}
+            onPress={createNewAccount}
         />
 
     </GenericColumnView>

@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import * as userThunk from '../../../store/user/thunk';
-import { P, ConfigItem, GenericScrollView } from '../../../components';
+import * as userThunk from '@store/user/thunk';
+import { P, ConfigItem, GenericScrollView } from '@components/index';
 
 const PCustom = styled(P)`
     margin-top: 15px;

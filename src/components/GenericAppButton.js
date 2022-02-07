@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { theme } from '../constants/StyledComponentsTheme';
+import { theme } from '@constants/StyledComponentsTheme';
 
 const Button = styled.TouchableHighlight`
     height: ${props => props.theme.$heightOfGenericComponent}px;

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { theme } from '../../constants/StyledComponentsTheme';
-import { GenericColumnView, GenericContainer, SectionTitle } from '../../components';
+import { theme } from '@constants/StyledComponentsTheme';
+import { GenericColumnView, GenericContainer, SectionTitle } from '@components/index';
 import Matches from './Matches';
 import Conversations from './Conversations';
 

@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
-import { theme } from '../../../constants/StyledComponentsTheme';
-import noProfile from '../../../assets/noProfile.png';
-import { RoundImage, GenericColumnView, P } from '../../../components';
-import { setLimitCharactereSizeToString } from '../../../utils/Functions';
+import { theme } from '@constants/StyledComponentsTheme';
+import noProfile from '@assets/noProfile.png';
+import { RoundImage, GenericColumnView, P } from '@components/index';
+import { setLimitCharactereSizeToString } from '@utils/Functions';
 
 const MatchItemBorderRadius = 80;
 

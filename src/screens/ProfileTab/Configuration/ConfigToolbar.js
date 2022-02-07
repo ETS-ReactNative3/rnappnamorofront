@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { theme } from '../../../constants/StyledComponentsTheme';
-import { Toolbar } from '../../../components';
+import { theme } from '@constants/StyledComponentsTheme';
+import { Toolbar } from '@components/index';
 
 export default function ConfigToolbar(props) {
     return <Toolbar

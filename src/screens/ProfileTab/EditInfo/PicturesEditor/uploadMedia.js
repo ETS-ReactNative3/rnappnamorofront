@@ -1,8 +1,8 @@
 import ImagePicker from 'react-native-image-crop-picker';
 
-import { dangerNotification } from '../../../../utils/Notifications';
-import { handleError, generateRandomKey } from '../../../../utils/Functions';
-import * as dashboardThunk from '../../../../store/dashboard/thunk';
+import { dangerNotification } from '@utils/Notifications';
+import { handleError, generateRandomKey } from '@utils/Functions';
+import * as dashboardThunk from '@store/dashboard/thunk';
 
 export function pickFile(userImagesLength, dispatch) {
     try {

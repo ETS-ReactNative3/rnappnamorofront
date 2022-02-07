@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { GenericRowView } from '../../../../components';
+import { GenericRowView } from '@components/index';
 import PictureItem from './PictureItem';
 
 export default function Pictures() {

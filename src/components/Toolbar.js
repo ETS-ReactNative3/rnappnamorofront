@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Toolbar as ToolbarComponent } from 'react-native-material-ui'
 
-import { theme } from '../constants/StyledComponentsTheme';
+import { theme } from '@constants/StyledComponentsTheme';
 
 export default Toolbar = (props) => {
 

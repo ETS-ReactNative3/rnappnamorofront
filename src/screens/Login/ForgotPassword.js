@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { P, GenericRowView } from '../../components';
+import { P, GenericRowView } from '@components/index';
 
 const ForgotPasswordContainer = styled(GenericRowView)`
     margin-top: 15px;

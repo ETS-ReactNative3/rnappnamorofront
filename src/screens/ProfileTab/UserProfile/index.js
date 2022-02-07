@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { GenericColumnView, DevelopedBy, AppVersion } from '../../../components';
+import { GenericColumnView, DevelopedBy, AppVersion } from '@components/index';
 import ProfileCircle from './ProfileCircle';
 
 export default function UserProfile() {

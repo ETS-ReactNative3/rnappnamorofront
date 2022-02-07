@@ -1,16 +1,16 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { modalOptions } from '../constants/ModalOptions';
-import Login from '../screens/Login';
-import Dashboard from '../screens/Dashboard';
-import ForgotPasswordModal from '../modals/ForgotPassword';
-import SignUpModal from '../modals/SignUp';
-import TurnOnLocationModal from '../modals/TurnOnLocation';
-import GenericYesNoModal from '../modals/GenericYesNoModal';
-import ContactModal from '../modals/Contact';
-import CompleteYourProfileModal from '../modals/CompleteYourProfile';
-import ChatModal from '../modals/Chat';
+import { modalOptions } from '@constants/ModalOptions';
+import Login from '@screens/Login';
+import Dashboard from '@screens/Dashboard';
+import ForgotPasswordModal from '@modals/ForgotPassword';
+import SignUpModal from '@modals/SignUp';
+import TurnOnLocationModal from '@modals/TurnOnLocation';
+import GenericYesNoModal from '@modals/GenericYesNoModal';
+import ContactModal from '@modals/Contact';
+import CompleteYourProfileModal from '@modals/CompleteYourProfile';
+import ChatModal from '@modals/Chat';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();

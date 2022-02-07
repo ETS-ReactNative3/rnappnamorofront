@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { GenericColumnView } from '../../../components';
+import { GenericColumnView } from '@components/index';
 import UserPersonalInfo from './UserPersonalInfo';
 import ControlButtonsContainer from './ControlButtonsContainer';
 

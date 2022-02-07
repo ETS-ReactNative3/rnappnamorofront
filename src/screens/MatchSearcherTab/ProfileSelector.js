@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import SwipeCards from 'react-native-swipe-cards';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as matchActions from '../../store/match/actions';
-import { GenericContainer } from '../../components';
+import * as matchActions from '@store/match/actions';
+import { GenericContainer } from '@components/index';
 import ProfileCard from './ProfileCard';
-import { theme } from '../../constants/StyledComponentsTheme';
+import { theme } from '@constants/StyledComponentsTheme';
 import { ignoreCurrentProfile, likeCurrentProfile } from './MatchSearcherFunctions';
 import MatchSearcherPlaceholder from './MatchSearcherPlaceholder';
 

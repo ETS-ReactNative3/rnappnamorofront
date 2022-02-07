@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import * as matchActions from '../../store/match/actions';
-import { theme } from '../../constants/StyledComponentsTheme';
-import { RoundIconButton, GenericRowView } from '../../components';
-import { checkIfSuperLikeIsAvailable } from '../../utils/Functions';
+import * as matchActions from '@store/match/actions';
+import { theme } from '@constants/StyledComponentsTheme';
+import { RoundIconButton, GenericRowView } from '@components/index';
+import { checkIfSuperLikeIsAvailable } from '@utils/Functions';
 import { ignoreCurrentProfile, likeCurrentProfile } from './MatchSearcherFunctions';
 
 const MainContainer = styled(GenericRowView)`

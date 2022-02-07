@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { RoundImage } from '../../components';
+import { RoundImage } from '@components/index';
 
 const TipContainer = styled.View`
     flex: 1;

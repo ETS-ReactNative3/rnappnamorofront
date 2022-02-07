@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import * as authThunk from '../../../store/auth/thunk';
+import * as authThunk from '@store/auth/thunk';
 import ControlButton from './ControlButton';
-import { GenericColumnView } from '../../../components';
-import { theme } from '../../../constants/StyledComponentsTheme';
+import { GenericColumnView } from '@components/index';
+import { theme } from '@constants/StyledComponentsTheme';
 
 export default function ControlButtonsContainer() {
 

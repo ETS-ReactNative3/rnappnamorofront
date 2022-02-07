@@ -3,12 +3,12 @@ import { PermissionsAndroid } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 
 import { REACT_APP_GEOCODE_API_KEY } from 'react-native-expand-dotenv';
-import * as RootNavigationRef from '../../routes/RootNavigationRef';
-import * as utilsActions from '../utils/actions';
-import * as userActions from '../user/actions';
-import * as errorThunk from '../error/thunk';
-import * as userThunk from '../user/thunk';
-import * as matchThunk from '../match/thunk';
+import * as RootNavigationRef from '@routes/RootNavigationRef';
+import * as utilsActions from '@store/utils/actions';
+import * as userActions from '@store/user/actions';
+import * as errorThunk from '@store/error/thunk';
+import * as userThunk from '@store/user/thunk';
+import * as matchThunk from '@store/match/thunk';
 
 Geocoder.init(REACT_APP_GEOCODE_API_KEY, { language: 'pt-br' });
 

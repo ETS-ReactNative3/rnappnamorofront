@@ -2,10 +2,10 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-import * as dashboardThunk from '../../store/dashboard/thunk';
-import { emailValidator } from '../../utils/Functions';
-import { dangerNotification } from '../../utils/Notifications';
-import { TextInputRightIconButton, GenericAppButton, GenericColumnView } from '../../components';
+import * as dashboardThunk from '@store/dashboard/thunk';
+import { emailValidator } from '@utils/Functions';
+import { dangerNotification } from '@utils/Notifications';
+import { TextInputRightIconButton, GenericAppButton, GenericColumnView } from '@components/index';
 
 export default function SignUpFields() {
 

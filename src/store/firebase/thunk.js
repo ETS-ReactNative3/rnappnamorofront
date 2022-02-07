@@ -1,8 +1,8 @@
 import firebase from 'firebase';
 
-import { convertDateFormatToHHMM } from '../../utils/Functions';
+import { convertDateFormatToHHMM } from '@utils/Functions';
 import * as firebaseActions from './actions';
-import * as errorThunk from '../error/thunk';
+import * as errorThunk from '@store/error/thunk';
 
 const unsubscribeFirebaseListeners = [];
 

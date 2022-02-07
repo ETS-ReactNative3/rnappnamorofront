@@ -1,5 +1,5 @@
-import * as matchThunk from '../../store/match/thunk';
-import * as matchActions from '../../store/match/actions';
+import * as matchThunk from '@store/match/thunk';
+import * as matchActions from '@store/match/actions';
 
 export function ignoreCurrentProfile(dispatch, profileId) {
     dispatch(matchThunk.ignoreCurrentProfile(profileId));

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { theme } from '../constants/StyledComponentsTheme';
+import { theme } from '@constants/StyledComponentsTheme';
 import GenericColumnView from './GenericColumnView';
 import AwesomeIcon from './AwesomeIcon';
 import P from './P';

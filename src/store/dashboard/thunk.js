@@ -1,11 +1,11 @@
-import { decodeJwtToken } from '../../utils/Functions';
-import { successNotification } from '../../utils/Notifications';
-import { Api } from '../../utils/Api';
+import { decodeJwtToken } from '@utils/Functions';
+import { successNotification } from '@utils/Notifications';
+import { Api } from '@utils/Api';
 import * as dashboardActions from './actions';
-import * as utilsActions from '../utils/actions';
-import * as authThunk from '../auth/thunk';
-import * as errorThunk from '../error/thunk';
-import * as userThunk from '../user/thunk';
+import * as utilsActions from '@store/utils/actions';
+import * as authThunk from '@store/auth/thunk';
+import * as errorThunk from '@store/error/thunk';
+import * as userThunk from '@store/user/thunk';
 
 export function uploadImageToServer(imageData, selectedFile) {
     return async (dispatch, getState) => {

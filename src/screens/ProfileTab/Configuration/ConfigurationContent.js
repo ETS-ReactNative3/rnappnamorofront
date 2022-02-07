@@ -3,9 +3,9 @@ import { Linking } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-import { theme } from '../../../constants/StyledComponentsTheme';
-import * as userThunk from '../../../store/user/thunk';
-import * as dashboardActions from '../../../store/dashboard/actions';
+import { theme } from '@constants/StyledComponentsTheme';
+import * as userThunk from '@store/user/thunk';
+import * as dashboardActions from '@store/dashboard/actions';
 import {
     SectionTitle,
     ConfigItem,
@@ -13,7 +13,7 @@ import {
     DevelopedBy,
     AppVersion,
     GenericScrollView
-} from '../../../components';
+} from '@components/index';
 
 export default function ConfigurationContent() {
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import MatchesContent from './MatchesContent';
-import { P } from '../../../components';
+import { P } from '@components/index';
 
 const YouHaveNoMatchesContainer = styled.View`
     height: 70%;

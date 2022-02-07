@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import { GenericContainer, P } from '../../../components';
-import noProfile from '../../../assets/noProfile.png';
+import { GenericContainer, P } from '@components/index';
+import noProfile from '@assets/noProfile.png';
 
 const UserPersonalInfoContainer = styled(GenericContainer)`
     height: auto;

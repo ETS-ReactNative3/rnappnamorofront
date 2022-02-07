@@ -2,11 +2,11 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import * as dashboardThunk from '../../store/dashboard/thunk';
-import * as matchThunk from '../../store/match/thunk';
-import * as userThunk from '../../store/user/thunk';
-import { GenericRowView, GenericColumnView, P, GenericAppButton } from '../../components';
-import { handleError } from '../../utils/Functions';
+import * as dashboardThunk from '@store/dashboard/thunk';
+import * as matchThunk from '@store/match/thunk';
+import * as userThunk from '@store/user/thunk';
+import { GenericRowView, GenericColumnView, P, GenericAppButton } from '@components/index';
+import { handleError } from '@utils/Functions';
 
 export const PCustom = styled(P)`
     margin-top: 10px;

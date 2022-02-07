@@ -1,15 +1,11 @@
 import jwt from 'jwt-decode';
-import crashlytics from '@react-native-firebase/crashlytics';
 
 import { dangerNotification } from './Notifications';
 import * as Options from './Options';
 
 export function handleError(err) {
     try {
-
         const somethingIsWrong = 'Ops, parece que algo saiu mal. Tente novamente.';
-
-        crashlytics().recordError(err);
 
         if (typeof err?.response?.data === "string") {
             let helper = err?.response?.data.split(' ');
@@ -17,19 +13,16 @@ export function handleError(err) {
             if (helper[0] !== '<!DOCTYPE' && err?.response?.status == 400)
                 dangerNotification(err?.response?.data);
             else {
-                crashlytics().recordError(err?.response);
+                console.log(err);
                 console.log(somethingIsWrong + ' - ' + err?.response?.data);
             }
 
         } else {
-            crashlytics().recordError(err?.response);
+            console.log(err);
             console.log(somethingIsWrong + ' - Ref: ' + err);
         }
 
     } catch (error) {
-
-        crashlytics().recordError(err);
-        crashlytics().recordError(error);
         console.log(err);
         console.log(error);
     }

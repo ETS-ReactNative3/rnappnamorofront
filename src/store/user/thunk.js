@@ -1,18 +1,18 @@
-import * as RootNavigationRef from '../../routes/RootNavigationRef';
+import * as RootNavigationRef from '@routes/RootNavigationRef';
 
 import {
     calculateAge,
     getSearchingByDesc,
     getSchoolingDesc,
     getGenderDesc
-} from '../../utils/Functions';
-import { Api } from '../../utils/Api';
+} from '@utils/Functions';
+import { Api } from '@utils/Api';
 import * as userActions from './actions';
-import * as utilsActions from '../utils/actions';
-import * as errorThunk from '../error/thunk';
-import * as utilsThunk from '../utils/thunk';
-import * as matchThunk from '../match/thunk';
-import * as firebaseThunk from '../firebase/thunk';
+import * as utilsActions from '@store/utils/actions';
+import * as errorThunk from '@store/error/thunk';
+import * as utilsThunk from '@store/utils/thunk';
+import * as matchThunk from '@store/match/thunk';
+import * as firebaseThunk from '@store/firebase/thunk';
 
 export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArrayAndGetNextProfile) {
     return async (dispatch, getState) => {

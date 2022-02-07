@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
-import * as userThunk from '../../../store/user/thunk';
-import * as Options from '../../../utils/Options';
+import * as userThunk from '@store/user/thunk';
+import * as Options from '@utils/Options';
 import {
     TextInputRightIconButton,
     DatePickerButton,
@@ -12,8 +12,8 @@ import {
     GenericAppButton,
     SectionTitle,
     GenericContainer
-} from '../../../components';
-import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../../utils/Functions';
+} from '@components/index';
+import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '@utils/Functions';
 
 const UserInfoEditorContainer = styled(GenericContainer)`
     height: auto;

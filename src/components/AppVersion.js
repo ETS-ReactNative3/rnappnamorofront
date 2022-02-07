@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import appIcon from '../assets/appIcon.png'
+import appIcon from '@assets/appIcon.png'
 import GenericRowView from './GenericRowView';
 import P from './P';
 

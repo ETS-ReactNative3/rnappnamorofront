@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { P, H2, GenericColumnView } from '../../components';
+import { P, H2, GenericColumnView } from '@components/index';
 
 const MainContainer = styled(GenericColumnView)`
     flex: 1;

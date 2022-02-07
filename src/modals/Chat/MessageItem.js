@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { theme } from '../../constants/StyledComponentsTheme';
+import { theme } from '@constants/StyledComponentsTheme';
 
 const MainContainer = styled.View`
     min-height: 50px;

@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import * as firebaseThunk from '../../store/firebase/thunk';
-import { GenericRowView, TextInput, GenericAppButton, RoundIconButton } from '../../components';
-import { theme } from '../../constants/StyledComponentsTheme';
-import { successNotification } from '../../utils/Notifications';
+import * as firebaseThunk from '@store/firebase/thunk';
+import { GenericRowView, TextInput, GenericAppButton, RoundIconButton } from '@components/index';
+import { theme } from '@constants/StyledComponentsTheme';
+import { successNotification } from '@utils/Notifications';
 
 const MainContainer = styled(GenericRowView)`
     height: 60px;

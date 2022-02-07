@@ -1,8 +1,8 @@
 import React from "react";
 import styled from 'styled-components';
 
-import { GenericModalContainer, GenericAppButton, GenericContainer, P } from '../../components';
-import { InfoText } from '../../constants/InfoText';
+import { GenericModalContainer, GenericAppButton, GenericContainer, P } from '@components/index';
+import { InfoText } from '@constants/InfoText';
 
 export const TurnOnLocationContainer = styled(GenericContainer)`
     padding: 10px;

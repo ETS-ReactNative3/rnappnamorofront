@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import ConversationsContent from './ConversationsContent';
-import { P } from '../../../components';
+import { P } from '@components/index';
 
 const YouHaveNoConversationsContainer = styled.View`
     height: 70%;

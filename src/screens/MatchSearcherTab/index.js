@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { InfoText } from '../../constants/InfoText';
-import { GenericContainer } from '../../components';
+import { InfoText } from '@constants/InfoText';
+import { GenericContainer } from '@components/index';
 import MatchSearcherPlaceholder from './MatchSearcherPlaceholder';
 import ProfileSelector from './ProfileSelector';
 import ControlButtons from './ControlButtons';

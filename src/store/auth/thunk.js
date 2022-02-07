@@ -2,16 +2,16 @@ import { Keyboard } from 'react-native';
 import firebase from 'firebase';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { decodeJwtToken } from '../../utils/Functions';
-import { Api } from '../../utils/Api';
-import * as RootNavigationRef from '../../routes/RootNavigationRef';
-import * as utilsActions from '../utils/actions';
-import * as matchActions from '../match/actions';
-import * as authActions from '../auth/actions';
-import * as userActions from '../user/actions';
-import * as matchThunk from '../match/thunk';
-import * as errorThunk from '../error/thunk';
-import * as userThunk from '../user/thunk';
+import { decodeJwtToken } from '@utils/Functions';
+import { Api } from '@utils/Api';
+import * as RootNavigationRef from '@routes/RootNavigationRef';
+import * as utilsActions from '@store/utils/actions';
+import * as matchActions from '@store/match/actions';
+import * as authActions from '@store/auth/actions';
+import * as userActions from '@store/user/actions';
+import * as matchThunk from '@store/match/thunk';
+import * as errorThunk from '@store/error/thunk';
+import * as userThunk from '@store/user/thunk';
 
 const unsubscribeFirebaseListeners = [];
 

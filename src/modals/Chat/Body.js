@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import MessageItem from './MessageItem';
 import TipItem from './TipItem';
-import { GenericDataList } from '../../components';
+import { GenericDataList } from '@components/index';
 
 export default function Body({ matchedProfile, profileImage }) {
 

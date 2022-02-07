@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { theme } from '../constants/StyledComponentsTheme';
+import { theme } from '@constants/StyledComponentsTheme';
 import AwesomeIcon from './AwesomeIcon';
 
 const Button = styled.TouchableHighlight`

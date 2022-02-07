@@ -5,8 +5,8 @@ import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { REACT_APP_GOOGLE_CLIENT_ID } from 'react-native-expand-dotenv';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 
-import * as authThunk from '../../store/auth/thunk';
-import { SocialButton } from '../../components';
+import * as authThunk from '@store/auth/thunk';
+import { SocialButton } from '@components/index';
 
 GoogleSignin.configure({
     webClientId: REACT_APP_GOOGLE_CLIENT_ID, //client ID of type WEB for your server (needed to verify user ID and offline access)

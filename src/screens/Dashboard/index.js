@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import * as userActions from '../../store/user/actions';
-import * as authActions from '../../store/auth/actions';
-import * as authThunk from '../../store/auth/thunk';
-import { decodeJwtToken } from '../../utils/Functions';
+import * as userActions from '@store/user/actions';
+import * as authActions from '@store/auth/actions';
+import * as authThunk from '@store/auth/thunk';
+import { decodeJwtToken } from '@utils/Functions';
 import DashboardTabNavigator from './DashboardTabNavigator';
-import { GenericContainer } from '../../components';
+import { GenericContainer } from '@components/index';
 
 export default function Dashboard() {
 

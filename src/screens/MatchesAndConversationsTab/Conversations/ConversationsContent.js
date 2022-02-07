@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import ConversationItem from './ConversationItem';
-import { GenericDataList } from '../../../components';
+import { GenericDataList } from '@components/index';
 
 export default function ConversationsContent() {
 

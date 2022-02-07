@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { theme } from '../../../constants/StyledComponentsTheme';
-import { P, GenericRowView, GenericColumnView, GenericScrollView, AwesomeIcon } from '../../../components';
+import { theme } from '@constants/StyledComponentsTheme';
+import { P, GenericRowView, GenericColumnView, GenericScrollView, AwesomeIcon } from '@components/index';
 
 const PTitle = styled(P)`
     color: ${props => props.theme.$textColor};

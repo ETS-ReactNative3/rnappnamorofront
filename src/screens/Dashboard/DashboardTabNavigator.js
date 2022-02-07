@@ -1,11 +1,11 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import { theme } from '../../constants/StyledComponentsTheme';
-import { AwesomeIcon, GenericColumnView } from '../../components';
-import MatchSearcherTab from '../MatchSearcherTab';
-import ProfileStackNavigator from '../ProfileTab/ProfileStackNavigator';
-import MatchesAndConversationsTab from '../MatchesAndConversationsTab';
+import { theme } from '@constants/StyledComponentsTheme';
+import { AwesomeIcon, GenericColumnView } from '@components/index';
+import MatchSearcherTab from '@screens/MatchSearcherTab';
+import ProfileStackNavigator from '@screens/ProfileTab/ProfileStackNavigator';
+import MatchesAndConversationsTab from '@screens/MatchesAndConversationsTab';
 
 const Tab = createMaterialTopTabNavigator();
 

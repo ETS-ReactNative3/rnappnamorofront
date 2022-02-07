@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
-import { theme } from '../../../constants/StyledComponentsTheme';
-import { GenericColumnView, GenericRowView, P, RoundImage } from '../../../components';
-import noProfile from '../../../assets/noProfile.png';
-import { setLimitCharactereSizeToString } from '../../../utils/Functions';
+import { theme } from '@constants/StyledComponentsTheme';
+import { GenericColumnView, GenericRowView, P, RoundImage } from '@components/index';
+import noProfile from '@assets/noProfile.png';
+import { setLimitCharactereSizeToString } from '@utils/Functions';
 
 const Button = styled.TouchableHighlight`
     height: 80px;

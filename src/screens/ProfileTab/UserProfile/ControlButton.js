@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { GenericColumnView, P, RoundIconButton } from '../../../components';
+import { GenericColumnView, P, RoundIconButton } from '@components/index';
 
 const ButtonContainer = styled(GenericColumnView)`
     flex: 1;

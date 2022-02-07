@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import Carousel from 'react-native-looped-carousel';
 import { Dimensions } from 'react-native';
 
-import noProfile from '../../assets/noProfile.png';
-import { generateRandomKey } from '../../utils/Functions';
-import { H2, H3, GenericColumnView, AwesomeIcon } from '../../components';
-import { textShadow } from '../../constants/InlineStyling';
+import noProfile from '@assets/noProfile.png';
+import { generateRandomKey } from '@utils/Functions';
+import { H2, H3, GenericColumnView, AwesomeIcon } from '@components/index';
+import { textShadow } from '@constants/InlineStyling';
 
 const ProfileCardInfo = styled(GenericColumnView)`
     flex: 1;

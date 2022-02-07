@@ -2,17 +2,17 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-import * as userThunk from '../../store/user/thunk';
-import { dangerNotification } from '../../utils/Notifications';
-import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '../../utils/Functions';
-import * as Options from '../../utils/Options';
+import * as userThunk from '@store/user/thunk';
+import { dangerNotification } from '@utils/Notifications';
+import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '@utils/Functions';
+import * as Options from '@utils/Options';
 import {
     TextInputRightIconButton,
     DatePickerButton,
     ModalSelector,
     GenericAppButton,
     GenericColumnView
-} from '../../components';
+} from '@components/index';
 
 export default function CompleteYourProfileContent() {
 
