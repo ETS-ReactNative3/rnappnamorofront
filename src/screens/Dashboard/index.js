@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import * as userActions from '@store/user/actions';
 import * as authActions from '@store/auth/actions';
 import * as authThunk from '@store/auth/thunk';
-import { decodeJwtToken } from '@utils/Functions';
+import { decodeJwtToken } from '~/utils/functions';
 import DashboardTabNavigator from './DashboardTabNavigator';
 import { GenericContainer } from '@components/index';
 

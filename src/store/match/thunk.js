@@ -5,20 +5,17 @@ import * as utilsActions from '@store/utils/actions';
 import * as errorThunk from '@store/error/thunk';
 import * as firebaseThunk from '@store/firebase/thunk';
 import * as userThunk from '@store/user/thunk';
-import { calculateDistanceFromLatLonInKm, calculateAge } from '@utils/Functions';
-import { Api } from '@utils/Api';
+import api from '@utils/api';
+import { calculateDistanceFromLatLonInKm, calculateAge } from '~/utils/functions';
 
 export function getMatchedProfiles() {
     return async (dispatch, getState) => {
         //get only profiles that was already matched with current user
 
         const userState = getState().user;
-        const authState = getState().auth;
 
         try {
-            const res = await Api({ accessToken: authState.accessToken }).get(
-                `users/get_match_profiles/${userState.userData.id}`
-                , {});
+            const res = await api.get(`users/get_match_profiles/${userState.userData.id}`, {});
 
             res.data.map(item => {
                 item.age = calculateAge(new Date(item.birthday))
@@ -52,7 +49,6 @@ export function getNextProfileForTheMatchSearcher() {
 
         const { isGettingProfileForTheMatchSearcher, profileIdsAlreadyDownloaded, matchSearcherProfiles } = getState().match;
         const { userData } = getState().user;
-        const { accessToken } = getState().auth;
         const { isGeolocationEnabled } = getState().utils;
 
         try {
@@ -60,7 +56,7 @@ export function getNextProfileForTheMatchSearcher() {
 
                 dispatch(matchActions.updateIsGettingProfileForTheMatchSearcher(true));
 
-                const res = await Api({ accessToken }).post('users/get_profile_to_the_match_searcher', {
+                const res = await api.post('users/get_profile_to_the_match_searcher', {
                     currentLongitude: userData.currentLongitude,
                     currentLatitude: userData.currentLatitude,
                     maxDistance: userData.maxDistance,
@@ -71,6 +67,7 @@ export function getNextProfileForTheMatchSearcher() {
                 });
 
                 if (res.data.user) {
+
                     res.data.user.distance = parseInt(calculateDistanceFromLatLonInKm(
                         userData.currentLongitude,
                         userData.currentLatitude,
@@ -121,15 +118,12 @@ export function unmatch(profileId) {
     return async (dispatch, getState) => {
 
         const userState = getState().user;
-        const authState = getState().auth;
 
         try {
 
             dispatch(utilsActions.showLoader(true));
 
-            await Api({ accessToken: authState.accessToken }).post(`users/unmatch`,
-                { userId: userState.userData.id, profileId }
-            );
+            await api.post('users/unmatch', { userId: userState.userData.id, profileId });
 
             await dispatch(firebaseThunk.removeAllConversationsFromThisMatch(profileId));
 

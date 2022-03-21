@@ -1,7 +1,7 @@
 import jwt from 'jwt-decode';
 
-import { dangerNotification } from './Notifications';
-import * as Options from './Options';
+import { dangerNotification } from './notifications';
+import * as Options from './options';
 
 export function handleError(err) {
     try {

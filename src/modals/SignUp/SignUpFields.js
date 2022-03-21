@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 import * as authThunk from '@store/auth/thunk';
-import * as Options from '@utils/Options';
+import * as Options from '~/utils/options';
 import { theme } from '@constants/StyledComponentsTheme';
-import { convertDateStringFromDDMMYYYYtoMMDDYYYY } from '@utils/Functions';
-import { dangerNotification } from '@utils/Notifications';
+import { convertDateStringFromDDMMYYYYtoMMDDYYYY } from '~/utils/functions';
+import { dangerNotification } from '~/utils/notifications';
 import {
     TextInputRightIconButton,
     DatePickerButton,

@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-import { convertDateFormatToHHMM } from '@utils/Functions';
+import { convertDateFormatToHHMM } from '~/utils/functions';
 import * as firebaseActions from './actions';
 import * as errorThunk from '@store/error/thunk';
 

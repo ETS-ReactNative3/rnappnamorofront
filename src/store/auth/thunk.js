@@ -2,8 +2,7 @@ import { Keyboard } from 'react-native';
 import firebase from 'firebase';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { decodeJwtToken } from '@utils/Functions';
-import { Api } from '@utils/Api';
+import api from '@utils/api';
 import * as RootNavigationRef from '@routes/RootNavigationRef';
 import * as utilsActions from '@store/utils/actions';
 import * as matchActions from '@store/match/actions';
@@ -12,6 +11,7 @@ import * as userActions from '@store/user/actions';
 import * as matchThunk from '@store/match/thunk';
 import * as errorThunk from '@store/error/thunk';
 import * as userThunk from '@store/user/thunk';
+import { decodeJwtToken } from '~/utils/functions';
 
 const unsubscribeFirebaseListeners = [];
 
@@ -32,20 +32,18 @@ export function checkIfTokenHasExpired() {
 
             if (accessToken) {
 
-                await Api({ accessToken }).post('account/check_if_token_has_expired', { /*body*/ });
+                await api.post('account/check_if_token_has_expired', {});
 
                 dispatch(authActions.isCheckingIfTokenHasExpiredStatus(false));
 
                 dispatch(userThunk.getUserData(true, true, true, true));
 
             } else {
-
                 dispatch(authActions.isCheckingIfTokenHasExpiredStatus(false));
                 dispatch(signOut());
             }
 
         } catch (err) {
-
             dispatch(authActions.isCheckingIfTokenHasExpiredStatus(false));
             dispatch(errorThunk.handleThunkError(err));
         }
@@ -75,7 +73,6 @@ export function signOut() {
             RootNavigationRef.getCurrentRoutName() != 'Login' && RootNavigationRef.reset('Login');
 
         } catch (err) {
-
             dispatch(errorThunk.handleThunkError(err));
             dispatch(setAccessTokenOnStorageAndRedux(''));
         }
@@ -83,13 +80,13 @@ export function signOut() {
 }
 
 export function signUp(userData, navigation) {
-    return async (dispatch, getState) => {
+    return async (dispatch) => {
 
         try {
 
             dispatch(utilsActions.showLoader(true));
 
-            const res = await Api({ accessToken: getState().auth.accessToken }).post('account/signup', userData);
+            const res = await api.post('account/signup', userData);
 
             navigation.goBack();
 
@@ -113,7 +110,7 @@ export function signInLocal(userData) {
 
             dispatch(utilsActions.showLoader(true));
 
-            const res = await Api({ accessToken: null }).post('account/signin', userData);
+            const res = await api.post('account/signin', userData);
 
             dispatch(setAccessTokenOnStorageAndRedux(res.data.token));
             dispatch(userActions.updateUserDataOnRedux({ id: decodeJwtToken(res.data.token).id }));
@@ -123,7 +120,7 @@ export function signInLocal(userData) {
             Keyboard.dismiss();
 
             dispatch(authActions.signInAction());
-            
+
             dispatch(userThunk.getUserData(true, true, true, true));
 
             RootNavigationRef.reset('Dashboard');
@@ -135,9 +132,7 @@ export function signInLocal(userData) {
 }
 
 export function signInOauth(oauthAccessToken, type) {
-    return async (dispatch, getState) => {
-
-        const authState = getState().auth;
+    return async (dispatch) => {
 
         try {
 
@@ -147,10 +142,10 @@ export function signInOauth(oauthAccessToken, type) {
 
             switch (type) {
                 case 'facebook':
-                    res = await Api({ accessToken: authState.accessToken }).post('account/facebook', { access_token: oauthAccessToken });
+                    res = await api.post('account/facebook', { access_token: oauthAccessToken });
                     break;
                 default:
-                    res = await Api({ accessToken: authState.accessToken }).post('account/google', { access_token: oauthAccessToken });
+                    res = await api.post('account/google', { access_token: oauthAccessToken });
                     break;
             }
 

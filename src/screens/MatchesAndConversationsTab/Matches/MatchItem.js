@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { theme } from '@constants/StyledComponentsTheme';
 import noProfile from '@assets/noProfile.png';
 import { RoundImage, GenericColumnView, P } from '@components/index';
-import { setLimitCharactereSizeToString } from '@utils/Functions';
+import { setLimitCharactereSizeToString } from '~/utils/functions';
 
 const MatchItemBorderRadius = 80;
 

@@ -1,4 +1,4 @@
-import { handleError } from '@utils/Functions';
+import { handleError } from '~/utils/functions';
 import * as utilsActions from '@store/utils/actions';
 import * as authThunk from '@store/auth/thunk';
 

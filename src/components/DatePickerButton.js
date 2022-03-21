@@ -4,7 +4,7 @@ import DateTimePicker from "react-native-modal-datetime-picker"
 
 import GenericRowView from './GenericRowView';
 import P from './P';
-import { convertDateFormatToDDMMYYYY } from '@utils/Functions';
+import { convertDateFormatToDDMMYYYY } from '~/utils/functions';
 import { maxBirthdayDate } from '@constants/GenericConstants';
 import { theme } from '@constants/StyledComponentsTheme';
 

@@ -8,7 +8,7 @@ import SocialButtons from './SocialButtons';
 import ForgotPassword from './ForgotPassword';
 import SignUpNow from './SignUpNow';
 import { theme } from '@constants/StyledComponentsTheme';
-import { dangerNotification } from '@utils/Notifications'
+import { dangerNotification } from '~/utils/notifications'
 import { H2, LineTextLine, TextInputRightIconButton, GenericAppButton } from '@components/index';
 
 const Styles = EStyleSheet.create({

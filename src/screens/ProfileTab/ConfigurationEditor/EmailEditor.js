@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import * as dashboardThunk from '@store/dashboard/thunk';
 import { theme } from '@constants/StyledComponentsTheme';
 import { P, GenericAppButton, TextInputRightIconButton, GenericScrollView } from '@components/index';
-import { dangerNotification } from '@utils/Notifications';
-import { emailValidator } from '@utils/Functions';
+import { dangerNotification } from '~/utils/notifications';
+import { emailValidator } from '~/utils/functions';
 
 const PCustom = styled(P)`
     margin-top: 15px;

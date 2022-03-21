@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { theme } from '@constants/StyledComponentsTheme';
 import { GenericColumnView, GenericRowView, P, RoundImage } from '@components/index';
 import noProfile from '@assets/noProfile.png';
-import { setLimitCharactereSizeToString } from '@utils/Functions';
+import { setLimitCharactereSizeToString } from '~/utils/functions';
 
 const Button = styled.TouchableHighlight`
     height: 80px;

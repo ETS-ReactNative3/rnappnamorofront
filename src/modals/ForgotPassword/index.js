@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import * as dashboardThunk from '@store/dashboard/thunk';
-import { dangerNotification } from '@utils/Notifications';
-import { emailValidator } from '@utils/Functions';
+import { dangerNotification } from '~/utils/notifications';
+import { emailValidator } from '~/utils/functions';
 import { GenericModalContainer, TextInputRightIconButton, GenericAppButton, P } from '@components/index';
 
 export const PCustom = styled(P)`

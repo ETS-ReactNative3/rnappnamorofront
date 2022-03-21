@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import * as firebaseThunk from '@store/firebase/thunk';
 import { GenericRowView, TextInput, GenericAppButton, RoundIconButton } from '@components/index';
 import { theme } from '@constants/StyledComponentsTheme';
-import { successNotification } from '@utils/Notifications';
+import { successNotification } from '~/utils/notifications';
 
 const MainContainer = styled(GenericRowView)`
     height: 60px;

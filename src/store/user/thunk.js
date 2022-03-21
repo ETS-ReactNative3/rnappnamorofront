@@ -5,8 +5,8 @@ import {
     getSearchingByDesc,
     getSchoolingDesc,
     getGenderDesc
-} from '@utils/Functions';
-import { Api } from '@utils/Api';
+} from '~/utils/functions';
+import api from '@utils/api';
 import * as userActions from './actions';
 import * as utilsActions from '@store/utils/actions';
 import * as errorThunk from '@store/error/thunk';
@@ -18,7 +18,6 @@ export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArray
     return async (dispatch, getState) => {
 
         const userState = getState().user;
-        const authState = getState().auth;
 
         try {
 
@@ -26,7 +25,7 @@ export function updateUser(user, shouldShowLoader, shouldCleanMatchSearcherArray
 
             user = { ...user, id: userState.userData.id };
 
-            await Api({ accessToken: authState.accessToken }).post(`users/update_user`, { user });
+            await api.post('users/update_user', { user });
 
             const userData = user.ageRange ? {
                 ageRange: [
@@ -57,12 +56,10 @@ export function getUserData(
     return async (dispatch, getState) => {
 
         const userState = getState().user;
-        const authState = getState().auth;
 
         try {
 
-            const res = await Api({ accessToken: authState.accessToken })
-                .get(`users/get_user/${userState.userData.id}`, {});
+            const res = await api.get(`users/get_user/${userState.userData.id}`, {});
 
             const userData = res.data;
 
@@ -103,12 +100,12 @@ export function getUserData(
 }
 
 export function deleteUserImage(imageId) {
-    return async (dispatch, getState) => {
+    return async (dispatch) => {
         try {
 
             dispatch(utilsActions.showLoader(true));
 
-            await Api({ accessToken: getState().auth.accessToken }).delete(`users/user_images/${imageId}`);
+            await api.delete(`users/user_images/${imageId}`);
 
             dispatch(utilsActions.showLoader(false));
             dispatch(getUserData(true));

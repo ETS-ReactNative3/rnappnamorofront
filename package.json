@@ -30,6 +30,7 @@
     "react-native-expand-dotenv": "^0.0.7",
     "react-native-extended-stylesheet": "^0.12.0",
     "react-native-fbsdk": "^3.0.0",
+    "react-native-flash-message": "^0.2.1",
     "react-native-geocoding": "^0.5.0",
     "react-native-geolocation-service": "^5.1.1",
     "react-native-gesture-handler": "^1.8.0",

@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 import * as dashboardThunk from '@store/dashboard/thunk';
-import { emailValidator } from '@utils/Functions';
-import { dangerNotification } from '@utils/Notifications';
+import { emailValidator } from '~/utils/functions';
+import { dangerNotification } from '~/utils/notifications';
 import { TextInputRightIconButton, GenericAppButton, GenericColumnView } from '@components/index';
 
 export default function SignUpFields() {

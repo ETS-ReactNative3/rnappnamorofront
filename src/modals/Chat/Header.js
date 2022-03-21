@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
 import { GenericRowView, GenericColumnView, P, RoundCloseButton, RoundImage, RoundIconButton } from '@components/index';
-import { convertDateFormatToDDMMYYYY } from '@utils/Functions';
+import { convertDateFormatToDDMMYYYY } from '~/utils/functions';
 import { theme } from '@constants/StyledComponentsTheme';
 
 const HeaderContainer = styled(GenericRowView)`

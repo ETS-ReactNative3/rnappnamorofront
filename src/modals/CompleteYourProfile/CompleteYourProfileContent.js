@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 import * as userThunk from '@store/user/thunk';
-import { dangerNotification } from '@utils/Notifications';
-import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '@utils/Functions';
-import * as Options from '@utils/Options';
+import { dangerNotification } from '~/utils/notifications';
+import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '~/utils/functions';
+import * as Options from '~/utils/options';
 import {
     TextInputRightIconButton,
     DatePickerButton,

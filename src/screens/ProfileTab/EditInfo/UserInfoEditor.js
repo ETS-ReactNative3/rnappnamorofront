@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
 import * as userThunk from '@store/user/thunk';
-import * as Options from '@utils/Options';
+import * as Options from '~/utils/options';
 import {
     TextInputRightIconButton,
     DatePickerButton,
@@ -13,7 +13,7 @@ import {
     SectionTitle,
     GenericContainer
 } from '@components/index';
-import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '@utils/Functions';
+import { handleUserBirthday, convertDateStringFromDDMMYYYYtoMMDDYYYY } from '~/utils/functions';
 
 const UserInfoEditorContainer = styled(GenericContainer)`
     height: auto;
